@@ -15,6 +15,6 @@ public class KidsconnectApplication {
 
     @GetMapping("/hi")
     public String hello(){
-        return "hello kids connect";
+        return "hello kids connect1";
     }
 }
