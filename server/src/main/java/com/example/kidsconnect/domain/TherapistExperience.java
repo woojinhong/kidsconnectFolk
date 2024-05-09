@@ -17,7 +17,8 @@ public class TherapistExperience {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String place;
-    private Date experience;
+    private Date startDate;
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "therapist_id")
