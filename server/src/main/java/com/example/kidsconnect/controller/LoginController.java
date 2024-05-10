@@ -3,6 +3,7 @@ package com.example.kidsconnect.controller;
 import com.example.kidsconnect.dao.UserRepository;
 import com.example.kidsconnect.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,9 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return (List<User>) userRepository.findAll();
-    }
+//    @GetMapping("/users")
+//    public ResponseEntity<List<User>> getUsers() {
+//        List<User> users = userRepository.findAll();
+//        return ResponseEntity.ok().body(users);
+//    }
 }
