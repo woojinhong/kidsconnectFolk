@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "userId": 5,
+    "therapistId": 3,
+    "rating": 4,
+    "gender": "여",
+    "comment": "진솔한 조언과 세심한 배려가 돋보이는 치료사입니다. 믿고 맡길 수 있어요.",
+    "inDate": "10/5/2023",
+    "upDate": "1/29/2024"
+  },
+  {
+    "id": 2,
+    "userId": 4,
+    "therapistId": 1,
+    "rating": 5,
+    "gender": "여",
+    "comment": "따뜻한 마음으로 아이를 대해주고, 치료 과정을 잘 설명해주셨어요. 감사합니다.",
+    "inDate": "4/26/2022",
+    "upDate": "9/24/2023"
+  },
+  {
+    "id": 3,
+    "userId": 3,
+    "therapistId": 4,
+    "rating": 1,
+    "gender": "남",
+    "comment": "치료 과정에 대한 설명이 부족하고, 소통이 부족한 느낌이었어요. 개선이 필요합니다.",
+    "inDate": "7/5/2023",
+    "upDate": "12/12/2023"
+  },
+  {
+    "id": 4,
+    "userId": 2,
+    "therapistId": 5,
+    "rating": 5,
+    "gender": "남",
+    "comment": "전문적이고 이해심 깊은 치료사였어요. 강력 추천합니다!",
+    "inDate": "9/8/2023",
+    "upDate": "2/8/2024"
+  },
+  {
+    "id": 5,
+    "userId": 1,
+    "therapistId": 1,
+    "rating": 1,
+    "gender": "여",
+    "comment": "치료사의 전문성과 친절함에 대해 의문이 들 정도로 아이의 개선이 미미했습니다.",
+    "inDate": "1/12/2021",
+    "upDate": "3/9/2022"
+  }
+]

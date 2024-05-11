@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "감정과 치유의 안내자: 아동·청소년 정신건강 전문 치료사",
+    "bio": "아동 및 청소년을 위한 정신건강 전문 치료사로, 개인의 감정과 Bedside Manner를 중시합니다.",
+    "content": "저는 아동과 청소년의 정신건강을 중시하며, 그들의 감정과 마음의 치유를 위해 노력하고 있습니다. 이 미래의 세대들이 건강하고 안정된 심리적 토대 위에서 성장할 수 있도록 안내하고 지원합니다.",
+    "education": "석사 학위: 심리학 (전공: 정신건강 치료), XX 대학교",
+    "identityCheck": false,
+    "crimeCheck": true,
+    "ageRange": 3,
+    "imageFile": "http://dummyimage.com/212x100.png/cc0000/ffffff",
+    "viewCnt": 5632,
+    "inDate": "11/3/2023",
+    "upDate": "4/6/2024"
+  },
+  {
+    "id": 2,
+    "title": "변화를 이끄는 지표: 정신건강 다변인 치료사",
+    "bio": "다양한 연령층을 위한 정신건강 치료사로, 심리적 도움을 통해 개인의 성장과 변화를 돕습니다.",
+    "content": "저는 다양한 상황과 환경에서 변화를 이끌어내는 지표 역할을 합니다. 환자 개개인의 요구와 상황에 맞춰 다변인적인 치료 방법을 적용하여, 그들이 더 나은 삶으로 나아갈 수 있도록 돕고 있습니다.",
+    "education": "학사 학위: 임상 심리학, XX 대학교",
+    "identityCheck": true,
+    "crimeCheck": false,
+    "ageRange": 12,
+    "imageFile": "http://dummyimage.com/235x100.png/5fa2dd/ffffff",
+    "viewCnt": 7891,
+    "inDate": "2/19/2022",
+    "upDate": "8/20/2023"
+  },
+  {
+    "id": 3,
+    "title": "가족의 지혜로 성장하는: 부부 및 가족 관계 중점 치료사",
+    "bio": "가족 및 부부 간의 관계 개선을 위한 인터페이스 중점 치료사로, 소통과 이해를 바탕으로 함께 해결해 나갑니다.",
+    "content": "가족은 우리 삶에서 가장 중요한 지지 체계입니다. 저는 부부와 가족들이 서로를 이해하고 지지하며 성장할 수 있도록 돕습니다. 소통과 이해를 바탕으로 가족 구성원 간의 관계를 더욱 강화시키고 지혜를 함께 모으는 과정을 돕습니다.",
+    "education": "전문 자격증: 정신건강 전문가 (LMHC), 발급기관명",
+    "identityCheck": true,
+    "crimeCheck": true,
+    "ageRange": 6,
+    "imageFile": "http://dummyimage.com/111x100.png/dddddd/000000",
+    "viewCnt": 4723,
+    "inDate": "5/11/2021",
+    "upDate": "6/8/2023"
+  },
+  {
+    "id": 4,
+    "title": "내적 안정의 인도자: 스트레스 및 불안 관리 전문가",
+    "bio": "스트레스 및 불안 관리를 위한 정신건강 전문가로, 심리적 안정과 자기 발전을 지원합니다.",
+    "content": "스트레스와 불안은 현대 사회에서 누구나 경험하는 문제입니다. 제 목표는 환자들이 내적 안정을 찾고 스트레스와 불안을 극복할 수 있도록 돕는 것입니다. 각자의 상황에 맞춰 맞춤형 치료와 자기 관리 방법을 제시하여, 그들이 자신의 삶을 다시 주도할 수 있도록 돕습니다.",
+    "education": "석사 학위: 가족 및 부부 상담학, XX 대학교",
+    "identityCheck": true,
+    "crimeCheck": false,
+    "ageRange": 3,
+    "imageFile": "http://dummyimage.com/137x100.png/ff4444/ffffff",
+    "viewCnt": 3215,
+    "inDate": "2/14/2020",
+    "upDate": "1/6/2024"
+  },
+  {
+    "id": 5,
+    "title": "몸과 마음의 건강을 위한 나침반: 정신과 전문의",
+    "bio": "신체적 건강과 정신 건강의 조화로, 삶의 질을 높이는데 전념하는 정신과 전문가입니다.",
+    "content": "저는 환자들의 몸과 마음의 건강을 위한 나침반 역할을 하고 있습니다. 정신건강 문제에 대한 진단과 치료뿐만 아니라, 종합적인 건강 상태를 고려하여 그들이 최상의 결과를 얻을 수 있도록 지원합니다. 종합적인 관점에서의 치료와 도움으로 환자들이 더 나은 삶을 살도록 돕습니다.",
+    "education": "대학원 수료: 정신의학, XX 대학교 School of Medicine",
+    "identityCheck": false,
+    "crimeCheck": false,
+    "ageRange": 18,
+    "imageFile": "http://dummyimage.com/201x100.png/ff4444/ffffff",
+    "viewCnt": 6409,
+    "inDate": "9/15/2010",
+    "upDate": "12/1/2023"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "firstName": "영희",
+    "email": "younghee.kim@example.com",
+    "pwd": "abcd1234!",
+    "dateOfBirth": "6/15/1985",
+    "phoneNum": "010-1234-5678",
+    "postalCode": "12345",
+    "addressDetail": "강남타워 오피스텔 304호",
+    "address": "서울특별시 강남구 역삼동 123번지",
+    "status": true,
+    "inDate": "10/8/2013",
+    "upDate": "3/5/2020"
+  },
+  {
+    "id": 2,
+    "firstName": "철수",
+    "email": "chulsoo.lee@example.com",
+    "pwd": "abcd1234!",
+    "dateOfBirth": "4/25/1978",
+    "phoneNum": "010-1234-5678",
+    "postalCode": "54321",
+    "addressDetail": "광교 아파트 102동 201호",
+    "address": "경기도 수원시 장안구 광교동 456번지",
+    "status": false,
+    "inDate": "4/24/2014",
+    "upDate": "4/7/2022"
+  },
+  {
+    "id": 3,
+    "firstName": "지영",
+    "email": "jiyoung.park@example.com",
+    "pwd": "abcd1234!",
+    "dateOfBirth": "9/8/1990",
+    "phoneNum": "010-1234-5678",
+    "postalCode": "98765",
+    "addressDetail": "만수빌딩 5층 501호",
+    "address": "인천광역시 남동구 만수동 789번지",
+    "status": false,
+    "inDate": "7/13/2012",
+    "upDate": "1/29/2015"
+  },
+  {
+    "id": 4,
+    "firstName": "민우",
+    "email": "minwoo.choi@example.com",
+    "pwd": "abcd1234!",
+    "dateOfBirth": "11/12/1982",
+    "phoneNum": "010-1234-5678",
+    "postalCode": "67890",
+    "addressDetail": "둔산타워 오피스텔 1103호",
+    "address": "대전광역시 서구 둔산동 321번지",
+    "status": true,
+    "inDate": "8/21/2010",
+    "upDate": "4/8/2014"
+  },
+  {
+    "id": 5,
+    "firstName": "수진",
+    "email": "sujin.jang@example.com",
+    "pwd": "abcd1234!",
+    "dateOfBirth": "3/7/1989",
+    "phoneNum": "010-1234-5678",
+    "postalCode": "13579",
+    "addressDetail": "해운대해변 아파트 3동 1501호",
+    "address": "부산광역시 해운대구 우동 567번지",
+    "status": true,
+    "inDate": "5/4/2020",
+    "upDate": "3/2/2024"
+  }
+]

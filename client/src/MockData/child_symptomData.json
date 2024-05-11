@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "symptomId": 4
+  },
+  {
+    "id": 2,
+    "symptomId": 3
+  },
+  {
+    "id": 3,
+    "symptomId": 1
+  },
+  {
+    "id": 4,
+    "symptomId": 2
+  },
+  {
+    "id": 5,
+    "symptomId": 5
+  }
+]
