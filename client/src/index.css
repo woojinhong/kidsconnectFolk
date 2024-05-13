@@ -39,6 +39,8 @@ dd {
 }
 
 /* list를 role값으로 갖는 ul, ol 요소의 기본 목록 스타일을 제거 */
+ul,
+ol,
 ul[role="list"],
 ol[role="list"] {
   list-style: none;
