@@ -1,28 +1,29 @@
 package com.example.kidsconnect.controller;
 
 
-import com.example.kidsconnect.dao.UserRepository;
-import com.example.kidsconnect.domain.User;
+import com.example.kidsconnect.dto.LoginDto;
+import com.example.kidsconnect.dto.UserSignUpDto;
 import com.example.kidsconnect.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/user")
 public class UserController {
-    @Autowired
-    UserService userService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") Long id){
-        return ResponseEntity.ok(userService.findUserByName(id));
+    @Autowired
+    private UserService userService;
+
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+        return userService.login(loginDto);
     }
 
-
+    @PostMapping("/register")
+    public ResponseEntity<String> Register(@RequestBody UserSignUpDto userSignUpDto){
+        return userService.signUp(userSignUpDto);
+    }
 }

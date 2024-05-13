@@ -1,10 +1,7 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 import java.time.LocalDateTime;
@@ -13,6 +10,8 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
