@@ -1,4 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
+import "@mantine/core/styles.css";
 
 function App() {
   return (
