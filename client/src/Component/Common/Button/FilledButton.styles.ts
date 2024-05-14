@@ -19,7 +19,7 @@ export const getButtonStyles = (
       : variant === "filled"
         ? "62px"
         : "58px",
-    maxWidth: variant === "filled" ? "84px" : "76px",
+    maxWidth: "fit-content",
     padding: variant === "filled" ? "0 16px" : "0 8px",
     height: variant === "filled" ? "56px" : "32px",
     fontSize: variant === "filled" ? "16px" : "14px",

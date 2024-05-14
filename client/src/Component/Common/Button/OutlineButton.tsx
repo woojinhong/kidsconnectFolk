@@ -4,7 +4,12 @@ import "@mantine/core/styles.css";
 import { useHover } from "@mantine/hooks";
 import { StyledButtonWrapper, getButtonStyles } from "./OutlineButton.styles";
 
-function OutlineButton({ variant = "outline" }) {
+interface OutlineButtonProps {
+  variant?: "outline" | "m_outline";
+  text?: string; // text 속성 추가
+}
+
+function OutlineButton({ variant = "outline", text = "" }: OutlineButtonProps) {
   const [clicked, setClicked] = useState(false);
   const { hovered, ref } = useHover();
 
@@ -27,7 +32,7 @@ function OutlineButton({ variant = "outline" }) {
         className=""
         onClick={() => setClicked(!clicked)}
       >
-        <span>버튼</span>
+        {text}
       </Button>
     </StyledButtonWrapper>
   );
