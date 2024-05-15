@@ -1,25 +1,24 @@
 package com.example.kidsconnect.dto;
 
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    @ToString
-    public class UserDto {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@Valid
+public class UserDtoRequest {
 
 
-        @NotBlank(message ="{required.user.email}")
-        private String email;
+    @NotBlank(message ="{required.user.email}")
+    private String email;
 
-        @NotBlank(message ="{required.user.password}")
-        private String password;
+    @NotBlank(message ="{required.user.password}")
+    private String password;
 
-        private Boolean status;
-
-    }
+}

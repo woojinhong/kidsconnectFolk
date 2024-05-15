@@ -1,6 +1,6 @@
 package com.example.kidsconnect.service;
 
-import com.example.kidsconnect.controller.UserNotFoundException;
+import com.example.kidsconnect.exception.UserNotFoundException;
 import com.example.kidsconnect.dao.UserRepository;
 import com.example.kidsconnect.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,4 +19,7 @@ public class UserService {
         User user = optionalUser.orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         return user;
     }
+
+
+
 }

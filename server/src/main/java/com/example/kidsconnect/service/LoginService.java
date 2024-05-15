@@ -1,20 +1,16 @@
 package com.example.kidsconnect.service;
 
-import com.example.kidsconnect.controller.UserNotFoundException;
 import com.example.kidsconnect.dao.UserRepository;
 import com.example.kidsconnect.domain.User;
 import com.example.kidsconnect.dto.UserDto;
 import com.example.kidsconnect.mapping.UserMapper;
-import org.hibernate.annotations.SecondaryRow;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Optional;
 
 @Service
 public class LoginService {
