@@ -23,7 +23,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> Register(@RequestBody UserSignUpDto userSignUpDto){
+    public ResponseEntity<String> register(@RequestBody UserSignUpDto userSignUpDto){
+
+        System.out.println("userSignUpDto = " + userSignUpDto);
         return userService.signUp(userSignUpDto);
     }
 }

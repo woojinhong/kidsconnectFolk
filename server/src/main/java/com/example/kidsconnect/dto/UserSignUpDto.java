@@ -1,19 +1,22 @@
 package com.example.kidsconnect.dto;
 
-import jakarta.persistence.Column;
+import com.example.kidsconnect.mapping.ToEntity;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
+@ToString
 public class UserSignUpDto {
+
     private String email;
     private String password;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
     private String phoneNum;
     private String postalCode;
     private String addressDetail;
     private String address;
+
+
 }

@@ -1,30 +1,37 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
+@DynamicInsert
 public class Therapist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
-    private String pwd;
+    private String password;
     private String firstName;
     private String lastName;
     private String phoneNum;
     private String postalCode;
     private String addressDetail;
     private String address;
-    private Boolean status;
+    private Character gender;
+    private boolean freelancer;
+    private boolean status;
+    private Date dateOfBirth;
+
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime inDate;
     @Temporal(TemporalType.TIMESTAMP)

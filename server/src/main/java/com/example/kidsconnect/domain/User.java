@@ -2,6 +2,7 @@ package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 
 import java.time.LocalDateTime;
@@ -12,6 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@ToString
+@DynamicInsert
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +29,6 @@ public class User {
     @Column(length= 30, nullable = false)
     private String password;
 
-    private Date dateOfBirth;
     @Column(length= 30, nullable = false)
     private String phoneNum;
     @Column(length= 30, nullable = false)
@@ -34,14 +37,14 @@ public class User {
     private String addressDetail;
     @Column(length= 30, nullable = false)
     private String address;
-    @Column(nullable = false)
+
+    private Date dateOfBirth;
+
     private Boolean status;
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime upDate;
+
+    private LocalDateTime upDate ;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CenterReview> centerReview;
@@ -51,6 +54,25 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<TherapistReview> therapistReview;
+
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+        if (this.status == null) {
+            this.status = false;
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
 
     public User( String email, String firstName, String lastName, String password, Date dateOfBirth, String phoneNum, String postalCode, String addressDetail, String address, Boolean status, LocalDateTime inDate, LocalDateTime upDate) {
         this.email = email;
@@ -69,46 +91,4 @@ public class User {
 
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", phoneNum='" + phoneNum + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", addressDetail='" + addressDetail + '\'' +
-                ", address='" + address + '\'' +
-                ", status=" + status +
-                ", inDate=" + inDate +
-                ", upDate=" + upDate +
-                '}';
-    }
 }

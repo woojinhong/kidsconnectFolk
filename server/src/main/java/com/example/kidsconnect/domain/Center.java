@@ -1,17 +1,16 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
+@Data
+@Builder
 public class Center {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

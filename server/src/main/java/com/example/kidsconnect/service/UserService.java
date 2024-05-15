@@ -4,11 +4,10 @@ package com.example.kidsconnect.service;
 import com.example.kidsconnect.dao.UserRepository;
 import com.example.kidsconnect.domain.User;
 import com.example.kidsconnect.dto.LoginDto;
+import com.example.kidsconnect.mapping.ToEntity;
 import com.example.kidsconnect.dto.UserSignUpDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
-import com.example.kidsconnect.mapping.UserMapper;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,29 +23,36 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    ToEntity toEntity;
+
     //객체 매핑 정보 불러오기
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
 
+
+    //사용 추천안함 cacheable
     @Cacheable(key = "#login")
     public ResponseEntity<String> login(LoginDto loginDto) {
-        userRepository.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword()).orElseThrow(
+        User user = toEntity.fromUserLoginDto(loginDto);
+
+        userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword()).orElseThrow(
                 () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
-        return ResponseEntity.ok("Login successful!");
+
+        return ResponseEntity.ok("환영합니다 "+ loginDto.getEmail() +"님아");
 
     }
 
     @Transactional
     public ResponseEntity<String> signUp(UserSignUpDto userSignUpDto) {
-        if(!userRepository.existsByEmail(userSignUpDto.getEmail()))
+        //dto -> entity(mapStruct)
+        User user = toEntity.fromUserSignUpDto(userSignUpDto);
+
+        System.out.println("user = " + user);
+        if(userRepository.existsByEmail(user.getEmail()))
             throw new CustomException(CustomCode.DUPLICATED_EMAIL);
 
-        //mapstruct 객체 매핑 dto -> entity
-        User user = userMapper.fromUserSignUpDto(userSignUpDto);
-
         userRepository.save(user);
-
-        return ResponseEntity.ok("가입 축하드립니다 "+userSignUpDto.getFirstName()+"님");
+        return ResponseEntity.ok("가입 축하드립니다 "+userSignUpDto.getFirstName()+"님!!");
     }
 }
 

@@ -68,8 +68,6 @@ class UserRepositoryTest {
                 .dateOfBirth(new Date())
                 .status(true)
                 .phoneNum("010-3333-3333")
-                .inDate(LocalDateTime.now())
-                .upDate(LocalDateTime.now())
                 .build();
         userRepository.save(user);
 
@@ -98,8 +96,6 @@ class UserRepositoryTest {
                     .dateOfBirth(new Date())
                     .status(true)
                     .phoneNum("010-3333-3333")
-                    .inDate(LocalDateTime.now())
-                    .upDate(LocalDateTime.now())
                     .build();
 
             userRepository.save(user);

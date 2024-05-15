@@ -15,7 +15,6 @@ public class Enrol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Boolean freelancer;
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime inDate;
     @Temporal(TemporalType.TIMESTAMP)
