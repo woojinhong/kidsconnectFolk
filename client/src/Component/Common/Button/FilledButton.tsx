@@ -7,11 +7,13 @@ import { StyledButton, getButtonStyles } from "./FilledButton.styles";
 
 interface FilledButtonProps extends DisabledButtonProps {
   variant?: "filled" | "m_filled";
+  text?: string;
 }
 
 function FilledButton({
   variant = "filled",
   disabled = [],
+  text = "",
 }: FilledButtonProps) {
   const [clicked, setClicked] = useState(false);
   const { hovered, ref } = useHover();
@@ -55,7 +57,7 @@ function FilledButton({
               width: variant === "filled" ? "20" : "16",
               height: variant === "filled" ? "20" : "16",
               position: "absolute",
-              left: "13px",
+              left: variant === "filled" ? "13px" : "8px",
             }}
             color="#FFFFFF"
           />
@@ -65,12 +67,12 @@ function FilledButton({
             marginLeft:
               clicked && (variant === "filled" || variant === "m_filled")
                 ? variant === "filled"
-                  ? "18px"
-                  : "14px"
+                  ? "20px"
+                  : "18px"
                 : "0px",
           }}
         >
-          버튼
+          {text}
         </span>
       </Button>
     </StyledButton>

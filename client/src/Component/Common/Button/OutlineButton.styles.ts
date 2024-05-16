@@ -8,8 +8,7 @@ export const getButtonStyles = (variant: string, hovered: boolean) => {
   switch (variant) {
     case "outline":
       return {
-        minWidth: "56px",
-        maxWidth: "84px",
+        maxWidth: "fit-content",
         height: "56px",
         fontSize: "16px",
         fontWeight: "700",
@@ -19,8 +18,7 @@ export const getButtonStyles = (variant: string, hovered: boolean) => {
       };
     case "m_outline":
       return {
-        minWidth: "56px",
-        maxWidth: "76px",
+        maxWidth: "fit-content",
         height: "32px",
         fontSize: "14px",
         fontWeight: "500",
