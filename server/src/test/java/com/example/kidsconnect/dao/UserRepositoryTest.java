@@ -73,8 +73,7 @@ class UserRepositoryTest {
 
         User user2 = userRepository.findByEmail("dnwls753951@gmail.com");
 
-        //entity 객체 getter setter 없음
-        //방법1(객체매핑) 민수님 mapstruct dto builder()로 객체생성 대신입니다.
+        //entity setter 제외
         //user2 entity 객채 -> UserSignUpDto 객체매핑
         UserSignUpDto userSignUpDto = userMapper.toUserSignUpDto(user2);
         assertTrue( userSignUpDto.getEmail().equals("dnwls753951@gmail.com"));

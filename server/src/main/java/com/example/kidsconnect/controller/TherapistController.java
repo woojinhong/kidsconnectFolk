@@ -18,13 +18,13 @@ public class TherapistController {
     TherapistService therapistService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
 
       return therapistService.login(loginDto);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody TherapistSignUpDto therapistSignUpDto){
+    public ResponseEntity<?> register(@RequestBody TherapistSignUpDto therapistSignUpDto){
 
         return therapistService.signUp(therapistSignUpDto);
     }

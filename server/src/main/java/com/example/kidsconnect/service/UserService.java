@@ -8,6 +8,7 @@ import com.example.kidsconnect.mapping.ToEntity;
 import com.example.kidsconnect.dto.UserSignUpDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -18,13 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 //메서드 @Cacheable(value = "myUser") 같은 효과
 @CacheConfig(cacheNames = "myUser")
+@RequiredArgsConstructor
 public class UserService {
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    ToEntity toEntity;
+    private final ToEntity toEntity;
 
     //객체 매핑 정보 불러오기
 
@@ -32,13 +31,13 @@ public class UserService {
 
     //사용 추천안함 cacheable
     @Cacheable(key = "#login")
-    public ResponseEntity<String> login(LoginDto loginDto) {
+    public ResponseEntity<?> login(LoginDto loginDto) {
         User user = toEntity.fromUserLoginDto(loginDto);
 
         userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword()).orElseThrow(
                 () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
 
-        return ResponseEntity.ok("환영합니다 "+ loginDto.getEmail() +"님아");
+        return ResponseEntity.ok("부모 로그인 성공");
 
     }
 
@@ -52,7 +51,7 @@ public class UserService {
             throw new CustomException(CustomCode.DUPLICATED_EMAIL);
 
         userRepository.save(user);
-        return ResponseEntity.ok("가입 축하드립니다 "+userSignUpDto.getFirstName()+"님!!");
+        return ResponseEntity.ok("부모 회원가입 성공");
     }
 }
 

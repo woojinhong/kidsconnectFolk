@@ -1,5 +1,6 @@
 package com.example.kidsconnect.dao;
 
+import com.example.kidsconnect.domain.Symptom;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,5 @@ class ErrorCodeRepositoryTest {
     @Test
     @DisplayName("에러 코드 테스트 ")
     void findByCode() {
-
     }
 }

@@ -1,23 +1,26 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class ChildSymptom {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+
     @ManyToOne
     @JoinColumn(name = "child_id")
     private Child child;
 
-    @Id
+
     @ManyToOne
     @JoinColumn(name = "symptom_id")
     private Symptom symptom;

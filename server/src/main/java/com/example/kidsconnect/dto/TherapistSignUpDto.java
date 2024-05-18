@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class TherapistSignUpDto {
     private Long id;
     private String email;
@@ -22,6 +23,7 @@ public class TherapistSignUpDto {
     private boolean freelancer;
     private boolean status;
 
+    private String centerName;
 
     }
 

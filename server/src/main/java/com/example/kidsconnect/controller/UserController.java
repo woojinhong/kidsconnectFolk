@@ -18,12 +18,12 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         return userService.login(loginDto);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserSignUpDto userSignUpDto){
+    public ResponseEntity<?> register(@RequestBody UserSignUpDto userSignUpDto){
 
         System.out.println("userSignUpDto = " + userSignUpDto);
         return userService.signUp(userSignUpDto);

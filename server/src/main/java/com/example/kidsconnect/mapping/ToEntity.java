@@ -1,18 +1,15 @@
 package com.example.kidsconnect.mapping;
 
-import com.example.kidsconnect.domain.Therapist;
-import com.example.kidsconnect.domain.User;
+import com.example.kidsconnect.domain.*;
+import com.example.kidsconnect.dto.ChildDto;
 import com.example.kidsconnect.dto.LoginDto;
 import com.example.kidsconnect.dto.TherapistSignUpDto;
 import com.example.kidsconnect.dto.UserSignUpDto;
-import org.mapstruct.factory.Mappers;
+
 import org.springframework.stereotype.Component;
 
 @Component
-public class ToEntity {
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
-    private final TherapistMapper therapistMapper = Mappers.getMapper(TherapistMapper.class);
-
+public class ToEntity extends MapperFactory{
 
     //to user entity
     public User fromUserSignUpDto(UserSignUpDto dto) {
@@ -32,4 +29,15 @@ public class ToEntity {
     }
 
 
+    //to child entity
+
+    public Child fromChildDto(ChildDto dto){
+        return childMapper.fromChildDto(dto);
+    }
+
+
+    //to center
+    public Center fromChildDtoToCenter(TherapistSignUpDto dto){
+        return centerMapper.fromTherapistSignUpDto(dto);
+    }
 }

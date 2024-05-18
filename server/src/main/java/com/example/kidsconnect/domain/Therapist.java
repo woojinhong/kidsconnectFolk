@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @Builder
 @DynamicInsert
+@ToString
 public class Therapist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

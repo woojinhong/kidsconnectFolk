@@ -43,7 +43,6 @@ public enum CustomCode {
         NOT_FOUND_PAGE(HttpStatus.NOT_FOUND, "NOT_FOUND_PAGE", "더 이상 페이지를 찾을 수 없습니다."),
 
         NOT_VALID_IMAGE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "NOT_VALID_IMAGE", "jpg, jpeg, png 형식만 업로드 가능합니다.");
-
         private final HttpStatus httpStatus;
         private final String code;
         private final String message;

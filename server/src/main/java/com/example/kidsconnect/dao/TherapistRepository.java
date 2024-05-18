@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface TherapistRepository extends CrudRepository<Therapist,Long> {
     boolean existsByEmail(String email);
     Optional<Therapist> findByEmailAndPassword(String email, String password);
+
 }

@@ -1,9 +1,8 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 
 import java.time.LocalDateTime;
@@ -14,7 +13,10 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
+@AllArgsConstructor
+@Builder
+@DynamicInsert
+@ToString
 public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +24,28 @@ public class Child {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
-    private String gender;
+    private char gender;
     private String personality;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime upDate;
 
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)
     private List<ChildSymptom> childSymptom;
 
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
 }
