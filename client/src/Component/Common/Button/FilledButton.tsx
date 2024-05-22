@@ -8,12 +8,14 @@ import { StyledButton, getButtonStyles } from "./FilledButton.styles";
 interface FilledButtonProps extends DisabledButtonProps {
   variant?: "filled" | "m_filled";
   text?: string;
+  backgroundColor?: string;
 }
 
 function FilledButton({
   variant = "filled",
   disabled = [],
   text = "",
+  backgroundColor = "#FF7000",
 }: FilledButtonProps) {
   const [clicked, setClicked] = useState(false);
   const { hovered, ref } = useHover();
@@ -41,7 +43,13 @@ function FilledButton({
     <StyledButton ref={ref}>
       <Button
         disabled={disabled.length > 0}
-        style={getButtonStyles(variant, disabled, clicked, hovered)}
+        style={getButtonStyles(
+          variant,
+          disabled,
+          clicked,
+          hovered,
+          backgroundColor
+        )}
         variant={
           variant === "filled" || variant === "m_filled" ? "filled" : variant
         }

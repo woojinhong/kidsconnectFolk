@@ -9,7 +9,8 @@ export const getButtonStyles = (
   variant: string,
   disabled: string[],
   clicked: boolean,
-  hovered: boolean
+  hovered: boolean,
+  backgroundColor: string
 ) => {
   const baseStyles = {
     minWidth: clicked
@@ -19,7 +20,7 @@ export const getButtonStyles = (
       : variant === "filled"
         ? "62px"
         : "58px",
-    maxWidth: "fit-content",
+    width: "100%",
     padding: variant === "filled" ? "0 16px" : "0 8px",
     height: variant === "filled" ? "56px" : "32px",
     fontSize: variant === "filled" ? "16px" : "14px",
@@ -29,7 +30,8 @@ export const getButtonStyles = (
       ? variant === "filled"
         ? "#FFD8B8"
         : "#FFB274"
-      : "#FF7000",
+      : backgroundColor,
+    transition: "0.2s",
   };
 
   if (disabled.includes("disabledLight")) {
