@@ -1,4 +1,4 @@
-const ColorTheme: object = {
+const ColorTheme: ColorThemeType = {
   primaryColor: "#FF7000",
   secondaryColor: "#0038FF",
   pcDark: "#D45E00",
@@ -19,6 +19,28 @@ const ColorTheme: object = {
   lightGray2: "#F2F2F2",
   white: "#FFFFFF",
   error: "#FF2727",
+};
+type ColorThemeType = {
+  primaryColor: string;
+  secondaryColor: string;
+  pcDark: string;
+  pcLight1: string;
+  pcLight2: string;
+  scDark: string;
+  scLight1: string;
+  scLight2: string;
+  subGreen: string;
+  subRed: string;
+  subYellow: string;
+  subPink: string;
+  subDarkGreen: string;
+  black: string;
+  gray1: string;
+  gray2: string;
+  lightGray1: string;
+  lightGray2: string;
+  white: string;
+  error: string;
 };
 
 export default ColorTheme;

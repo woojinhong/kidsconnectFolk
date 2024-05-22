@@ -2,6 +2,7 @@
   {
     "id": 1,
     "firstName": "영희",
+    "lastName": "김",
     "email": "younghee.kim@example.com",
     "pwd": "abcd1234!",
     "dateOfBirth": "6/15/1985",
@@ -16,6 +17,7 @@
   {
     "id": 2,
     "firstName": "철수",
+    "lastName": "박",
     "email": "chulsoo.lee@example.com",
     "pwd": "abcd1234!",
     "dateOfBirth": "4/25/1978",
@@ -30,6 +32,7 @@
   {
     "id": 3,
     "firstName": "지영",
+    "lastName": "최",
     "email": "jiyoung.park@example.com",
     "pwd": "abcd1234!",
     "dateOfBirth": "9/8/1990",
@@ -44,6 +47,7 @@
   {
     "id": 4,
     "firstName": "민우",
+    "lastName": "이",
     "email": "minwoo.choi@example.com",
     "pwd": "abcd1234!",
     "dateOfBirth": "11/12/1982",
@@ -58,6 +62,7 @@
   {
     "id": 5,
     "firstName": "수진",
+    "lastName": "강",
     "email": "sujin.jang@example.com",
     "pwd": "abcd1234!",
     "dateOfBirth": "3/7/1989",
