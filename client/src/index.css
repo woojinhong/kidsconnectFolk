@@ -9,6 +9,7 @@
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
   font-weight: 400;
+  white-space: pre-line;
   input::placeholder,
   textarea::placeholder {
     color: #c1c1c1;
@@ -41,8 +42,7 @@ dd {
 /* list를 role값으로 갖는 ul, ol 요소의 기본 목록 스타일을 제거 */
 ul,
 ol,
-ul[role="list"],
-ol[role="list"] {
+li {
   list-style: none;
   padding: 0;
   margin: 0;
