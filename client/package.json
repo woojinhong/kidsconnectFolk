@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@mantine/core": "^7.9.1",
-    "@mantine/hooks": "^7.9.1",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -21,6 +20,7 @@
     "styled-components": "^6.1.9"
   },
   "devDependencies": {
+    "@mantine/hooks": "^7.9.2",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
