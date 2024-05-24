@@ -8,18 +8,10 @@ export const StyledButton = styled.div`
 export const getButtonStyles = (
   variant: string,
   disabled: string[],
-  clicked: boolean,
   hovered: boolean,
   backgroundColor: string
 ) => {
   const baseStyles = {
-    minWidth: clicked
-      ? variant === "filled"
-        ? "84px"
-        : "76px"
-      : variant === "filled"
-        ? "62px"
-        : "58px",
     width: "100%",
     padding: variant === "filled" ? "0 16px" : "0 8px",
     height: variant === "filled" ? "56px" : "32px",
@@ -52,3 +44,7 @@ export const getButtonStyles = (
     return baseStyles;
   }
 };
+
+export const StyledIcon = styled.img`
+  margin-right: 4px;
+`;
