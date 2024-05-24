@@ -3,7 +3,12 @@ import { ActionIcon } from "@mantine/core";
 import IconCheck from "../../../../Assets/Image/Icon/IconCheck.svg";
 import IconCancel from "../../../../Assets/Image/Icon/IconCancel.svg";
 
-function ButtonIcon({ type = "accept", disabled, onClick }: ButtonIconProps) {
+function ButtonIcon({
+  type = "accept",
+  disabled,
+  onClick,
+  fitContent = false,
+}: ButtonIconProps) {
   function borderColorByType(type: string, disabled: boolean | undefined) {
     if (type === "accept") {
       return "#0038FF";
@@ -25,8 +30,8 @@ function ButtonIcon({ type = "accept", disabled, onClick }: ButtonIconProps) {
   }
 
   const checkboxStyle = {
-    width: "40px",
-    height: "40px",
+    width: fitContent ? "100%" : "40px",
+    height: fitContent ? "100%" : "40px",
     borderRadius: "100%",
     border: `1px solid ${borderColorByType(type, disabled)}`,
     backgroundColor: backgroundColorByType(type, disabled),
@@ -49,4 +54,5 @@ type ButtonIconProps = {
   type?: "accept" | "reject";
   disabled?: boolean;
   onClick?: () => void;
+  fitContent?: boolean;
 };
