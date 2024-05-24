@@ -2,20 +2,20 @@ import { Notification } from "@mantine/core";
 import ButtonIcon from "../Button/ButtonIcon/ButtonIcon";
 
 function Toast({
-  variant = "accept",
+  variant = "success",
   title = "",
 }: {
-  variant?: "accept" | "reject";
+  variant?: "success" | "failed";
   title: string;
 }) {
   const acceptIcon = <ButtonIcon type="accept" fitContent={true} />;
   const rejectIcon = <ButtonIcon type="reject" fitContent={true} />;
 
-  const titleColor: string = variant === "accept" ? "#0038FF" : "#FF2727";
+  const titleColor: string = variant === "success" ? "#0038FF" : "#FF2727";
 
   return (
     <Notification
-      icon={variant === "accept" ? acceptIcon : rejectIcon}
+      icon={variant === "success" ? acceptIcon : rejectIcon}
       title={title}
       withCloseButton={false}
       styles={{
