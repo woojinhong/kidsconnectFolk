@@ -10,38 +10,25 @@ import {
   CustomComboboxDropdown,
 } from "./SelectBoxDefault.styles";
 import SelectBoxDefaultProps from "./SelectBoxDefaultProps";
+import therapistData from "../../../MockData/therapistData.json";
 
-const groceries = [
-  "🍎 Apples",
-  "🍌 Bananas",
-  "🥦 Broccoli",
-  "🥕 Carrots",
-  "🍫 Chocolate",
-  "🍇 Grapes",
-  "🍋 Lemon",
-  "🥬 Lettuce",
-  "🍄 Mushrooms",
-  "🍊 Oranges",
-  "🥔 Potatoes",
-  "🍅 Tomatoes",
-  "🥚 Eggs",
-  "🥛 Milk",
-  "🍞 Bread",
-  "🍗 Chicken",
-  "🍔 Hamburger",
-  "🧀 Cheese",
-  "🥩 Steak",
-  "🍟 French Fries",
-  "🍕 Pizza",
-  "🥦 Cauliflower",
-  "🥜 Peanuts",
-  "🍦 Ice Cream",
-  "🍯 Honey",
-  "🥖 Baguette",
-  "🍣 Sushi",
-  "🥝 Kiwi",
-  "🍓 Strawberries",
-];
+//치료사목업데이터
+interface Therapist {
+  id: number;
+  firstName: string;
+  email: string;
+  pwd: string;
+  dateOfBirth: string;
+  phoneNum: string;
+  postalCode: string;
+  addressDetail: string;
+  address: string;
+  status: boolean;
+  inDate: string;
+  upDate: string;
+}
+
+const addresses = therapistData.map((therapist: Therapist) => therapist.address);
 
 function SelectBoxDefault({
   width = "fit-content",
@@ -56,14 +43,14 @@ function SelectBoxDefault({
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
-  const arrowIcon = isFocused || !!value ? arrowUp : arrowDown;
+  const arrowIcon = isFocused ? arrowUp : arrowDown;
 
-  const shouldFilterOptions = groceries.every((item) => item !== search);
+  const shouldFilterOptions = addresses.every((item) => item !== search);
   const filteredOptions = shouldFilterOptions
-    ? groceries.filter((item) =>
+    ? addresses.filter((item) =>
         item.toLowerCase().includes(search.toLowerCase().trim())
       )
-    : groceries;
+    : addresses;
 
   const options = filteredOptions.map((item) => (
     <Combobox.Option value={item} key={item}>
@@ -74,7 +61,7 @@ function SelectBoxDefault({
   return (
     <Combobox
       store={combobox}
-      onOptionSubmit={(val) => {
+      onOptionSubmit={(val: string) => {
         setValue(val);
         setSearch(val);
         combobox.closeDropdown();
