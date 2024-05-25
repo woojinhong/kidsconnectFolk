@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ActionIcon } from '@mantine/core';
 
 interface StyledActionIconProps {
   opacity?: number;
@@ -11,7 +10,7 @@ interface StyledActionIconProps {
   fontWeight?: string;
 }
 
-export const StyledActionIcon = styled(ActionIcon)<StyledActionIconProps>`
+export const StyledActionIcon = styled.div<StyledActionIconProps>`
   background-color: ${(props) => props.backgroundColor ?? 'transparent'};
   width: ${(props) => props.width ?? '80px'};
   height: ${(props) => props.height ?? '80px'};
