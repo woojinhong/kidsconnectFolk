@@ -1,6 +1,7 @@
 export type CheckBoxAgeBoxProps = {
   label: string;
   description: React.ReactNode;
+  checked: boolean;
 };
 
 export function titleLineBreak(label: string) {

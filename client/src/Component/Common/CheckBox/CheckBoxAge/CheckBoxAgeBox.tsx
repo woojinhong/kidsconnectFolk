@@ -8,9 +8,9 @@ import {
 } from "./CheckBoxAgeProps";
 
 function CheckBoxAgeBox({ ...props }: CheckBoxAgeBoxProps) {
-  const { label, description } = props;
+  const { label, description, checked } = props;
 
-  const [checked, setChecked] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
   return (
     <StyledCheckBox
@@ -18,8 +18,8 @@ function CheckBoxAgeBox({ ...props }: CheckBoxAgeBoxProps) {
       label={titleLineBreak(label)}
       value={label}
       description={description}
-      checked={checked}
-      onChange={(e) => setChecked(e.currentTarget.checked)}
+      checked={checked ? checked : isChecked}
+      onChange={(e) => setIsChecked(e.currentTarget.checked)}
       styles={{
         input: {
           display: "none",
