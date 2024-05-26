@@ -34,9 +34,9 @@ export const UserTitle = styled.span`
 export const CommentText = styled(Text)`
   color: #666666;
   font-weight: 400;
-  line-height: 17.38px;
   &:nth-of-type(2) {
     margin-top: 8px;
+    line-height: 17.38px;
   }
 `;
 
