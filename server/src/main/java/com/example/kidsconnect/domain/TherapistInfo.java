@@ -1,19 +1,24 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 
-import java.security.Timestamp;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import java.util.List;
+
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
+@DynamicInsert
+
 public class TherapistInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,23 +26,80 @@ public class TherapistInfo {
     private String title;
     private String bio;
     private String content;
-    private String education;
+
+
     private Boolean identityCheck;
     private Boolean crimeCheck;
-    private String ageRange;
+    @ElementCollection
+    @CollectionTable(name = "therapist_certificate", joinColumns = @JoinColumn(name = "therapist_info_id"))
+    @Column(name = "certificate")
+    private List<String> certificate =new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "therapist_age_range", joinColumns = @JoinColumn(name = "therapist_info_id"))
+    @Column(name = "age_range")
+    private List<String> ageRange =new ArrayList<>();
     @Lob
     private byte[] imageFile;
     private int viewCnt;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime upDate;
 
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "therapist_id")
     private Therapist therapist;
 
-    @OneToMany(mappedBy = "therapistInfo", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "therapist_info_id")
+    private List<TherapistEducation> education;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "therapist_info_id")
+    private List<TherapistExperience> experience;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "therapist_info_id")
     private List<TherapistInfoSymptom> therapistInfoSymptom;
+
+    public void addTherapistExperience(TherapistExperience therapistExperience){
+        if (this.experience == null) {
+            this.experience = new ArrayList<>();
+        }
+        this.experience.add(therapistExperience);
+    }
+    public void addTherapistEducation(TherapistEducation therapistEducation){
+        if (this.education == null) {
+            this.education = new ArrayList<>();
+        }
+
+        this.education.add(therapistEducation);
+    }
+
+    public void addTherapistInfoSymptom(TherapistInfoSymptom therapistInfoSymptom){
+        if (this.therapistInfoSymptom == null) {
+            this.therapistInfoSymptom = new ArrayList<>();
+        }
+
+        this.therapistInfoSymptom.add(therapistInfoSymptom);
+    }
+
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
+
 }

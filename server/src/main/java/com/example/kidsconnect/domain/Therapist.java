@@ -33,9 +33,9 @@ public class Therapist {
     private boolean status;
     private Date dateOfBirth;
 
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime upDate;
 
 
@@ -45,13 +45,27 @@ public class Therapist {
     @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
     private List<Reservation> reservation;
 
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
-    private List<TherapistExperience> therapistExperience;
 
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
-    private List<TherapistInfo> therapistInfo;
+    @OneToOne(mappedBy = "therapist", cascade = CascadeType.ALL)
+    private TherapistInfo therapistInfo;
 
     @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
     private List<TherapistReview> therapistReview;
 
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
 }

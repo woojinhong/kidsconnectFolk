@@ -55,7 +55,6 @@ public class ChildService {
             childSymptomRepository.save(childSymptom);
         }
 
-
         return ResponseEntity.ok("아이 추가 성공");
     }
 

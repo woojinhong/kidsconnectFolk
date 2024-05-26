@@ -68,6 +68,7 @@ class ChildRepositoryTest {
 
             childRepository.save(child);
         }
+
         Symptom symptom = symptomRepository.findById(2l).orElseThrow(
                 () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
         Child child = childRepository.findById(1l).orElseThrow(
@@ -90,9 +91,49 @@ class ChildRepositoryTest {
     public void symptomDummyData(){
         for(int i =1 ; i<=10 ; i++) {
             Symptom symptom = Symptom.builder()
-                    .symptom("장애"+i)
+                    .name("장애"+i)
                     .build();
             symptomRepository.save(symptom);
         }
+    }
+
+    @Test
+    @DisplayName("Symptom,child 필드 삭제 -> ChildSymptom 필드 자동 삭제 테스트")
+    void deleteSymptom_CascadeDeleteChildSymptom() {
+
+        Child child = Child.builder()
+                .lastName("홍테스트1")
+                .gender('M')
+                .build();
+        childRepository.save(child);
+
+        Symptom symptom = Symptom.builder()
+                .name("테스트증상3")
+                .build();
+        symptomRepository.save(symptom);
+
+        Child childTest = childRepository.findByLastName(child.getLastName());
+
+        Symptom symptomTest = symptomRepository.findByName(symptom.getName()).orElseThrow();
+
+        assertEquals(childTest.getLastName(),child.getLastName());
+        assertEquals(symptomTest.getName(),symptom.getName());
+
+        ChildSymptom childSymptom = ChildSymptom.builder()
+                .child(child)
+                .symptom(symptom)
+                .build();
+        childSymptomRepository.save(childSymptom);
+//
+//        ChildSymptom childSymptomTest = childSymptomRepository.findByChildIdAndSymptomId(childSymptom.getChild().getId(), childSymptom.getSymptom().getId());
+//
+//        assertTrue(childSymptomTest.getId().equals(childSymptom.getId()));
+        // When
+//        symptomRepository.delete(symptom);
+
+
+
+        // Then
+//        assertFalse(childSymptomRepository.existsById(childSymptom.getId()));
     }
 }

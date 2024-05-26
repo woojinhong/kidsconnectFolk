@@ -16,6 +16,7 @@ public class MapperFactory {
     SymptomMapper symptomMapper = Mappers.getMapper(SymptomMapper.class);
 
     CenterMapper centerMapper = Mappers.getMapper(CenterMapper.class);
+    TherapistInfoMapper therapistInfoMapper = Mappers.getMapper(TherapistInfoMapper.class);
 
 
 }

@@ -20,10 +20,26 @@ public class Reservation {
     private String address;
     private String postalCode;
     private String addressDetail;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime upDate;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
 
     @ManyToOne
     @JoinColumn(name = "user_id")

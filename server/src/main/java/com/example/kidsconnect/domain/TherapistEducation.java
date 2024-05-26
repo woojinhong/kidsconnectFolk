@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -14,24 +13,19 @@ import java.util.Date;
 @Builder
 @DynamicInsert
 @ToString
-public class TherapistExperience {
+public class TherapistEducation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Date startDate;
-    private Date endDate;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "therapist_id")
-    private Therapist therapist;
+    private String education;
+    private String degree;
 
 
+    @ManyToOne
+    @JoinColumn(name = "therapist_info_id")
+    private TherapistInfo therapistInfo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_id")
-    private Center center;
-
-
-
+    public void addTherapistInfo(TherapistInfo therapistInfo) {
+        this.therapistInfo = therapistInfo;
+    }
 }

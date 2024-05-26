@@ -37,10 +37,13 @@ public class Enrol {
         if (this.upDate == null) {
             this.upDate = LocalDateTime.now();
         }
+
     }
 
     @PreUpdate
     protected void onUpdate() {
         this.upDate = LocalDateTime.now();
     }
+
+
 }

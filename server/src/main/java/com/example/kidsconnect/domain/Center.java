@@ -38,6 +38,9 @@ public class Center {
     @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
     private List<Enrol> enrol;
 
+    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+    private List<TherapistExperience> experience;
+
     @PrePersist
     protected void onCreate() {
         if (this.inDate == null) {

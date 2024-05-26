@@ -1,28 +1,35 @@
 package com.example.kidsconnect.service;
 
-import com.example.kidsconnect.dao.CenterRepository;
-import com.example.kidsconnect.dao.CenterReviewRepository;
-import com.example.kidsconnect.dao.EnrolRepository;
-import com.example.kidsconnect.dao.TherapistRepository;
+import com.example.kidsconnect.dao.*;
 import com.example.kidsconnect.domain.*;
 import com.example.kidsconnect.dto.LoginDto;
+
+import com.example.kidsconnect.dto.TherapistInfoDto;
 import com.example.kidsconnect.dto.TherapistSignUpDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
 import com.example.kidsconnect.mapping.ToEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TherapistService {
 
     private final TherapistRepository therapistRepository;
+    private final TherapistInfoRepository therapistInfoRepository;
+
     private final CenterRepository centerRepository;
     private final EnrolRepository enrolRepository;
+
+    private final SymptomRepository symptomRepository;
+
 
     private final ToEntity toEntity;
 
@@ -44,6 +51,7 @@ public class TherapistService {
 
         System.out.println("therapist = " + therapist);
         System.out.println("center = " + center);
+
         if(therapistRepository.existsByEmail(therapist.getEmail()))
             throw new CustomException(CustomCode.DUPLICATED_EMAIL);
 
@@ -61,4 +69,18 @@ public class TherapistService {
 
         return ResponseEntity.ok("치료사 회원가입 성공");
     }
-}
+
+
+//    public ResponseEntity<List<Therapist>>  findTherapistsByCategories(List<String> categories) {
+//
+//        return ResponseEntity.ok("치료사 목록");
+//    }
+//
+//    public ResponseEntity<List<Therapist>> findMatchedTherapists(MatchingRequestDto request) {
+//        // 질문에 기반한 치료사 매칭 로직 구현
+//        return ResponseEntity.ok("치료사 회원가입 성공");
+//    }
+
+
+        }
+

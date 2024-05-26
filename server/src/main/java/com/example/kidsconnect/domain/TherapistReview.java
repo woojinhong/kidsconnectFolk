@@ -17,10 +17,11 @@ public class TherapistReview {
     private Long id;
     private int rating;
     private String comment;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime upDate;
+
 
     @ManyToOne
     @JoinColumn(name = "therapist_id")
@@ -29,4 +30,20 @@ public class TherapistReview {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
 }
