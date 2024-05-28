@@ -14,10 +14,8 @@ function OutlineButton({
   variant = "outline",
   text = "",
   onClick,
-}: OutlineButtonProps) 
   borderColor = "#FF7000",
 }: OutlineButtonProps) {
-  const [clicked, setClicked] = useState(false);
   const { hovered, ref } = useHover();
 
   return (
