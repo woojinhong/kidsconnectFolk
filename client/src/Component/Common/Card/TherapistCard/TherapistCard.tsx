@@ -13,6 +13,7 @@ import {
 } from "./TherapistCard.style";
 import {
   TherapistCardProps,
+  TherapistProfileType,
   TherapistDetailedInfoType,
   TherapistCareerType,
   showAppliedButtonByMatchingStatus,
@@ -24,35 +25,38 @@ import TherapistCareer from "../../../../MockData/therapistExperienceData.json";
 
 import IconReview from "../../../../Assets/Image/IconReview.svg";
 
-function TherapistCard({ type }: TherapistCardProps) {
+function TherapistCard({ variants, therapistId }: TherapistCardProps) {
   // 추후 api 추가 시 변경 가능, isMatched, hasReviewed 값 = 임의 값
   const [isMatched, setIsMatched] = useState<boolean>(false);
   const [hasReviewed, setHasReviewed] = useState<boolean>(false);
 
-  const { id, firstName, lastName, phoneNum, address, addressDetail } =
-    TherapistProfile[0];
+  const therapistProfileById = TherapistProfile.find(
+    (data) => data.id === therapistId
+  );
+  const { firstName, lastName, phoneNum, address, addressDetail } =
+    therapistProfileById as TherapistProfileType;
 
   const therapistDetailedInfoById = TherapistDetailedInfo.find(
-    (therapist) => therapist.id === id
+    (therapist) => therapist.id === therapistId
   );
   const { imageFile, content, review, treatmentArea } =
     therapistDetailedInfoById as TherapistDetailedInfoType;
 
   const therapistCareerById = TherapistCareer.find(
-    (career) => career.therapistId === id
+    (career) => career.therapistId === therapistId
   );
   const { place, startDate, endDate } =
     therapistCareerById as TherapistCareerType;
 
   return (
-    <StyledTherapistCardContainer className={type}>
+    <StyledTherapistCardContainer className={variants}>
       <StyledTagWrapper>
         {treatmentArea.map((tag) => (
           <Tag key={tag} value={tag} />
         ))}
       </StyledTagWrapper>
       <StyledProfileWrapper
-        className={type === "summary" ? "profile_summary" : ""}
+        className={variants === "summary" ? "profile_summary" : ""}
       >
         <div className="profile_wrapper">
           <img src={imageFile} />
@@ -80,14 +84,14 @@ function TherapistCard({ type }: TherapistCardProps) {
           <span>{review}</span>
         </div>
       </StyledProfileWrapper>
-      {type === "applied" ? null : (
+      {variants === "applied" ? null : (
         <StyledContentWrapper
-          className={type === "summary" ? "content_summary" : ""}
+          className={variants === "summary" ? "content_summary" : ""}
         >
           <p>{content}</p>
         </StyledContentWrapper>
       )}
-      {type === "applied" ? (
+      {variants === "applied" ? (
         <StyledTherapistDetailContainer>
           <li>
             📍위치
@@ -101,12 +105,12 @@ function TherapistCard({ type }: TherapistCardProps) {
           </li>
         </StyledTherapistDetailContainer>
       ) : null}
-      {type === "default" ? (
+      {variants === "default" ? (
         <StyledButtonWrapper>
           <OutlineButton text="연결해주세요" />
         </StyledButtonWrapper>
       ) : null}
-      {type === "applied"
+      {variants === "applied"
         ? showAppliedButtonByMatchingStatus(isMatched, hasReviewed)
         : null}
     </StyledTherapistCardContainer>
