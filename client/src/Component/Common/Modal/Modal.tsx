@@ -14,16 +14,18 @@ import ChatProfile from "../../../Assets/Image/ChatProfile.svg";
 
 type ModalProps = {
   content: () => JSX.Element;
+  buttonText: string;
   chatInput?: boolean;
   buttonVariant?: "filled" | "outlined";
-  buttonText: string;
+  buttonIcon?: "search" | undefined; //필요 시 버튼 아이콘 추가
 };
 
 function Modal({
   content,
+  buttonText,
   chatInput = false,
   buttonVariant = "filled",
-  buttonText,
+  buttonIcon,
 }: ModalProps) {
   const [opened, { open, close }] = useDisclosure(false);
   return (
@@ -73,7 +75,7 @@ function Modal({
 
       <div>
         {buttonVariant === "filled" ? (
-          <FilledButton onClick={open} text={buttonText} />
+          <FilledButton onClick={open} text={buttonText} icon={buttonIcon} />
         ) : (
           <OutlineButton onClick={open} text={buttonText} />
         )}
