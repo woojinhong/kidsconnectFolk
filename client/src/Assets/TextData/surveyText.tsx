@@ -1,4 +1,4 @@
-import LoadingAnimation from "../Image/Lottie/Loading.json";
+import LoadingAnimation from "../Animation/Loading.gif";
 
 const surveyText = [
   {

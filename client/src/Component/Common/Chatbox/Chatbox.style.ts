@@ -44,3 +44,12 @@ export const StyledChatboxUserBox = styled(StyledChatboxSystemBox)`
     color: #fff;
   }
 `;
+
+export const StyledAnimationContainer = styled.div`
+  margin: 0;
+  padding: 0;
+  & img {
+    width: 120px;
+    height: 60px;
+  }
+`;
