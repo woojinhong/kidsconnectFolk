@@ -7,13 +7,17 @@ interface OutlineButtonProps {
   variant?: "outline" | "m_outline";
   text?: string; // text 속성 추가
   onClick?: () => void;
+  borderColor?: string;
 }
 
 function OutlineButton({
   variant = "outline",
   text = "",
   onClick,
+}: OutlineButtonProps) 
+  borderColor = "#FF7000",
 }: OutlineButtonProps) {
+  const [clicked, setClicked] = useState(false);
   const { hovered, ref } = useHover();
 
   return (
@@ -21,7 +25,7 @@ function OutlineButton({
       <Button
         style={{
           display: "flex",
-          ...getButtonStyles(variant, hovered),
+          ...getButtonStyles(variant, hovered, borderColor),
         }}
         variant={
           variant === "outline"

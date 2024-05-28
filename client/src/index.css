@@ -4,7 +4,6 @@
 }
 
 :root {
-  background-color: white;
   color: #333333;
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
@@ -23,6 +22,10 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+}
+
+body {
+  background-color: #ffffff;
 }
 
 /* 기본 여백을 제거하여 작성된 CSS를 제어. */
