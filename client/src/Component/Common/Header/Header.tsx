@@ -15,7 +15,7 @@ import notification from "../../../Assets/Image/Notification.svg";
 
 function Header() {
   // 차후 globalLoginStatus, user의 usertype 등 받아와서 조건부 렌더링 해주기
-  const globalLoginStatus: boolean = true;
+  const globalLoginStatus: boolean = false;
   const userType: string = "parents";
 
   return (
