@@ -52,7 +52,6 @@ const DefaultText: React.FC<DefaultTextProps> = ({
       }}
     >
       <TextStyles
-        isHovered={isHovered}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -66,14 +65,12 @@ const DefaultText: React.FC<DefaultTextProps> = ({
         {leftText}
       </TextStyles>
       <TextStyles
-        isHovered={isHovered}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {centerText}
       </TextStyles>
       <TextStyles
-        isHovered={isHovered}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
