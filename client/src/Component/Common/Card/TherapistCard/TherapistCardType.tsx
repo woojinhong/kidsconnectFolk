@@ -2,9 +2,17 @@ import { StyledButtonWrapper } from "./TherapistCard.style";
 import FilledButton from "../../Button/FilledButton";
 
 export type TherapistCardProps = {
-  type: "default" | "applied" | "summary";
+  variants: "default" | "applied" | "summary";
+  therapistId?: number | undefined;
 };
 
+export type TherapistProfileType = {
+  firstName: string;
+  lastName: string;
+  phoneNum: string;
+  address: string;
+  addressDetail: string;
+};
 export type TherapistDetailedInfoType = {
   imageFile: string;
   content: string;

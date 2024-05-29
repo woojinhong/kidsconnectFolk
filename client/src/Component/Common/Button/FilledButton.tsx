@@ -7,13 +7,14 @@ import {
   StyledIcon,
 } from "./FilledButton.styles";
 import IconSent from "../../../Assets/Image/Icon/IconSent.svg";
+import IconSearch from "../../../Assets/Image/Icon/IconSearchWhite.svg";
 
 interface FilledButtonProps extends DisabledButtonProps {
   variant?: "filled" | "m_filled";
   text?: string;
   backgroundColor?: string;
   onClick?: () => void;
-  icon?: "send"; // 필요한 icon 추가하기
+  icon?: "send" | "search"; // 필요한 icon 추가하기
 }
 
 function FilledButton({
@@ -30,6 +31,8 @@ function FilledButton({
     switch (icon) {
       case "send":
         return IconSent;
+      case "search":
+        return IconSearch;
       default:
         return ""; // 필요한 icon 추가하기
     }
