@@ -12,14 +12,6 @@ import {
 import IconRemove from "../../../Assets/Image/Icon/IconRemove.svg";
 import ChatProfile from "../../../Assets/Image/ChatProfile.svg";
 
-type ModalProps = {
-  content: () => JSX.Element;
-  buttonText: string;
-  chatInput?: boolean;
-  buttonVariant?: "filled" | "outlined";
-  buttonIcon?: "search" | undefined; //필요 시 버튼 아이콘 추가
-};
-
 function Modal({
   content,
   buttonText,
@@ -83,5 +75,13 @@ function Modal({
     </>
   );
 }
+
+type ModalProps = {
+  content: () => JSX.Element;
+  buttonText: string;
+  chatInput?: boolean;
+  buttonVariant?: "filled" | "outlined";
+  buttonIcon?: "search" | undefined; //필요 시 버튼 아이콘 추가
+};
 
 export default Modal;
