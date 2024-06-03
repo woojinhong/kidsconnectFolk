@@ -28,3 +28,8 @@ export function useGetChildAge(dateOfBirth: string) {
   }
   return age;
 }
+
+// chatbox 시간 지연 커스텀 훅
+export function useDelayChatbox(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

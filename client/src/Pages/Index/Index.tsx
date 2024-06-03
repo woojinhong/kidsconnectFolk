@@ -2,7 +2,7 @@ import Footer from "../../Component/Common/Footer/Footer";
 import Header from "../../Component/Common/Header/Header";
 
 import Modal from "../../Component/Common/Modal/Modal";
-import SurveyModalContent from "../../Component/Common/Modal/ModalContent/SurveyModalContent";
+import TherapistPreference from "../../Component/Common/Modal/ModalContent/TherapistPreference";
 import TherapistCard from "../../Component/Common/Card/TherapistCard/TherapistCard";
 
 import externalRecommendSites from "../../Assets/TextData/externalRecommendSites";
@@ -31,7 +31,7 @@ function Index() {
             </div>
             <Modal
               buttonText="선생님 찾아보기"
-              content={SurveyModalContent}
+              content={TherapistPreference}
               buttonIcon="search"
             />
           </div>

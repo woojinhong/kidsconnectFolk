@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import matchingSurveySlice from "./Slices/MatchingSurveySlice";
 
 export const store = configureStore({
   reducer: {
-    // slice 입력하기
+    preferenceData: matchingSurveySlice,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-
 export type AppDispatch = typeof store.dispatch;
