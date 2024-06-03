@@ -16,17 +16,19 @@ import java.util.List;
 @Getter
 @ToString
 @DynamicInsert
-public class User {
+public class User implements Loginable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length= 30, nullable = false , unique = true)
     private String email;
+
+    private String role;
     @Column(length= 30, nullable = false)
     private String firstName;
     @Column(length= 30, nullable = false)
     private String lastName;
-    @Column(length= 30, nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @Column(length= 30, nullable = false)
@@ -65,7 +67,7 @@ public class User {
             this.upDate = LocalDateTime.now();
         }
         if (this.status == null) {
-            this.status = false;
+            this.status = true;
         }
     }
 
@@ -91,4 +93,30 @@ public class User {
 
     }
 
+    public void setEmail(String email){
+        this.email=email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Override
+    public String email() {
+        return email;
+    }
+
+    @Override
+    public String password() {
+        return password;
+    }
+
+    @Override
+    public String role() {
+        return role;
+    }
 }

@@ -4,7 +4,6 @@ import com.example.kidsconnect.dao.*;
 import com.example.kidsconnect.domain.*;
 import com.example.kidsconnect.dto.LoginDto;
 
-import com.example.kidsconnect.dto.TherapistInfoDto;
 import com.example.kidsconnect.dto.TherapistSignUpDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
@@ -12,23 +11,23 @@ import com.example.kidsconnect.mapping.ToEntity;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 public class TherapistService {
 
     private final TherapistRepository therapistRepository;
-    private final TherapistInfoRepository therapistInfoRepository;
 
     private final CenterRepository centerRepository;
     private final EnrolRepository enrolRepository;
 
-    private final SymptomRepository symptomRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
 
     private final ToEntity toEntity;
@@ -46,25 +45,29 @@ public class TherapistService {
 
     @Transactional
     public ResponseEntity<?> signUp(TherapistSignUpDto therapistSignUpDto){
+
         Therapist therapist = toEntity.fromTherapistSignUpDto(therapistSignUpDto);
-        Center center = toEntity.fromChildDtoToCenter(therapistSignUpDto);
+//        Center center = toEntity.fromChildDtoToCenter(therapistSignUpDto);
 
         System.out.println("therapist = " + therapist);
-        System.out.println("center = " + center);
+//        System.out.println("center = " + center);
 
         if(therapistRepository.existsByEmail(therapist.getEmail()))
             throw new CustomException(CustomCode.DUPLICATED_EMAIL);
 
-        if(!therapist.isFreelancer()) {
-            center = centerRepository.findByName(center.getName())
-                    .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
+//        if(!therapist.isFreelancer()) {
+//            center = centerRepository.findByName(center.getName())
+//                    .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
 
             Enrol enrol = Enrol.builder()
                     .therapist(therapist)
-                    .center(center)
+//                    .center(center)
                     .build();
             enrolRepository.save(enrol);
-        }
+
+
+        therapist.setPassword(passwordEncoder.encode(therapist.getPassword()));
+        therapist.setRole("ROLE_ADMIN");
         therapistRepository.save(therapist);
 
         return ResponseEntity.ok("치료사 회원가입 성공");

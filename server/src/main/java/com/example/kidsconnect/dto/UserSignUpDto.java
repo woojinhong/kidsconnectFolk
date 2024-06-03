@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 @Data
 @ToString
 public class UserSignUpDto {
@@ -14,6 +16,7 @@ public class UserSignUpDto {
     private String firstName;
     private String lastName;
     private String phoneNum;
+    private Date dateOfBirth;
     private String postalCode;
     private String addressDetail;
     private String address;

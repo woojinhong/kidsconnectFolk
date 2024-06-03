@@ -30,24 +30,27 @@ class TherapistRepositoryTest {
     @Test
     @DisplayName("치료사 회원가입")
     public void therapistRegister(){
-        Therapist therapist = Therapist.builder()
-                .address("동파리구")
-                .addressDetail("동파육수")
-                .email("orolzleim@gmail.com")
-                .password("")
-                .firstName("아무개")
-                .lastName("김")
-                .gender('M')
-                .freelancer(false)
-                .phoneNum("010-0000-0000")
-                .status(false)
-                .inDate(LocalDateTime.now())
-                .upDate(LocalDateTime.now())
-                .postalCode("12345")
-                .dateOfBirth(new Date())
-                .build();
+        Therapist therapistTest=null;
+        for (int i = 0; i < 10; i++) {
+            Therapist therapist = Therapist.builder()
+                    .address("동파리구")
+                    .addressDetail("동파육수")
+                    .email("orolzleim@gmail.com")
+                    .password("")
+                    .firstName("아무개")
+                    .lastName("김")
+                    .gender('F')
+                    .freelancer(false)
+                    .phoneNum("010-0000-0000")
+                    .status(false)
+                    .inDate(LocalDateTime.now())
+                    .upDate(LocalDateTime.now())
+                    .postalCode("12345")
+                    .dateOfBirth(new Date())
+                    .build();
+           therapistTest =therapistRepository.save(therapist);
+        }
 
-        Therapist therapistTest =therapistRepository.save(therapist);
         System.out.println("therapistTest = " + therapistTest);
 
         TherapistSignUpDto therapistSignUpDto =therapistMapper.toTherapistSignUpDto(therapistTest);

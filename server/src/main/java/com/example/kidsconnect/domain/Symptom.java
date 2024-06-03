@@ -22,9 +22,5 @@ public class Symptom {
 
     private String name;
 
-    @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ChildSymptom> childSymptom;
 
-//    @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL)
-//    private List<TherapistInfoSymptom> therapistInfoSymptom = new ArrayList<>();
 }

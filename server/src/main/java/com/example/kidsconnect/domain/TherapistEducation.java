@@ -21,11 +21,4 @@ public class TherapistEducation {
     private String degree;
 
 
-    @ManyToOne
-    @JoinColumn(name = "therapist_info_id")
-    private TherapistInfo therapistInfo;
-
-    public void addTherapistInfo(TherapistInfo therapistInfo) {
-        this.therapistInfo = therapistInfo;
-    }
 }

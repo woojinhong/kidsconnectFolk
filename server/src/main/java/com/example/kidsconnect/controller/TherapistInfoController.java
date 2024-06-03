@@ -1,7 +1,4 @@
 package com.example.kidsconnect.controller;
-
-import com.example.kidsconnect.domain.TherapistInfo;
-import com.example.kidsconnect.domain.TherapistInfoSymptom;
 import com.example.kidsconnect.dto.TherapistInfoDto;
 import com.example.kidsconnect.service.TherapistInfoService;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +13,21 @@ public class TherapistInfoController {
     private final TherapistInfoService therapistInfoService;
 
     @PostMapping()
-    public ResponseEntity<?> createTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto){
+    public ResponseEntity<?> createTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto) {
 
         return therapistInfoService.addTherapistInfo(therapistInfoDto);
     }
 
 
-    @PatchMapping()
-    public ResponseEntity<?> updateTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto){
-        return null;//therapistInfoServiceService.addTherapistInfo(ther)
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateTherapistInfo(@PathVariable Long id, @RequestBody TherapistInfoDto therapistInfoDto) {
+        return therapistInfoService.updateTherapistInfo(id, therapistInfoDto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTherapistInfo(@PathVariable Long id) {
+
+        return therapistInfoService.deleteTherapistInfo(id);
+    }
+
 }

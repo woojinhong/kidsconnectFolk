@@ -3,6 +3,10 @@ package com.example.kidsconnect.mapping;
 import com.example.kidsconnect.domain.*;
 import com.example.kidsconnect.dto.*;
 
+import org.mapstruct.AfterMapping;
+import org.mapstruct.MappingTarget;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -41,5 +45,11 @@ public class ToEntity extends MapperFactory{
     //to TherapistInfo
     public TherapistInfo toTherapistInfo(TherapistInfoDto dto){
         return therapistInfoMapper.toTherapistInfo(dto);
+    }
+
+    @AfterMapping
+    public void encryptPassword(@MappingTarget User.UserBuilder user, UserSignUpDto userSignUpDto, @Autowired PasswordEncoder passwordEncoder) {
+        System.out.println("Encrypting password...");
+        user.password(passwordEncoder.encode(userSignUpDto.getPassword()));
     }
 }

@@ -19,6 +19,7 @@ public class UserController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        System.out.println("Received login request with email: " + loginDto.getEmail());
         return userService.login(loginDto);
     }
 

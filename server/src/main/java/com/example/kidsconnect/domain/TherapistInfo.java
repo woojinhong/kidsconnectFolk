@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -18,7 +19,6 @@ import java.util.List;
 @Getter
 @Builder
 @DynamicInsert
-
 public class TherapistInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +47,6 @@ public class TherapistInfo {
     private LocalDateTime upDate;
 
 
-    @OneToOne
-    @JoinColumn(name = "therapist_id")
-    private Therapist therapist;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "therapist_info_id")
@@ -102,4 +99,30 @@ public class TherapistInfo {
         this.upDate = LocalDateTime.now();
     }
 
+
+    public void updateTherapistInfo(String title, String bio, String content, Boolean identityCheck, Boolean crimeCheck, List<String> certificate, List<String> ageRange, byte[] imageFile) {
+        this.title = title;
+        this.bio = bio;
+        this.content = content;
+        this.identityCheck = identityCheck;
+        this.crimeCheck = crimeCheck;
+        this.certificate = certificate;
+        this.ageRange = ageRange;
+        this.imageFile = imageFile;
+    }
+
+    @Override
+    public String toString() {
+        return "TherapistInfo{" +
+                ", title='" + title + '\'' +
+                ", bio='" + bio + '\'' +
+                ", content='" + content + '\'' +
+                ", identityCheck=" + identityCheck +
+                ", crimeCheck=" + crimeCheck +
+                ", certificate=" + certificate +
+                ", ageRange=" + ageRange +
+                ", imageFile=" + Arrays.toString(imageFile) +
+                ", viewCnt=" + viewCnt +
+                '}';
+    }
 }

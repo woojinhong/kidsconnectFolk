@@ -15,11 +15,7 @@ public class TherapistController {
     @Autowired
     TherapistService therapistService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
 
-      return therapistService.login(loginDto);
-    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody TherapistSignUpDto therapistSignUpDto){

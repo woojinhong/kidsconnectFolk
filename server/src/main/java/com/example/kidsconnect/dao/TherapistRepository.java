@@ -11,4 +11,5 @@ public interface TherapistRepository extends CrudRepository<Therapist,Long> {
     boolean existsByEmail(String email);
     Optional<Therapist> findByEmailAndPassword(String email, String password);
 
+    Therapist findByEmail(String email);
 }

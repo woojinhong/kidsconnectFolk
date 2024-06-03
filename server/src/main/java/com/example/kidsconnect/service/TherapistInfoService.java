@@ -13,19 +13,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
 public class TherapistInfoService {
     private final TherapistInfoRepository therapistInfoRepository;
     private final SymptomRepository symptomRepository;
     private final ToEntity toEntity;
+
     @Transactional
     public ResponseEntity<?> addTherapistInfo(TherapistInfoDto therapistInfoDto) {
-        TherapistInfo therapistInfo = toEntity.toTherapistInfo(therapistInfoDto); // dto -> entity
+        TherapistInfo therapistInfo = toEntity.toTherapistInfo(therapistInfoDto); // dto -> entity + jwt token
 
         addExperiences(therapistInfo, therapistInfoDto.getExperience());
         addEducations(therapistInfo, therapistInfoDto.getEducation());
         addSymptoms(therapistInfo, therapistInfoDto.getSymptom());
+
+
 
         therapistInfoRepository.save(therapistInfo);
 
@@ -33,19 +37,49 @@ public class TherapistInfoService {
     }
 
 
-    public ResponseEntity<?> updateTherapistInfo(TherapistInfoDto therapistInfoDto) {
-        TherapistInfo therapistInfo = toEntity.toTherapistInfo(therapistInfoDto);
+    @Transactional
+    public ResponseEntity<?> updateTherapistInfo(Long id, TherapistInfoDto therapistInfoDto) {
+        TherapistInfo existingTherapistInfo = therapistInfoRepository.findById(id)
+                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
 
+        // Clear and add new experiences
+        existingTherapistInfo.getExperience().clear();
+        addExperiences(existingTherapistInfo, therapistInfoDto.getExperience());
 
+        // Clear and add new educations
+        existingTherapistInfo.getEducation().clear();
+        addEducations(existingTherapistInfo, therapistInfoDto.getEducation());
+
+        // Clear and add new symptoms
+        existingTherapistInfo.getTherapistInfoSymptom().clear();
+        addSymptoms(existingTherapistInfo, therapistInfoDto.getSymptom());
+
+        existingTherapistInfo.updateTherapistInfo(therapistInfoDto.getTitle(),
+                therapistInfoDto.getBio(),
+                therapistInfoDto.getContent(),
+                therapistInfoDto.getIdentityCheck(),
+                therapistInfoDto.getCrimeCheck(),
+                therapistInfoDto.getCertificate(),
+                therapistInfoDto.getAgeRange(),
+                therapistInfoDto.getImageFile());
 
         return ResponseEntity.ok("수정 성공");
     }
 
 
+    public ResponseEntity<?> deleteTherapistInfo(Long id) {
+        if (!therapistInfoRepository.existsById(id)) {
+            throw new CustomException(CustomCode.NOT_FOUND_MEMBER);
+        }
+        therapistInfoRepository.deleteById(id);
+        return ResponseEntity.ok("삭제 성공");
+    }
 
-
-
-
+//    private void addTherapistInfo(Therapist therapist, List<TherapistInfo> therapistInfo) {
+//        if (therapistInfo != null) {
+//            therapistInfo.forEach(therapist::addTherapistInfo);
+//        }
+//    }
 
     /**
      * 치료사 경험 정보를 치료사 엔티티에 추가하는 메서드

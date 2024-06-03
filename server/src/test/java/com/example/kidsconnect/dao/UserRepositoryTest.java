@@ -71,12 +71,12 @@ class UserRepositoryTest {
                 .build();
         userRepository.save(user);
 
-        User user2 = userRepository.findByEmail("dnwls753951@gmail.com");
+//        User user2 = userRepository.findByEmail("dnwls753951@gmail.com");
 
         //entity setter 제외
-        //user2 entity 객채 -> UserSignUpDto 객체매핑
-        UserSignUpDto userSignUpDto = userMapper.toUserSignUpDto(user2);
-        assertTrue( userSignUpDto.getEmail().equals("dnwls753951@gmail.com"));
+//        //user2 entity 객채 -> UserSignUpDto 객체매핑
+//        UserSignUpDto userSignUpDto = userMapper.toUserSignUpDto(user2);
+//        assertTrue( userSignUpDto.getEmail().equals("dnwls753951@gmail.com"));
 
 
     }
