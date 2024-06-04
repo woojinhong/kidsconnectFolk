@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/child") public class ChildController {
+@RequestMapping("api/v1/child") 
+
+public class ChildController {
 
     @Autowired
     private ChildService childService;
