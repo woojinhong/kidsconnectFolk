@@ -8,18 +8,22 @@ import {
 } from "./Chatbox.style";
 import LoadingAnimation from "../../../Assets/Animation/Loading.gif";
 
-type ChatboxSystemProps = {
+interface ChatboxSystemProps {
   highlightWords?: string;
   messages?: string;
   button?: string[];
   animation?: boolean;
-};
+  onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
+  disabled?: boolean;
+}
 
 function ChatboxSystem({
   highlightWords = "",
   messages = "",
   button = [],
   animation = false,
+  onClick,
+  disabled = false,
 }: ChatboxSystemProps) {
   return (
     <StyledChatboxSystemBox>
@@ -35,6 +39,7 @@ function ChatboxSystem({
       {button ? (
         <StyledButtonWrapper
           className={messages.includes("선생님 성별") ? "gender_buttons" : ""}
+          style={{ color: disabled ? "#999999" : "#333333" }}
         >
           {button.map((text) => {
             return (
@@ -43,6 +48,8 @@ function ChatboxSystem({
                 text={text}
                 variant="m_outline"
                 borderColor="#c1c1c1"
+                onClick={onClick}
+                disabled={disabled}
               ></OutlineButton>
             );
           })}

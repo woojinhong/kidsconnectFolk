@@ -4,33 +4,32 @@ export const StyledButtonWrapper = styled.div`
   display: block;
 `;
 
-export const getButtonStyles = (
-  variant: string,
-  hovered: boolean,
-  borderColor: string
+export const getCommonButtonStyles = (
+  borderColor: string,
+  disabled: boolean,
+  hovered: boolean
 ) => {
+  return {
+    width: "100%",
+    border: `1px solid ${disabled ? "#999999" : borderColor}`,
+    backgroundColor: disabled ? "#b2b2b2" : hovered ? "#FFD8B8" : "#ffffff",
+    transition: "0.2s",
+    color: hovered ? "#FF7000" : "#FF7000",
+  };
+};
+export const getButtonStyles = (variant: string) => {
   switch (variant) {
     case "outline":
       return {
-        width: "100%",
         height: "56px",
         fontSize: "16px",
         fontWeight: "700",
-        border: `1px solid ${borderColor}`,
-        color: hovered ? "#FF7000" : "#FF7000",
-        backgroundColor: hovered ? "#FFD8B8" : "#ffffff",
-        transition: "0.2s",
       };
     case "m_outline":
       return {
-        width: "100%",
         height: "32px",
         fontSize: "14px",
         fontWeight: "500",
-        border: `1px solid ${borderColor}`,
-        color: hovered ? "#FF7000" : "#FF7000",
-        backgroundColor: hovered ? "#FFD8B8" : "#ffffff",
-        transition: "0.2s",
       };
     default:
       return {};

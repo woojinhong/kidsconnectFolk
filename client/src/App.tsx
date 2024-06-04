@@ -1,12 +1,14 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "@mantine/core/styles.css";
+
+import Index from "./Pages/Index/Index";
 
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        얘는 냅두고 아래에 Component 연결 후 url 넣기 이친구는 나중에 같이 삭제
-      </div>
+      <Routes>
+        <Route path="/" element={<Index />} />
+      </Routes>
     </BrowserRouter>
   );
 }
