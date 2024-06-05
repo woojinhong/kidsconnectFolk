@@ -2,9 +2,11 @@ import Footer from "../../Component/Common/Footer/Footer";
 import Header from "../../Component/Common/Header/Header";
 
 import Modal from "../../Component/Common/Modal/Modal";
+import Category from "../../Component/Common/Category/Category";
 import TherapistPreference from "../../Component/Common/Modal/ModalContent/TherapistPreference";
 import TherapistCard from "../../Component/Common/Card/TherapistCard/TherapistCard";
 
+import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import externalRecommendSites from "../../Assets/TextData/externalRecommendSites";
 import SubBannerImg from "../../Assets/Image/Banner/subBannerImg.png";
 
@@ -26,8 +28,15 @@ function Index() {
               <span>아래 필요한 도움을 선택하시고 찾아 보세요!</span>
             </div>
             <div>
-              {/* Todo: 카테고리 컴퍼넌트 map */}
-              체크박스~
+              {treatmentAreaText.map((category) => (
+                <Category
+                  key={category.text}
+                  emoji={category.emoji}
+                  text={category.text}
+                  size="lg"
+                  main={true}
+                />
+              ))}
             </div>
             <Modal
               buttonText="선생님 찾아보기"
