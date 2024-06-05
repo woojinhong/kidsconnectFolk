@@ -32,3 +32,26 @@ export const StyledChatInput = styled.div`
     height: 48px !important;
   }
 `;
+
+export const StyledAddChildButton = styled.button`
+  width: 268px;
+  height: 186px;
+  border-radius: 16px;
+  background-color: #f2f2f2;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  & img {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+  }
+  & span {
+    font-size: 14px;
+    font-weight: 500;
+  }
+`;

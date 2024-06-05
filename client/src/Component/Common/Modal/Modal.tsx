@@ -7,8 +7,10 @@ import {
   StyledModalHeader,
   StyledModalCloseButton,
   StyledChatInput,
+  StyledAddChildButton,
 } from "./Modal.style";
 
+import Plus from "../../../Assets/Image/Plus.svg";
 import IconRemove from "../../../Assets/Image/Icon/IconRemove.svg";
 import ChatProfile from "../../../Assets/Image/ChatProfile.svg";
 
@@ -66,7 +68,14 @@ function Modal({
       </MantineModal.Root>
 
       <div>
-        {buttonVariant === "filled" ? (
+        {buttonVariant === "addChild" ? (
+          <StyledAddChildButton onClick={open}>
+            <div>
+              <img src={Plus} />
+              <span>{buttonText}</span>
+            </div>
+          </StyledAddChildButton>
+        ) : buttonVariant === "filled" ? (
           <FilledButton onClick={open} text={buttonText} icon={buttonIcon} />
         ) : (
           <OutlineButton onClick={open} text={buttonText} />
@@ -80,7 +89,7 @@ type ModalProps = {
   content: () => JSX.Element;
   buttonText: string;
   chatInput?: boolean;
-  buttonVariant?: "filled" | "outlined";
+  buttonVariant?: "filled" | "outlined" | "addChild";
   buttonIcon?: "search" | undefined; //필요 시 버튼 아이콘 추가
 };
 
