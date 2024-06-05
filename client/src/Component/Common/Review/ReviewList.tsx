@@ -7,6 +7,7 @@ import {
   StyledCard,
   UserName,
   UserTitle,
+  RatingText,
 } from "./ReviewList.styles";
 import therapistReviewData from "../../../MockData/therapistReviewData.json";
 import userData from "../../../MockData/userData.json";
@@ -28,7 +29,7 @@ const ReviewList = () => {
     return (
       <StarsContainer>
         <StarImage src={starSvg} alt="star" />
-        <CommentText size="sm">{rating.toFixed(1)}</CommentText>
+        <RatingText>{rating.toFixed(1)}</RatingText>
       </StarsContainer>
     );
   };
@@ -39,22 +40,24 @@ const ReviewList = () => {
         const user = userData.find((user) => user.id === review.userId);
 
         return (
-          <StyledCard key={review.id}>
-            {user && (
-              <CommentText size="14px">
-                {renderStars(review.rating)}
-                <UserName>
-                  {user.lastName}
-                  {user.firstName}
-                </UserName>
-                <UserTitle> 부모님</UserTitle>
+          <li key={review.id}>
+            <StyledCard>
+              {user && (
+                <CommentText>
+                  {renderStars(review.rating)}
+                  <UserName>
+                    {user.lastName}
+                    {user.firstName}
+                  </UserName>
+                  <UserTitle> 부모님</UserTitle>
+                </CommentText>
+              )}
+              <CommentText>
+                {review.comment}
+                <Divider />
               </CommentText>
-            )}
-            <CommentText size="12px">
-              {review.comment}
-              <Divider />
-            </CommentText>
-          </StyledCard>
+            </StyledCard>
+          </li>
         );
       })}
     </ReviewContainer>
