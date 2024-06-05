@@ -1,28 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextInput } from "@mantine/core";
+import styled from "styled-components";
+
+import { InputEmailText } from "../../../Assets/TextData/SignCommonText";
+import { SignCommonTextType } from "../../../Assets/TextData/SignCommonText";
+
 import Cancel from "../../../Assets/Image/Cancel.svg";
-import Search from "../../../Assets/Image/Search.svg";
+import IconSearch from "../../../Assets/Image/Search.svg";
+import IconCalendar from "../../../Assets/Image/Icon/IconCalendar.svg";
+import IconUpload from "../../../Assets/Image/Icon/IconUpload.svg";
 
 interface InputComplexProps {
-  label: string;
-  width: string;
-  showDescription: boolean;
-  showWithAsterisk: boolean;
-  placeholder: string;
-  icon: boolean;
-  apiIcon: boolean;
-  btn: boolean;
+  label?: string;
+  placeholder?: string;
+  inputType?: "email";
+  width?: string;
+  detailedDescription?: string;
+  showWithAsterisk?: boolean;
+  icon?: boolean;
+  apiIcon?: "search" | "calendar" | "upload" | undefined;
+  button?: boolean;
+  disabled?: boolean;
 }
 
 const InputText: React.FC<InputComplexProps> = ({
-  label,
-  width,
-  showDescription,
-  showWithAsterisk,
-  placeholder,
-  icon,
+  label = "",
+  width = "100%",
+  detailedDescription = "",
+  showWithAsterisk = false,
+  placeholder = "",
+  icon = false,
   apiIcon,
-  btn,
+  button = false,
+  disabled = false,
+  inputType = "",
 }) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -30,18 +41,39 @@ const InputText: React.FC<InputComplexProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setValue(newValue);
+  };
 
-    // 이메일 형식 검증
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(newValue)) {
-      setError("이메일 형식에 맞게 입력해주세요");
-    } else {
-      setError("");
+  console.log(value);
+  console.log(!!error);
+
+  const apiIconSwitch = (apiIcon: string) => {
+    switch (apiIcon) {
+      case "search":
+        return IconSearch;
+      case "calendar":
+        return IconCalendar;
+      case "upload":
+        return IconUpload;
+      default:
+        return "";
     }
   };
 
+  const apiIconAltSwitch = (apiIcon: string) => {
+    switch (apiIcon) {
+      case "search":
+        return "검색하기";
+      case "calendar":
+        return "날짜 선택하기";
+      case "upload":
+        return "이미지 업로드하기";
+      default:
+        return "";
+    }
+  };
   let rightSectionContent = null;
-  if (btn) {
+
+  if (button) {
     rightSectionContent = (
       <div style={{ width: "87px", height: "36px", marginRight: "90px" }}>
         <Button
@@ -81,8 +113,8 @@ const InputText: React.FC<InputComplexProps> = ({
         }}
       >
         <img
-          src={Search}
-          alt="Search"
+          src={apiIconSwitch(apiIcon)}
+          alt={apiIconAltSwitch(apiIcon)}
           style={{
             cursor: "pointer",
             width: "16px",
@@ -93,25 +125,67 @@ const InputText: React.FC<InputComplexProps> = ({
     );
   }
 
+  const { labelText, withAsterisk, placeholderText, errorMessage, regEx } =
+    InputEmailText as SignCommonTextType;
+
+  const handleEmailValidation = (email: string) => {
+    if (regEx.test(email) || email === "") {
+      return setError("");
+    } else {
+      return setError(errorMessage);
+    }
+  };
+
+  useEffect(() => {
+    if (inputType === "email") {
+      handleEmailValidation(value);
+    }
+  }, [value, error]);
+
   return (
-    <TextInput
+    <StyledTextInput
       size="lg"
-      radius="lg"
-      label={label}
-      withAsterisk={showWithAsterisk ? showWithAsterisk : undefined}
-      description={showDescription ? "상세설명" : undefined}
-      error={error}
+      radius="16px"
+      label={inputType ? labelText : label}
+      withAsterisk={
+        showWithAsterisk
+          ? showWithAsterisk
+          : inputType
+            ? withAsterisk
+            : undefined
+      }
+      description={
+        detailedDescription ? <span>{detailedDescription}</span> : undefined
+      }
       value={value}
-      placeholder={placeholder}
+      placeholder={inputType ? placeholderText : placeholder}
       style={{ width }}
       styles={{
-        input: { border: "1px solid #C1C1C1", height: "56px", fontSize: 14 },
-        label: { fontWeight: 700, marginBottom: 10 },
+        input: { border: "1px solid #C1C1C1", height: "56px", fontSize: 16 },
+        label: { fontWeight: 700 },
       }}
       onChange={handleChange}
       rightSection={rightSectionContent}
+      disabled={disabled}
+      error={error ? error : null}
     />
   );
 };
 
 export default InputText;
+
+export const StyledTextInput = styled(TextInput)`
+  & label {
+    font-size: 16px;
+  }
+  & p span {
+    font-size: 13px;
+    color: #999999;
+  }
+  & input:placeholder {
+    color: #c1c1c1;
+  }
+  & p {
+    font-size: 12px;
+  }
+`;
