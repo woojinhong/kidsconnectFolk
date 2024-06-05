@@ -43,9 +43,6 @@ const InputText: React.FC<InputComplexProps> = ({
     setValue(newValue);
   };
 
-  console.log(value);
-  console.log(!!error);
-
   const apiIconSwitch = (apiIcon: string) => {
     switch (apiIcon) {
       case "search":
