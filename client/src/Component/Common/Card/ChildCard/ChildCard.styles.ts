@@ -1,17 +1,21 @@
 import { Card, Group, Text } from "@mantine/core";
 import styled from "styled-components";
 
+export const StyledCardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+`;
 export const StyledCard = styled(Card)`
+  display: flex;
   padding: 24px;
   width: 268px;
   height: 183px;
   border-radius: 16px;
   border: 1px solid #f2f2f2;
-  display: flex;
   justify-content: center;
-  margin-bottom: 24px;
   &:nth-of-type(2) {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     cursor: pointer;
   }
 `;
@@ -21,6 +25,13 @@ export const InfoGroup = styled(Group)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+
+  & > div > img {
+    width: 14px;
+    height: 14px;
+    margin-left: 6px;
+    margin-bottom: -1px;
+  }
 `;
 
 export const DescriptionText = styled(Text)`
