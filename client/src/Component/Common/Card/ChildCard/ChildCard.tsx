@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
+
+import Tag from "../../Tag/Tag";
+import Modal from "../../Modal/Modal";
+
 import {
   StyledCard,
   InfoGroup,
   DescriptionText,
   TagContainer,
+  StyledCardContainer,
 } from "./ChildCard.styles";
+
 import Edit from "../../../../Assets/Image/Edit.svg";
+import SymbolFemale from "../../../../Assets/Image/Icon/SymbolFemale.svg";
+import SymbolMale from "../../../../Assets/Image/Icon/SymbolMale.svg";
 import childData from "../../../../MockData/childData.json";
 import symptomData from "../../../../MockData/child_symptomData.json";
-import Tag from "../../Tag/Tag";
-import Plus from "../../../../Assets/Image/Plus.svg";
 
 interface Child {
   id: number;
@@ -17,6 +23,7 @@ interface Child {
   firstName: string;
   dateOfBirth: string;
   personality: string;
+  gender: string;
 }
 
 interface SymptomData {
@@ -44,11 +51,19 @@ const ChildCard = () => {
     }
   }, []);
 
+  const addChildCard = () => (
+    <Modal
+      buttonVariant="addChild"
+      buttonText="아이 등록하기"
+      content={() => <div>hi</div>}
+    />
+  );
+
   if (!child) {
-    return <StyledCard>No child data available</StyledCard>;
+    return addChildCard();
   }
 
-  const { lastName, firstName, dateOfBirth, personality } = child;
+  const { lastName, firstName, dateOfBirth, personality, gender } = child;
   const age = calculateAge(dateOfBirth);
 
   const truncatedPersonality =
@@ -59,19 +74,20 @@ const ChildCard = () => {
   };
 
   return (
-    <div>
+    <StyledCardContainer>
       <StyledCard>
         <InfoGroup>
           <div style={{ fontWeight: 700 }}>
             {lastName}
             {firstName}
             <span style={{ fontWeight: 400, marginLeft: "4px" }}>{age}세</span>
+            <img src={gender === "female" ? SymbolFemale : SymbolMale} />
           </div>
           <img
             src={Edit}
             alt="Edit"
             onClick={handleEdit}
-            style={{ cursor: "pointer", width: "20px", height: "20px" }}
+            style={{ cursor: "pointer", width: "16px", height: "16px" }}
           />
         </InfoGroup>
 
@@ -85,22 +101,8 @@ const ChildCard = () => {
           ))}
         </TagContainer>
       </StyledCard>
-
-      <StyledCard onClick={handleRegisterChild}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <img src={Plus} alt="Registering a child" />
-          <div style={{ fontWeight: 500, fontSize: "14px", marginTop: "10px" }}>
-            아이 등록하기
-          </div>
-        </div>
-      </StyledCard>
-    </div>
+      {addChildCard()}
+    </StyledCardContainer>
   );
 };
 

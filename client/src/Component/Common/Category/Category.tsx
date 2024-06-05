@@ -1,37 +1,39 @@
-import CategoryProps, { emojiMap } from "./CategoryProps";
+import { useState } from "react";
+import { useHover } from "@mantine/hooks";
+
+import CategoryProps from "./CategoryProps";
 import { StyledActionIcon, Emoji, Text } from "./Category.styles";
 
 function Category({
-  imoge,
+  emoji,
   text,
-  opacity,
-  border,
-  backgroundColor,
-  fontSize,
-  height,
-  width,
-  fontWeight,
+  size = "sm",
+  onClick,
+  main = false,
+  checkbox = true,
 }: CategoryProps) {
-  const emoji = emojiMap[imoge] || "❓";
-  const isBordered = !!border;
+  const [isChecked, setIsChecked] = useState(false);
+  const { hovered, ref } = useHover();
+
+  function handleCheckbox() {
+    if (onClick) {
+      onClick(text);
+    }
+    setIsChecked(!isChecked);
+  }
 
   return (
     <StyledActionIcon
-      variant="default"
-      opacity={opacity}
-      border={border}
-      backgroundColor={backgroundColor}
-      fontSize={fontSize}
-      height={height}
-      width={width}
-      fontWeight={fontWeight}
+      isChecked={isChecked}
+      size={size}
+      main={main}
+      onClick={handleCheckbox}
+      ref={ref}
+      hovered={hovered}
+      checkbox={checkbox}
     >
-      <Emoji isBordered={isBordered} fontSize={fontSize} lineHeight={height}>
-        {emoji}
-      </Emoji>
-      <Text isBordered={isBordered} fontSize={fontSize} fontWeight={fontWeight}>
-        {text}
-      </Text>
+      <Emoji size={size}>{emoji}</Emoji>
+      <Text size={size}>{text}</Text>
     </StyledActionIcon>
   );
 }
