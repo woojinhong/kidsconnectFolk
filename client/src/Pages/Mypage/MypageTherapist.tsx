@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 
 import Navigation from "../../Component/Mypage/Navigation/Navigation";
-import ProfileContent from "../../Component/Mypage/TherapistContent/Profile/ProfileContent";
 import MatchingContent from "../../Component/Mypage/TherapistContent/Matching/MatchingContent";
-import ReviewContent from "../../Component/Mypage/TherapistContent/Review/ReviewContent";
 
 import { StyledMypageLayout } from "../../Assets/StyledData/PageLayout.style";
 
