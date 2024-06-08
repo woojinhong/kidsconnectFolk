@@ -20,7 +20,7 @@ export const InputPasswordText = {
   apiIcon: false,
   errorMessage:
     "* 비밀번호는 8자 이상, 영문, 숫자, 특수 기호를 포함해야 합니다",
-  regEx: /^(?=.*\d)(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/,
+  regEx: /^(?=.*\d)(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]ㅡ             ){8,16}$/,
 };
 
 export type SignCommonTextType = {
