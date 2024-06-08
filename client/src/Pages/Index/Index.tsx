@@ -1,6 +1,3 @@
-import Footer from "../../Component/Common/Footer/Footer";
-import Header from "../../Component/Common/Header/Header";
-
 import Modal from "../../Component/Common/Modal/Modal";
 import Category from "../../Component/Common/Category/Category";
 import TherapistPreference from "../../Component/Common/Modal/ModalContent/TherapistPreference";
@@ -16,7 +13,6 @@ function Index() {
 
   return (
     <>
-      <Header />
       <main>
         <section style={{ backgroundColor: "#f2f2f2" }}>
           <div>
@@ -82,7 +78,6 @@ function Index() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
