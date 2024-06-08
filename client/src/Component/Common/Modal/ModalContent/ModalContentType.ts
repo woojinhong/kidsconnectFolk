@@ -22,3 +22,12 @@ export type ApplicationTextType = {
   toHome: string;
   toHistory: string;
 };
+
+export type AddChildTextType = {
+  message: {
+    name: string;
+    birthDate: string;
+    characteristic: string;
+  };
+  placeholder: string;
+};
