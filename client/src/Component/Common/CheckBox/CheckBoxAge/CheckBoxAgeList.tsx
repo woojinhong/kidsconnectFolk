@@ -3,22 +3,18 @@ import { useState } from "react";
 import CheckBoxAgeBox from "./CheckBoxAgeBox";
 import { StyledCheckBoxContainer } from "./CheckBoxAge.style";
 
-function CheckBoxAgeList({
-  treatmentData,
-  checked = false,
-}: {
-  treatmentData: string[];
-  checked: boolean;
-}) {
+import careChildAge from "../../../../Assets/TextData/careChildAge";
+
+function CheckBoxAgeList({ checked = false }: { checked?: boolean }) {
   const [ageValue, setAgeValue] = useState<string[]>([]);
 
   return (
     <StyledCheckBoxContainer value={ageValue} onChange={setAgeValue}>
-      {treatmentData.map((data) => (
+      {careChildAge.map((data) => (
         <CheckBoxAgeBox
-          key={data}
-          label={data}
-          description={data}
+          key={data.label}
+          label={data.label}
+          description={data.description}
           checked={checked}
         />
       ))}
