@@ -87,3 +87,14 @@ textarea:focus,
 select:focus {
   outline: none;
 }
+
+.mantine-Select-option {
+  padding: 12px 0 12px 12px;
+}
+.mantine-Select-option:hover {
+  background-color: #f2f2f2;
+}
+
+.m_2351eeb0:hover:where(:not([data-disabled])) {
+  background-color: #f2f2f2;
+}

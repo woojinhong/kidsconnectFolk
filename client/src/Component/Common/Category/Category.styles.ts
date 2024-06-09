@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 interface StyledCommonProps {
   size?: "sm" | "md" | "lg" | "xl";
-  isChecked?: boolean;
-  main?: boolean;
-  hovered?: boolean;
-  checkbox?: boolean;
+  $ischecked?: boolean;
+  $main?: boolean;
+  $hovered?: boolean;
+  $checkbox?: boolean;
 }
 
 function switchBoxSize(size: string | undefined) {
@@ -32,24 +32,24 @@ export const StyledActionIcon = styled.div<StyledCommonProps>`
   width: ${(props) => switchBoxSize(props.size)};
   height: ${(props) => switchBoxSize(props.size)};
   background-color: ${(props) =>
-    props.main
+    props.$main
       ? "#ffffff "
-      : props.checkbox && props.hovered
+      : props.$checkbox && props.$hovered
         ? "#ffffff"
         : " #f2f2f2"};
   border-radius: 16px;
   border: ${(props) =>
-    props.checkbox && props.isChecked
+    props.$checkbox && props.$ischecked
       ? "2px solid #FF7000"
-      : props.checkbox && props.hovered
+      : props.$checkbox && props.$hovered
         ? "2px solid #FFD8B8"
         : "none"};
-  cursor: ${(props) => (props.checkbox ? "pointer" : "default")};
-  color: ${(props) => (props.isChecked ? "#333333" : "#999999")};
+  cursor: ${(props) => (props.$checkbox ? "pointer" : "default")};
+  color: ${(props) => (props.$ischecked ? "#333333" : "#999999")};
   transition: all 0.2s;
 
   & strong {
-    opacity: ${(props) => (props.isChecked ? 1 : 0.8)};
+    opacity: ${(props) => (props.$ischecked ? 1 : 0.8)};
   }
 `;
 

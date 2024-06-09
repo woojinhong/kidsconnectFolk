@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import Tag from "../../Tag/Tag";
 import Modal from "../../Modal/Modal";
+import AddChildSurvey from "../../Modal/ModalContent/AddChildSurvey";
 
 import {
   StyledCard,
@@ -55,7 +56,8 @@ const ChildCard = () => {
     <Modal
       buttonVariant="addChild"
       buttonText="아이 등록하기"
-      content={() => <div>hi</div>}
+      content={() => <AddChildSurvey />}
+      chatInput={true}
     />
   );
 

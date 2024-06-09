@@ -1,5 +1,6 @@
 import { Highlight } from "@mantine/core";
 import OutlineButton from "../Button/OutlineButton";
+import InputDatePicker from "../Input/InputDatePicker";
 
 import {
   StyledChatboxSystemBox,
@@ -12,6 +13,7 @@ interface ChatboxSystemProps {
   highlightWords?: string;
   messages?: string;
   button?: string[];
+  selectbox?: boolean;
   animation?: boolean;
   onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
   disabled?: boolean;
@@ -24,6 +26,7 @@ function ChatboxSystem({
   animation = false,
   onClick,
   disabled = false,
+  selectbox = false,
 }: ChatboxSystemProps) {
   return (
     <StyledChatboxSystemBox>
@@ -55,6 +58,7 @@ function ChatboxSystem({
           })}
         </StyledButtonWrapper>
       ) : null}
+      {selectbox ? <InputDatePicker text="날짜 선택하기" /> : null}
       {animation ? (
         <StyledAnimationContainer>
           <img src={LoadingAnimation} alt="로딩 중" />

@@ -1,119 +1,97 @@
-import React, { useState } from "react";
-import { Combobox, useCombobox, ScrollArea } from "@mantine/core";
+import { useState, useEffect } from "react";
+import { StyledContainer, StyledSelectbox } from "./SelectBoxDefault.styles";
+import { SelectBoxDefaultProps } from "./SelectBoxDefaultProps";
+
+import selectboxData from "../../../Assets/TextData/selectboxData";
+import { categoryDefaultType } from "../../../Assets/TextData/selectboxData";
+
 import arrowDown from "../../../Assets/Image/arrowDown.svg";
 import arrowUp from "../../../Assets/Image/arrowUp.svg";
-import {
-  StyledContainer,
-  StyledArrow,
-  StyledInputBase,
-  SelectBoxOptions,
-  CustomComboboxDropdown,
-} from "./SelectBoxDefault.styles";
-import SelectBoxDefaultProps from "./SelectBoxDefaultProps";
-import therapistData from "../../../MockData/therapistData.json";
-
-//치료사목업데이터
-interface Therapist {
-  id: number;
-  firstName: string;
-  email: string;
-  pwd: string;
-  dateOfBirth: string;
-  phoneNum: string;
-  postalCode: string;
-  addressDetail: string;
-  address: string;
-  status: boolean;
-  inDate: string;
-  upDate: string;
-}
-
-const addresses = therapistData.map((therapist: Therapist) => therapist.address);
 
 function SelectBoxDefault({
-  width = "fit-content",
-  height = "fit-content",
-  text = "Select an item",
+  category = "",
+  width = "100%",
+  height = "56px",
+  getData,
+  region = "",
+  onClear = false,
 }: SelectBoxDefaultProps) {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-  });
-
-  const [value, setValue] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
+  const [value, setValue] = useState<string | null>("");
   const [isFocused, setIsFocused] = useState(false);
-
+  const [searchValue, setSearchValue] = useState<string>("");
   const arrowIcon = isFocused ? arrowUp : arrowDown;
 
-  const shouldFilterOptions = addresses.every((item) => item !== search);
-  const filteredOptions = shouldFilterOptions
-    ? addresses.filter((item) =>
-        item.toLowerCase().includes(search.toLowerCase().trim())
-      )
-    : addresses;
+  const categoryData: categoryDefaultType | undefined = selectboxData.find(
+    (data) => data.type === category
+  );
 
-  const options = filteredOptions.map((item) => (
-    <Combobox.Option value={item} key={item}>
-      {item}
-    </Combobox.Option>
-  ));
+  useEffect(() => {
+    if (onClear) {
+      setValue(null);
+    }
+  }, [onClear]);
+
+  function handleDropdownChange(value: string | null) {
+    setValue(value);
+    handleisFocused();
+    if (category === "region" && getData) {
+      getData(switchRegionToEng(value));
+    }
+  }
+  function handleisFocused() {
+    setIsFocused(!isFocused);
+  }
+  function switchRegionToEng(value: string | null) {
+    switch (value) {
+      case "서울":
+        return "seoul";
+      case "인천":
+        return "incheon";
+      case "경기":
+        return "gyeonggi";
+      default:
+        return null;
+    }
+  }
+
+  const getDetailedRegionData = () => {
+    if (categoryData?.detailedRegion && region) {
+      const regionData = categoryData.detailedRegion[region];
+      return regionData;
+    }
+    return [];
+  };
+
+  const changeData = () => {
+    if (category === "detailedRegion") {
+      return getDetailedRegionData();
+    } else return categoryData?.data;
+  };
 
   return (
-    <Combobox
-      store={combobox}
-      onOptionSubmit={(val: string) => {
-        setValue(val);
-        setSearch(val);
-        combobox.closeDropdown();
-      }}
-    >
-      <Combobox.Target>
-        <StyledContainer width={width} isFocused={isFocused}>
-          <StyledInputBase
-            height={height}
-            isValue={!!value}
-            rightSection={
-              <StyledArrow
-                src={arrowIcon}
-                alt="arrow"
-                onClick={() => {
-                  combobox.openDropdown();
-                  setIsFocused(!isFocused);
-                }}
-              />
-            }
-            rightSectionPointerEvents="none"
-            onClick={() => combobox.openDropdown()}
-            onFocus={() => {
-              combobox.openDropdown();
-              setIsFocused(true);
-            }}
-            onBlur={() => {
-              combobox.closeDropdown();
-              setIsFocused(false);
-              setSearch(value || "");
-            }}
-            placeholder={text}
-            value={search}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              combobox.updateSelectedOptionIndex();
-              setSearch(event.currentTarget.value);
-            }}
-          />
-        </StyledContainer>
-      </Combobox.Target>
-      <CustomComboboxDropdown>
-        <SelectBoxOptions>
-          <ScrollArea.Autosize type="scroll" mah={200}>
-            {options.length > 0 ? (
-                options
-            ) : (
-              <Combobox.Empty>Nothing found</Combobox.Empty>
-            )}
-          </ScrollArea.Autosize>
-        </SelectBoxOptions>
-      </CustomComboboxDropdown>
-    </Combobox>
+    <StyledContainer width={width}>
+      <StyledSelectbox
+        value={value}
+        placeholder={categoryData?.placeholder}
+        height={height}
+        data={changeData()}
+        onChange={handleDropdownChange}
+        rightSection={<img src={arrowIcon} />}
+        onClear={handleisFocused}
+        withCheckIcon={false}
+        searchable={true}
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        pointer={true}
+        styles={{
+          dropdown: {
+            borderRadius: "16px",
+            border: "1px solid #c1c1c1",
+            padding: "12px 0 0",
+          },
+        }}
+      />
+    </StyledContainer>
   );
 }
 

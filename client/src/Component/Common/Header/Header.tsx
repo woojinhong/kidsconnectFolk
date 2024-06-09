@@ -1,5 +1,6 @@
 import DefaultText from "../Button/DefaultText";
 import FilledButton from "../Button/FilledButton";
+import { Link } from "react-router-dom";
 
 import {
   StyledHeader,
@@ -22,7 +23,9 @@ function Header() {
     <StyledHeader>
       <main>
         <h1>
-          <img src={logo} alt="키즈커넥트" />
+          <Link to="/">
+            <img src={logo} alt="키즈커넥트" />
+          </Link>
         </h1>
         <StyledContentContainer>
           <section>

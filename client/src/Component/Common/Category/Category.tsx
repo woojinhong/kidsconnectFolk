@@ -24,13 +24,13 @@ function Category({
 
   return (
     <StyledActionIcon
-      isChecked={isChecked}
+      $ischecked={isChecked}
       size={size}
-      main={main}
+      $main={main}
       onClick={handleCheckbox}
       ref={ref}
-      hovered={hovered}
-      checkbox={checkbox}
+      $hovered={hovered}
+      $checkbox={checkbox}
     >
       <Emoji size={size}>{emoji}</Emoji>
       <Text size={size}>{text}</Text>

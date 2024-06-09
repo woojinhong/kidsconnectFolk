@@ -20,7 +20,7 @@ export const StyledHeader = styled.header`
     height: 100%;
   }
 
-  & h1 > img {
+  & h1 img {
     width: 120px;
   }
 `;

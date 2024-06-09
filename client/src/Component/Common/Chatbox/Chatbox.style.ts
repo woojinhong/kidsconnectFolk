@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 // SystemBox
 export const StyledChatboxSystemBox = styled.div`
   display: inline-block;
