@@ -34,6 +34,13 @@ public class Child {
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)
     private List<ChildSymptom> childSymptom;
 
+    @OneToMany(mappedBy = "child", orphanRemoval = true)
+    private List<Reservation> reservation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @PrePersist
     protected void onCreate() {
         if (this.inDate == null) {

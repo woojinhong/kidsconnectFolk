@@ -49,8 +49,9 @@ public class SecurityConfig {
                 .formLogin((form) -> form.disable())
                 .httpBasic((basic) -> basic.disable())
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/api/v1/auth/login/**","/api/v1/auth/signup/**").permitAll()
-                        .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+                        ///api/v1/auth/login/**","/api/v1/auth/signup/**
+                        .requestMatchers( "/**").permitAll()
+//                        .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class)
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil), UsernamePasswordAuthenticationFilter.class)

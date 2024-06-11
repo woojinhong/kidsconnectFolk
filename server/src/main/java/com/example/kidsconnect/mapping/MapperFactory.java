@@ -2,6 +2,7 @@ package com.example.kidsconnect.mapping;
 
 import com.example.kidsconnect.domain.Center;
 import com.example.kidsconnect.domain.Symptom;
+import com.example.kidsconnect.domain.TherapistReview;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.mapstruct.factory.Mappers;
@@ -17,6 +18,10 @@ public class MapperFactory {
 
     CenterMapper centerMapper = Mappers.getMapper(CenterMapper.class);
     TherapistInfoMapper therapistInfoMapper = Mappers.getMapper(TherapistInfoMapper.class);
+
+    ReservationMapper reservationMapper = Mappers.getMapper(ReservationMapper.class);
+
+    ReviewMapper reviewMapper = Mappers.getMapper(ReviewMapper.class);
 
 
 }

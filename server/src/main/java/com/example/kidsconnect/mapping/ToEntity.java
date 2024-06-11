@@ -47,6 +47,15 @@ public class ToEntity extends MapperFactory{
         return therapistInfoMapper.toTherapistInfo(dto);
     }
 
+    public TherapistInfo requsetToTherapistInfo(ReservationRequestDto dto){
+        return reservationMapper.requestToTherapistInfo(dto);
+    }
+
+    //to TherapistReview
+    public TherapistReview toTherapistReview(ReviewDto reviewDTO, TherapistInfo therapistInfo, User user){
+        return reviewMapper.toTherapistReview(reviewDTO,therapistInfo,user);
+    }
+
     @AfterMapping
     public void encryptPassword(@MappingTarget User.UserBuilder user, UserSignUpDto userSignUpDto, @Autowired PasswordEncoder passwordEncoder) {
         System.out.println("Encrypting password...");

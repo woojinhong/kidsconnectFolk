@@ -6,6 +6,7 @@ import com.example.kidsconnect.dao.SymptomRepository;
 import com.example.kidsconnect.domain.Child;
 import com.example.kidsconnect.domain.ChildSymptom;
 import com.example.kidsconnect.domain.Symptom;
+import com.example.kidsconnect.domain.User;
 import com.example.kidsconnect.dto.ChildDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -49,8 +51,8 @@ public class ChildService {
                     .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
             //mapstruct(x) builder(o) childSymptom 저장.
             ChildSymptom childSymptom = ChildSymptom.builder()
-                    .child(child)
-                    .symptom(symptom)
+                    //.child(child)
+                   // .symptom(symptom)
                     .build();
             childSymptomRepository.save(childSymptom);
         }
@@ -59,4 +61,9 @@ public class ChildService {
     }
 
 
+    @Transactional(readOnly = true)
+    public Child findById(Long id) {
+        return childRepository.findById(id)
+                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
+    }
 }

@@ -22,5 +22,12 @@ public class Symptom {
 
     private String name;
 
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "symptom_id")
+//    private List<ChildSymptom> childSymptom;
+//
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "symptom_id")
+//    private List<TherapistInfoSymptom> ther;
 
 }

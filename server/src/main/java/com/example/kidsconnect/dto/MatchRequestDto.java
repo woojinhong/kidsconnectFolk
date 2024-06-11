@@ -1,5 +1,7 @@
 package com.example.kidsconnect.dto;
 
+import com.example.kidsconnect.domain.Symptom;
+import com.example.kidsconnect.domain.TherapistExperience;
 import lombok.*;
 
 import java.util.List;
@@ -9,10 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class MatchRequestDto {
-    private String experience;
-    private String speciality;
-    private char gender;
-    private String address;
+    private boolean isExperience;
+    private Character gender;
+    private List<String> symptoms;
 
 
 }

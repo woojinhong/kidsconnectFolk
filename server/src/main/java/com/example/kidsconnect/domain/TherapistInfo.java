@@ -27,6 +27,7 @@ public class TherapistInfo {
     private String bio;
     private String content;
 
+    private String totalExperience;
 
     private Boolean identityCheck;
     private Boolean crimeCheck;
@@ -47,18 +48,23 @@ public class TherapistInfo {
     private LocalDateTime upDate;
 
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "therapist_id", referencedColumnName = "id")
+    private Therapist therapist;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "therapist_info_id")
     private List<TherapistEducation> education;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "therapist_info_id")
     private List<TherapistExperience> experience;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "therapist_info_id")
     private List<TherapistInfoSymptom> therapistInfoSymptom;
+
+
 
     public void addTherapistExperience(TherapistExperience therapistExperience){
         if (this.experience == null) {
@@ -82,6 +88,14 @@ public class TherapistInfo {
         this.therapistInfoSymptom.add(therapistInfoSymptom);
     }
 
+    public void setTherapist(Therapist therapist) {
+        this.therapist = therapist;
+    }
+
+
+    public void setTotalExperience(String totalExperience) {
+        this.totalExperience = totalExperience;
+    }
 
     @PrePersist
     protected void onCreate() {

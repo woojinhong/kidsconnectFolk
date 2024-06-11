@@ -20,9 +20,6 @@ public class Enrol {
     private LocalDateTime inDate;
     private LocalDateTime upDate;
 
-    @ManyToOne
-    @JoinColumn(name = "therapist_id")
-    private Therapist therapist;
 
     @ManyToOne
     @JoinColumn(name = "center_id")

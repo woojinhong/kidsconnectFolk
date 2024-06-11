@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-
     LoginDto toLoginDTO(User user);
 
     User fromLoginDto(LoginDto loginDto);

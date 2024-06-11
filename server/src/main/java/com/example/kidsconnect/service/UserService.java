@@ -1,7 +1,10 @@
 package com.example.kidsconnect.service;
 
 
+import com.example.kidsconnect.dao.ChildRepository;
 import com.example.kidsconnect.dao.UserRepository;
+import com.example.kidsconnect.domain.Child;
+import com.example.kidsconnect.domain.TherapistInfo;
 import com.example.kidsconnect.domain.User;
 import com.example.kidsconnect.dto.LoginDto;
 import com.example.kidsconnect.jwt.LoginFilter;
@@ -20,6 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 //메서드 @Cacheable(value = "myUser") 같은 효과
 //@CacheConfig(cacheNames = "myUser")
@@ -35,12 +40,17 @@ public class UserService {
     //객체 매핑 정보 불러오기
 
 
+    private final ChildRepository childRepository;
+
+    @Transactional(readOnly = true)
+    public List<Child> getChildrenByUserId(Long userId) {
+        return childRepository.findByUserId(userId);
+    }
 
     //사용 추천안함 cacheable
 //    @Cacheable(key = "#login")
     public ResponseEntity<?> login(LoginDto loginDto) {
-        System.out.println("Received login request with email: " + loginDto.getEmail());
-        logger.info("Authentication failed!"+ loginDto.getEmail());
+
         User user = toEntity.fromUserLoginDto(loginDto);
 
         User users =userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword()).orElseThrow(
@@ -58,16 +68,20 @@ public class UserService {
         //mapstruct = dto -> entity, passwordEncoding.encode
         User user = toEntity.fromUserSignUpDto(userSignUpDto);
 
-
         if(userRepository.existsByEmail(user.getEmail()))
             throw new CustomException(CustomCode.DUPLICATED_EMAIL);
-
-
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_ADMIN");
         userRepository.save(user);
         return ResponseEntity.ok("부모 회원가입 성공");
+    }
+
+
+    @Transactional(readOnly = true)
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
     }
 }
 

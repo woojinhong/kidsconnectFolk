@@ -1,16 +1,15 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class TherapistReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +21,12 @@ public class TherapistReview {
 
     private LocalDateTime upDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "therapist_info_id", nullable = false)
+    private TherapistInfo therapistInfo;
 
-    @ManyToOne
-    @JoinColumn(name = "therapist_id")
-    private Therapist therapist;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @PrePersist

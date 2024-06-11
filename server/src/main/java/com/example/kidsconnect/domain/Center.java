@@ -31,15 +31,14 @@ public class Center {
     private LocalDateTime inDate;
 
     private LocalDateTime upDate;
-
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "center_id")
     private List<CenterReview> centerReview;
 
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "center",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrol> enrol;
 
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
-    private List<TherapistExperience> experience;
+
 
     @PrePersist
     protected void onCreate() {

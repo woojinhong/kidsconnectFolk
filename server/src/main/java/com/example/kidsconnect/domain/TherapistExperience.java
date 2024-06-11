@@ -19,19 +19,9 @@ public class TherapistExperience {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String place;
     private Date startDate;
     private Date endDate;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "therapist_id")
-    private Therapist therapist;
-
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_id")
-    private Center center;
-
 
 
 }

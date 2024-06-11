@@ -1,10 +1,7 @@
 package com.example.kidsconnect.mapping;
 
 import com.example.kidsconnect.domain.*;
-import com.example.kidsconnect.dto.ChildDto;
-import com.example.kidsconnect.dto.LoginDto;
-import com.example.kidsconnect.dto.TherapistInfoDto;
-import com.example.kidsconnect.dto.UserSignUpDto;
+import com.example.kidsconnect.dto.*;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
@@ -29,6 +26,10 @@ public class ToDto extends MapperFactory {
         return childMapper.toChildDto(child, symptom);
     }
 
-    // from therapistInfo -> to therapistInfoDto
+    // from therapistInfo -> to reservationResponseDto
+
+    public ReservationResponseDto fromReservationResponse(Therapist therapist, TherapistInfo therapistInfo, Child child, User user ){
+        return reservationMapper.toReservationResponseDto(therapist,therapistInfo,child,user);
+    }
 
 }

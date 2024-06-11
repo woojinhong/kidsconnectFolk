@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 
 
 @Service
@@ -60,7 +61,7 @@ public class TherapistService {
 //                    .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
 
             Enrol enrol = Enrol.builder()
-                    .therapist(therapist)
+     //               .therapist(therapist)
 //                    .center(center)
                     .build();
             enrolRepository.save(enrol);
@@ -71,6 +72,11 @@ public class TherapistService {
         therapistRepository.save(therapist);
 
         return ResponseEntity.ok("치료사 회원가입 성공");
+    }
+
+    public Therapist findById(Long Id) {
+        return therapistRepository.findById(Id)
+                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
     }
 
 

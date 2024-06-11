@@ -2,6 +2,7 @@ package com.example.kidsconnect.controller;
 import com.example.kidsconnect.dto.TherapistInfoDto;
 import com.example.kidsconnect.service.TherapistInfoService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,10 @@ public class TherapistInfoController {
 
     private final TherapistInfoService therapistInfoService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> showTherapistInfo(@PathVariable Long id){
+        return therapistInfoService.showTherapistInfo(id);
+    }
     @PostMapping()
     public ResponseEntity<?> createTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto) {
 

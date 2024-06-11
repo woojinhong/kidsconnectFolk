@@ -1,5 +1,7 @@
 package com.example.kidsconnect.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -17,6 +19,10 @@ import java.util.List;
 @Builder
 @DynamicInsert
 @ToString
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Therapist implements Loginable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,18 +47,21 @@ public class Therapist implements Loginable {
     private LocalDateTime upDate;
 
 
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "therapist_id")
     private List<Enrol> enrol;
 
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "therapist", orphanRemoval = true)
     private List<Reservation> reservation;
 
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "therapist_id")
+    @OneToOne(mappedBy = "therapist", cascade = CascadeType.ALL, orphanRemoval = true)
     private TherapistInfo therapistInfo;
 
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL)
+
+
+    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TherapistReview> therapistReview;
 
 
