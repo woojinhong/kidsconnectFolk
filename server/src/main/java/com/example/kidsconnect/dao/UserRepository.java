@@ -16,7 +16,8 @@ public interface UserRepository extends CrudRepository<User,Long> {
     //"SELECT COUNT(u) FROM User u WHERE u.email = :email"
     boolean existsByEmail(String email);
 
-    //테스트 용
+    //테스트 용  
     User findByEmail(String email);
+
 
 }

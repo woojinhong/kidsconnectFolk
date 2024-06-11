@@ -1,9 +1,7 @@
 package com.example.kidsconnect.config;
 
-import com.example.kidsconnect.jwt.JWTFilter;
-import com.example.kidsconnect.jwt.JWTUtil;
-import com.example.kidsconnect.jwt.LoginFilter;
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,19 +15,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Collections;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final AuthenticationConfiguration authenticationConfiguration;
-    private final JWTUtil jwtUtil;
+//    private final AuthenticationConfiguration authenticationConfiguration;
+//    private final JWTUtil jwtUtil;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
-        this.authenticationConfiguration = authenticationConfiguration;
-        this.jwtUtil = jwtUtil;
-    }
+	private final JwtTokenProvider jwtTokenProvider;
+	
+//    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
+//        this.authenticationConfiguration = authenticationConfiguration;
+//        this.jwtUtil = jwtUtil;
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -49,12 +51,16 @@ public class SecurityConfig {
                 .formLogin((form) -> form.disable())
                 .httpBasic((basic) -> basic.disable())
                 .authorizeHttpRequests((auth) -> auth
-                        ///api/v1/auth/login/**","/api/v1/auth/signup/**
-                        .requestMatchers( "/**").permitAll()
-//                        .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+
+                        //api/v1/auth/login/**","/api/v1/auth/signup/**
+                        //.requestMatchers( "/**").permitAll()
+                        // .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/login", "/", "/api/v1/auth/login/**","/api/v1/auth/signup/**").permitAll()
+                        .requestMatchers("/**").hasAuthority("USER")
+
                         .anyRequest().authenticated())
-                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class)
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) // UsernamePassword 필터전에 JWT 인증 필터를 추가합니다.
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors((cors)-> cors
