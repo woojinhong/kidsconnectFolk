@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import ChatboxSystem from "../../Chatbox/ChatboxSystem";
 import ChatboxUser from "../../Chatbox/ChatboxUser";
@@ -10,7 +11,7 @@ import { matchingSurveyActions } from "../../../../Store/Slices/MatchingSurveySl
 import surveyText from "../../../../Assets/TextData/surveyText";
 import { PreferenceTextType } from "./ModalContentType";
 
-function TherapistPreference() {
+function TherapistPreference({ closed }: { closed?: boolean }) {
   const textData: PreferenceTextType | undefined = surveyText.find(
     (data) => data.type === "preference"
   ) as PreferenceTextType;
@@ -19,12 +20,8 @@ function TherapistPreference() {
 
   const [conversation, setConversation] = useState<JSX.Element[]>([]);
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [isGenderButtonDisabled, setIsGenderButtonDisabled] =
-    useState<boolean>(false);
-  const [isCareerButtonDisabled, setIsCareerButtonDisabled] =
-    useState<boolean>(false);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initialConversation = [
@@ -35,7 +32,7 @@ function TherapistPreference() {
       />,
     ];
     setConversation(initialConversation);
-    setCurrentStep(1); // Start with step 1 after the initial intro message
+    setCurrentStep(1);
   }, [messages.intro]);
 
   useEffect(() => {
@@ -50,7 +47,6 @@ function TherapistPreference() {
             highlightWords="선생님 성별"
             button={selectGender}
             onClick={getGenderPreferenceAnswer}
-            disabled={isGenderButtonDisabled}
           />,
         ]);
       } else if (currentStep === 2) {
@@ -63,7 +59,6 @@ function TherapistPreference() {
             highlightWords="경력"
             button={selectCareer}
             onClick={getCareerPreferenceAnswer}
-            disabled={isCareerButtonDisabled}
           />,
         ]);
       } else if (currentStep === 3) {
@@ -77,6 +72,9 @@ function TherapistPreference() {
             animation={true}
           />,
         ]);
+        setCurrentStep(4);
+      } else if (currentStep === 4) {
+        navigate("/matching");
       }
     };
 
@@ -88,31 +86,7 @@ function TherapistPreference() {
     messages.loading,
     selectGender,
     selectCareer,
-    isGenderButtonDisabled,
-    isCareerButtonDisabled,
   ]);
-
-  const getGenderPreferenceAnswer = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      let answer = event.currentTarget.textContent as string;
-      if (answer === "상관 없어요!") {
-        return (answer = "전체");
-      }
-      dispatch(matchingSurveyActions.setGenderPreference(answer));
-      setIsGenderButtonDisabled(true);
-      setConversation((prev) => [
-        ...prev,
-        <ChatboxUser
-          key="gender-answer"
-          messages={answer}
-          highlightWords={answer}
-        />,
-      ]);
-      setCurrentStep(2); // Move to the next step
-    },
-    []
-  );
 
   const getCareerPreferenceAnswer = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -120,7 +94,6 @@ function TherapistPreference() {
       const answer = event.currentTarget.textContent as string;
       const answerToBoolean: boolean = answer === "네" ? true : false;
       dispatch(matchingSurveyActions.setCareerPreference(answerToBoolean));
-      setIsCareerButtonDisabled(true);
       setConversation((prev) => [
         ...prev,
         <ChatboxUser
@@ -131,7 +104,32 @@ function TherapistPreference() {
       ]);
       setCurrentStep(3);
     },
-    []
+    [dispatch]
+  );
+
+  const getGenderPreferenceAnswer = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      const answer = event.currentTarget.textContent as string;
+      const answerToData = (answer: string) => {
+        if (answer === "상관 없어요!") {
+          return "성별 무관";
+        } else {
+          return answer;
+        }
+      };
+      dispatch(matchingSurveyActions.setGenderPreference(answerToData(answer)));
+      setConversation((prev) => [
+        ...prev,
+        <ChatboxUser
+          key="gender-answer"
+          messages={answer}
+          highlightWords={answer}
+        />,
+      ]);
+      setCurrentStep(2);
+    },
+    [dispatch]
   );
 
   return <section>{conversation}</section>;
