@@ -21,15 +21,18 @@ const surveyText = [
       careLocation: "어디서 도움을 받고 싶으신가요?",
       done: "신청이 완료되었어요!",
     },
-    selectChild: ["+ 아이 등록하기"],
+    selectChild: ["민주", "+ 아이 등록하기"],
     selectLocation: [
       "선생님이 근무하는 곳으로 갈게요!",
       "집에서 받고 싶어요!",
       "문의 후 조율할게요",
     ],
-    selectParams: ["선생님들을 더 찾아보고 싶어요", "홈 화면으로 돌아갈게요"],
-    toHome: "/",
-    toHistory: "/history",
+    selectParams: [
+      "선생님들을 더 찾아보고 싶어요",
+      "마이페이지에서 확인할게요",
+    ],
+    toMypage: "/mypage/p",
+    toHistory: "/matching",
   },
   {
     type: "addChild",

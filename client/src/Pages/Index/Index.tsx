@@ -7,7 +7,6 @@ import TherapistCard from "../../Component/Common/Card/TherapistCard/TherapistCa
 
 import { getSelectedTreatmentArea } from "../../Services/CustomHooks";
 import { matchingSurveyActions } from "../../Store/Slices/MatchingSurveySlice";
-import { useGetContentInModal } from "../../Services/CustomHooks";
 
 import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import externalRecommendSites from "../../Assets/TextData/externalRecommendSites";
@@ -55,7 +54,7 @@ function Index() {
             </div>
             <Modal
               buttonText="선생님 찾아보기"
-              content={useGetContentInModal("therapistPreference")}
+              content={"therapistPreference"}
               buttonIcon="search"
             />
           </div>

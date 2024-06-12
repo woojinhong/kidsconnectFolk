@@ -4,6 +4,9 @@ import FilledButton from "../../Button/FilledButton";
 export type TherapistCardProps = {
   variants: "default" | "applied" | "summary";
   therapistId?: number | undefined;
+  onClose?: () => void;
+  isOpen?: boolean;
+  onOpen?: () => void;
 };
 
 export type TherapistProfileType = {
