@@ -76,17 +76,22 @@ const selectboxData = [
   {
     type: "career",
     placeholder: "경력 무관",
-    data: ["신입", "경력"],
+    data: ["경력 무관", "경력"],
   },
   {
     type: "gender",
     placeholder: "성별",
-    data: ["남자", "여자", "무관"],
+    data: ["성별 무관", "남성", "여성"],
   },
   {
     type: "filterBy",
     placeholder: "최신순",
     data: ["최신순", "인기순"],
+  },
+  {
+    type: "userRegion",
+    placeholder: "지역",
+    data: ["전체", "서울", "경기", "인천"],
   },
 ];
 

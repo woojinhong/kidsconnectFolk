@@ -33,6 +33,7 @@ const matchingSurveySlice = createSlice({
     setCareerPreference: (state, action: PayloadAction<careerType>) => {
       state.preference.career = action.payload;
     },
+    getAllPreference: (state) => state,
   },
 });
 

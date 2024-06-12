@@ -1,3 +1,7 @@
+import TherapistPreference from "../Component/Common/Modal/ModalContent/TherapistPreference";
+import AddChildSurvey from "../Component/Common/Modal/ModalContent/AddChildSurvey";
+import ApplicationQuestionary from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
+
 // 경력 년,월 시작일, 끝난일을 통해 계산 커스텀 훅
 export function useCareerDateCalc(startDate: string, endDate: string) {
   const careerDateYear =
@@ -33,3 +37,35 @@ export function useGetChildAge(dateOfBirth: string) {
 export function useDelayChatbox(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+//Category Value 가져오는 Custom Hook
+export const getSelectedTreatmentArea = (
+  text: string,
+  state: string[],
+  setState: React.Dispatch<React.SetStateAction<string[]>>
+) => {
+  if (state.includes(text)) {
+    setState(state.filter((area) => area !== text));
+  } else if (text === "전체") {
+    setState([text]);
+  } else if (state.includes("전체")) {
+    setState([text]);
+  } else {
+    setState([...state, text]);
+  }
+};
+
+export const useGetContentInModal = (
+  type: "therapistPreference" | "addChild" | "apply"
+) => {
+  switch (type) {
+    case "therapistPreference":
+      return <TherapistPreference />;
+    case "addChild":
+      return <AddChildSurvey />;
+    case "apply":
+      return <ApplicationQuestionary />;
+    default:
+      return null;
+  }
+};

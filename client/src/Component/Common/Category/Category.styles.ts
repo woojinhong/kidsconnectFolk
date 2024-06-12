@@ -34,7 +34,7 @@ export const StyledActionIcon = styled.div<StyledCommonProps>`
   background-color: ${(props) =>
     props.$main
       ? "#ffffff "
-      : props.$checkbox && props.$hovered
+      : (props.$checkbox && props.$hovered) || props.$ischecked
         ? "#ffffff"
         : " #f2f2f2"};
   border-radius: 16px;

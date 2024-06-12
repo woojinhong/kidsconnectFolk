@@ -1,15 +1,31 @@
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 import Modal from "../../Component/Common/Modal/Modal";
 import Category from "../../Component/Common/Category/Category";
-import TherapistPreference from "../../Component/Common/Modal/ModalContent/TherapistPreference";
 import TherapistCard from "../../Component/Common/Card/TherapistCard/TherapistCard";
+
+import { getSelectedTreatmentArea } from "../../Services/CustomHooks";
+import { matchingSurveyActions } from "../../Store/Slices/MatchingSurveySlice";
+import { useGetContentInModal } from "../../Services/CustomHooks";
 
 import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import externalRecommendSites from "../../Assets/TextData/externalRecommendSites";
 import SubBannerImg from "../../Assets/Image/Banner/subBannerImg.png";
 
 function Index() {
+  const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
+    []
+  );
   // 추후 api 받아와서 id 찾기
   const therapistIdThisMonth: number[] = [4, 3, 1, 2];
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      matchingSurveyActions.setTreatmentAreaPreference(selectedTreatmentArea)
+    );
+  });
 
   return (
     <>
@@ -31,12 +47,15 @@ function Index() {
                   text={category.text}
                   size="lg"
                   main={true}
+                  setData={setSelectedTreatmentArea}
+                  checkedData={selectedTreatmentArea}
+                  onClick={getSelectedTreatmentArea}
                 />
               ))}
             </div>
             <Modal
               buttonText="선생님 찾아보기"
-              content={TherapistPreference}
+              content={useGetContentInModal("therapistPreference")}
               buttonIcon="search"
             />
           </div>

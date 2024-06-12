@@ -4,21 +4,12 @@ export interface SelectBoxDefaultProps {
   height?: string;
   text?: string;
   region?: string | null;
-  getData?: (value: string | null) => void;
+  getData?: (
+    value: string | null
+  ) => void | React.Dispatch<React.SetStateAction<string[]>>;
   onClear?: boolean;
-}
-
-export interface SelectboxOptionTherapist {
-  id: number;
-  firstName: string;
-  email: string;
-  pwd: string;
-  dateOfBirth: string;
-  phoneNum: string;
-  postalCode: string;
-  addressDetail: string;
-  address: string;
-  status: boolean;
-  inDate: string;
-  upDate: string;
+  filter?: boolean;
+  defaultSelectedValue?: string;
+  variants?: "filled";
+  size?: "sm" | "lg";
 }

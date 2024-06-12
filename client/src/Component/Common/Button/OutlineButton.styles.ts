@@ -6,7 +6,7 @@ export const StyledButtonWrapper = styled.div`
 
 export const getCommonButtonStyles = (
   borderColor: string,
-  disabled: boolean,
+  disabled: boolean | undefined,
   hovered: boolean
 ) => {
   return {

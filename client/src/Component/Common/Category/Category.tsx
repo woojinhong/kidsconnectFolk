@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHover } from "@mantine/hooks";
 
 import CategoryProps from "./CategoryProps";
@@ -11,16 +11,25 @@ function Category({
   onClick,
   main = false,
   checkbox = true,
+  checkedData = [],
+  setData = () => {},
 }: CategoryProps) {
   const [isChecked, setIsChecked] = useState(false);
   const { hovered, ref } = useHover();
 
   function handleCheckbox() {
     if (onClick) {
-      onClick(text);
+      onClick(text, checkedData, setData);
     }
-    setIsChecked(!isChecked);
   }
+
+  useEffect(() => {
+    if (checkedData.includes(text)) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+    }
+  }, [checkedData, text]);
 
   return (
     <StyledActionIcon

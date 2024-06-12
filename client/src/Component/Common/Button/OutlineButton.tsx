@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
-import "@mantine/core/styles.css";
 import { useHover } from "@mantine/hooks";
+
 import {
   StyledButtonWrapper,
   getButtonStyles,
@@ -20,7 +20,7 @@ function OutlineButton({
   text = "",
   onClick,
   borderColor = "#FF7000",
-  disabled = false,
+  disabled,
 }: OutlineButtonProps) {
   const { hovered, ref } = useHover();
 
