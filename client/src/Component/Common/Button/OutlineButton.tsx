@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
+
 import { Button } from "@mantine/core";
-import "@mantine/core/styles.css";
 import { useHover } from "@mantine/hooks";
+
 import {
   StyledButtonWrapper,
   getButtonStyles,
@@ -20,9 +22,14 @@ function OutlineButton({
   text = "",
   onClick,
   borderColor = "#FF7000",
-  disabled = false,
+  disabled,
 }: OutlineButtonProps) {
   const { hovered, ref } = useHover();
+  const [isDisabled, setIsDisabled] = useState(disabled);
+
+  useEffect(() => {
+    setIsDisabled(disabled);
+  }, [disabled]);
 
   return (
     <StyledButtonWrapper ref={ref}>
@@ -30,7 +37,7 @@ function OutlineButton({
         style={{
           display: "flex",
           ...getButtonStyles(variant),
-          ...getCommonButtonStyles(borderColor, disabled, hovered),
+          ...getCommonButtonStyles(borderColor, isDisabled, hovered),
         }}
         variant={
           variant === "outline"
@@ -42,7 +49,7 @@ function OutlineButton({
         color="#FF7000"
         radius={variant === "outline" ? "16px" : "8px"}
         onClick={onClick}
-        disabled={disabled}
+        disabled={isDisabled}
       >
         {text}
       </Button>
