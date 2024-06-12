@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Highlight } from "@mantine/core";
 import OutlineButton from "../Button/OutlineButton";
 import InputDatePicker from "../Input/InputDatePicker";
@@ -25,9 +27,17 @@ function ChatboxSystem({
   button = [],
   animation = false,
   onClick,
-  disabled = false,
+  disabled,
   selectbox = false,
 }: ChatboxSystemProps) {
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClick) {
+      onClick(event);
+      setIsDisabled(true);
+    }
+  };
   return (
     <StyledChatboxSystemBox>
       <Highlight
@@ -42,7 +52,7 @@ function ChatboxSystem({
       {button ? (
         <StyledButtonWrapper
           className={messages.includes("선생님 성별") ? "gender_buttons" : ""}
-          style={{ color: disabled ? "#999999" : "#333333" }}
+          style={{ color: isDisabled ? "#999999" : "#333333" }}
         >
           {button.map((text) => {
             return (
@@ -51,8 +61,8 @@ function ChatboxSystem({
                 text={text}
                 variant="m_outline"
                 borderColor="#c1c1c1"
-                onClick={onClick}
-                disabled={disabled}
+                onClick={handleOnClick}
+                disabled={isDisabled}
               ></OutlineButton>
             );
           })}
