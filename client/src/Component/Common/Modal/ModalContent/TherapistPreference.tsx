@@ -11,7 +11,7 @@ import { matchingSurveyActions } from "../../../../Store/Slices/MatchingSurveySl
 import surveyText from "../../../../Assets/TextData/surveyText";
 import { PreferenceTextType } from "./ModalContentType";
 
-function TherapistPreference({ closed }: { closed?: boolean }) {
+function TherapistPreference() {
   const textData: PreferenceTextType | undefined = surveyText.find(
     (data) => data.type === "preference"
   ) as PreferenceTextType;
