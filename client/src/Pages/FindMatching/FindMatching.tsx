@@ -24,14 +24,6 @@ function FindMatching() {
     string | boolean | null
   >();
   const [selectedFilterBy, setSelectedFilterBy] = useState<string | null>();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   const checkedSurveyData = useSelector(
     (state: RootState) => state.preferenceData
@@ -98,9 +90,6 @@ function FindMatching() {
               key={therapistId}
               therapistId={therapistId}
               variants="default"
-              isOpen={isModalOpen}
-              onOpen={openModal}
-              onClose={closeModal}
             />
           ))}
         </div>
