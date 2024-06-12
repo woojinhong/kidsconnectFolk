@@ -1,7 +1,3 @@
-import TherapistPreference from "../Component/Common/Modal/ModalContent/TherapistPreference";
-import AddChildSurvey from "../Component/Common/Modal/ModalContent/AddChildSurvey";
-import ApplicationQuestionary from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
-
 // 경력 년,월 시작일, 끝난일을 통해 계산 커스텀 훅
 export function useCareerDateCalc(startDate: string, endDate: string) {
   const careerDateYear =
@@ -52,20 +48,5 @@ export const getSelectedTreatmentArea = (
     setState([text]);
   } else {
     setState([...state, text]);
-  }
-};
-
-export const useGetContentInModal = (
-  type: "therapistPreference" | "addChild" | "apply"
-) => {
-  switch (type) {
-    case "therapistPreference":
-      return <TherapistPreference />;
-    case "addChild":
-      return <AddChildSurvey />;
-    case "apply":
-      return <ApplicationQuestionary />;
-    default:
-      return null;
   }
 };
