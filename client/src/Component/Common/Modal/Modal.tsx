@@ -22,6 +22,7 @@ function Modal({
   buttonIcon,
 }: ModalProps) {
   const [opened, { open, close }] = useDisclosure(false);
+
   return (
     <>
       <MantineModal.Root
@@ -39,7 +40,7 @@ function Modal({
             </MantineModal.Title>
             <StyledModalCloseButton icon={<img src={IconRemove} />} />
           </StyledModalHeader>
-          <MantineModal.Body>{content()}</MantineModal.Body>
+          <MantineModal.Body>{content}</MantineModal.Body>
           {chatInput ? (
             <StyledChatInput>
               <Input.Wrapper
@@ -86,7 +87,7 @@ function Modal({
 }
 
 type ModalProps = {
-  content: () => JSX.Element;
+  content: JSX.Element | null;
   buttonText: string;
   chatInput?: boolean;
   buttonVariant?: "filled" | "outlined" | "addChild";
