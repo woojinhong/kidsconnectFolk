@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Tag from "../../Tag/Tag";
 
-import OutlineButton from "../../Button/OutlineButton";
+import Tag from "../../Tag/Tag";
+import Modal from "../../Modal/Modal";
+
 import { useCareerDateCalc } from "../../../../Services/CustomHooks";
 import {
   StyledTherapistCardContainer,
@@ -25,7 +26,13 @@ import TherapistCareer from "../../../../MockData/therapistExperienceData.json";
 
 import IconReview from "../../../../Assets/Image/IconReview.svg";
 
-function TherapistCard({ variants, therapistId }: TherapistCardProps) {
+function TherapistCard({
+  variants,
+  therapistId,
+  onClose,
+  isOpen,
+  onOpen,
+}: TherapistCardProps) {
   // 추후 api 추가 시 변경 가능, isMatched, hasReviewed 값 = 임의 값
   const [isMatched, setIsMatched] = useState<boolean>(false);
   const [hasReviewed, setHasReviewed] = useState<boolean>(false);
@@ -107,7 +114,14 @@ function TherapistCard({ variants, therapistId }: TherapistCardProps) {
       ) : null}
       {variants === "default" ? (
         <StyledButtonWrapper>
-          <OutlineButton text="연결해주세요" />
+          <Modal
+            buttonText="연결해주세요"
+            content="apply"
+            buttonVariant="outlined"
+            onClose={onClose}
+            isOpen={isOpen}
+            onOpen={onOpen}
+          />
         </StyledButtonWrapper>
       ) : null}
       {variants === "applied"
