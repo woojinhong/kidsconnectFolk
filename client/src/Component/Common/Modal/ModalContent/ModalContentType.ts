@@ -19,7 +19,7 @@ export type ApplicationTextType = {
   selectChild: string[];
   selectLocation: string[];
   selectParams: string[];
-  toHome: string;
+  toMypage: string;
   toHistory: string;
 };
 
