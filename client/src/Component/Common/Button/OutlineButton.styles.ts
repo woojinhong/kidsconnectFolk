@@ -6,13 +6,13 @@ export const StyledButtonWrapper = styled.div`
 
 export const getCommonButtonStyles = (
   borderColor: string,
-  isDisabled: boolean | undefined,
+  disabled: boolean | undefined,
   hovered: boolean
 ) => {
   return {
     width: "100%",
-    border: `1px solid ${isDisabled ? "#999999" : borderColor}`,
-    backgroundColor: isDisabled ? "#b2b2b2" : hovered ? "#FFD8B8" : "#ffffff",
+    border: `1px solid ${disabled ? "#999999" : borderColor}`,
+    backgroundColor: disabled ? "#b2b2b2" : hovered ? "#FFD8B8" : "#ffffff",
     transition: "0.2s",
     color: hovered ? "#FF7000" : "#FF7000",
   };
