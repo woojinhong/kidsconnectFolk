@@ -27,7 +27,6 @@ function ChatboxSystem({
   button = [],
   animation = false,
   onClick,
-  disabled,
   selectbox = false,
 }: ChatboxSystemProps) {
   const [isDisabled, setIsDisabled] = useState(false);
