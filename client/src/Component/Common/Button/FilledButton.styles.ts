@@ -7,42 +7,29 @@ export const StyledButton = styled.div`
 
 export const getButtonStyles = (
   variant: string,
-  disabled: string[],
+  disabled: boolean,
   hovered: boolean,
   backgroundColor: string
 ) => {
-  const baseStyles = {
+  const changeBackgroundColor = () => {
+    if (disabled) {
+      return "#BEBEBE";
+    } else if (hovered) {
+      return "#FFB274";
+    } else {
+      backgroundColor;
+    }
+  };
+  return {
     width: "100%",
     padding: variant === "filled" ? "0 16px" : "0 8px",
     height: variant === "filled" ? "56px" : "32px",
     fontSize: variant === "filled" ? "16px" : "14px",
     fontWeight: variant === "filled" ? "700" : "500",
-    color: hovered ? "#FFFFFF" : "#FFFFFF",
-    backgroundColor: hovered
-      ? variant === "filled"
-        ? "#FFD8B8"
-        : "#FFB274"
-      : backgroundColor,
+    color: disabled ? "#999999" : "#ffffff",
+    backgroundColor: changeBackgroundColor(),
     transition: "0.2s",
   };
-
-  if (disabled.includes("disabledLight")) {
-    return {
-      ...baseStyles,
-      backgroundColor: "#F2F2F2",
-      color: "#999999",
-      cursor: "not-allowed",
-    };
-  } else if (disabled.includes("disabledDark")) {
-    return {
-      ...baseStyles,
-      backgroundColor: variant === "filled" ? "#BEBEBE" : "#BEBEBE",
-      color: "#999999",
-      cursor: "not-allowed",
-    };
-  } else {
-    return baseStyles;
-  }
 };
 
 export const StyledIcon = styled.img`

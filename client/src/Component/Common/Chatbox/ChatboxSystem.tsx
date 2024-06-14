@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Highlight } from "@mantine/core";
+import { DateValue } from "@mantine/dates";
 import OutlineButton from "../Button/OutlineButton";
 import InputDatePicker from "../Input/InputDatePicker";
 
@@ -37,6 +38,10 @@ function ChatboxSystem({
       setIsDisabled(true);
     }
   };
+  // 나중에 불러들일 데이터가 있을 때 사용
+  const getDateValue = (date: string) => {
+    console.log(date);
+  };
   return (
     <StyledChatboxSystemBox>
       <Highlight
@@ -67,7 +72,13 @@ function ChatboxSystem({
           })}
         </StyledButtonWrapper>
       ) : null}
-      {selectbox ? <InputDatePicker text="날짜 선택하기" /> : null}
+      {selectbox ? (
+        <InputDatePicker
+          placeholder="날짜 선택하기"
+          size="xs"
+          dispatch={getDateValue}
+        />
+      ) : null}
       {animation ? (
         <StyledAnimationContainer>
           <img src={LoadingAnimation} alt="로딩 중" />

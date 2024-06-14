@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 
+import { changeInputEvent } from "../../../Assets/CommonType/EventType";
 import { PasswordInput } from "@mantine/core";
 import { InputPasswordText } from "../../../Assets/TextData/SignCommonText";
 import { SignCommonTextType } from "../../../Assets/TextData/SignCommonText";
 
 import styled from "styled-components";
 
-function InputPassword() {
+function InputPassword({
+  dispatch,
+}: {
+  dispatch: (event: changeInputEvent) => void;
+}) {
   const { labelText, placeholderText, errorMessage, regEx } =
     InputPasswordText as SignCommonTextType;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setValue(newValue);
+    dispatch(event);
   };
 
   const [value, setValue] = useState<string>("");
@@ -32,6 +38,7 @@ function InputPassword() {
 
   return (
     <StyledTextInput
+      name="password"
       size="lg"
       radius="16px"
       withAsterisk={true}

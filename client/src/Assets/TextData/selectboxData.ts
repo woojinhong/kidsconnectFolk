@@ -5,9 +5,9 @@ const selectboxData = [
     data: ["서울", "경기", "인천"],
   },
   {
-    type: "detailedRegion",
+    type: "detailRegion",
     placeholder: "상세 지역",
-    detailedRegion: {
+    detailRegion: {
       seoul: [
         "강남구",
         "강동구",
@@ -101,10 +101,10 @@ export type categoryDefaultType = {
   type: string;
   placeholder: string;
   data?: string[];
-  detailedRegion?: detailedRegionType;
+  detailRegion?: detailRegionType;
 };
 
-export type detailedRegionType = {
+export type detailRegionType = {
   [key: string]: string[];
   seoul: string[];
   incheon: string[];
