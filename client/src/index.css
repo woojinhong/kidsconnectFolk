@@ -8,7 +8,10 @@
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
   font-weight: 400;
-  input::placeholder,
+  input::placeholder {
+    color: #e1e1e1;
+    font-weight: 400;
+  }
   textarea::placeholder {
     color: #c1c1c1;
     font-family: "Noto Sans KR", sans-serif;
@@ -92,9 +95,5 @@ select:focus {
   padding: 12px 0 12px 12px;
 }
 .mantine-Select-option:hover {
-  background-color: #f2f2f2;
-}
-
-.m_2351eeb0:hover:where(:not([data-disabled])) {
   background-color: #f2f2f2;
 }
