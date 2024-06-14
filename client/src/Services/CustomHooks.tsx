@@ -50,3 +50,14 @@ export const getSelectedTreatmentArea = (
     setState([...state, text]);
   }
 };
+
+export const useErrorMessagesAccordingToInputLabel = (label: string) => {
+  switch (label) {
+    case "생년월일":
+      return "생년월일을 입력해주세요";
+    case "휴대폰 번호":
+      return "휴대폰 번호를 입력해주세요";
+    default:
+      return "";
+  }
+};
