@@ -98,7 +98,6 @@ function Signup() {
               />
             )}
             <FilledButton text="회원가입" disabled={isFormInvalid} />
-            <FilledButton text="실험용" disabled={true} />
           </form>
         </div>
       </section>
