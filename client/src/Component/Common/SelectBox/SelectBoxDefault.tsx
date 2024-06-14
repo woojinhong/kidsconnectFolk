@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useFocusWithin } from "@mantine/hooks";
 import { StyledContainer, StyledSelectbox } from "./SelectBoxDefault.styles";
 import { SelectBoxDefaultProps } from "./SelectBoxDefaultProps";
 
@@ -22,9 +23,9 @@ function SelectBoxDefault({
   height = "",
 }: SelectBoxDefaultProps) {
   const [value, setValue] = useState<string | null>(null);
-  const [isFocused, setIsFocused] = useState(false);
-  const arrowIcon = isFocused ? arrowUp : arrowDown;
-  const arrowIconWhite = isFocused ? arrowUpWt : arrowDownWt;
+  const { ref, focused } = useFocusWithin();
+  const arrowIcon = focused ? arrowUp : arrowDown;
+  const arrowIconWhite = focused ? arrowUpWt : arrowDownWt;
 
   const categoryData: categoryDefaultType | undefined = selectboxData.find(
     (data) => data.type === category
@@ -40,17 +41,13 @@ function SelectBoxDefault({
 
   function handleDropdownChange(value: string | null) {
     setValue(value);
-    handleisFocused();
-    if (category === "region" && getData) {
-      getData(switchRegionToEng(value));
-    } else if (category === "career" && getData) {
+    if (category === "career" && getData) {
       getData(switchCareerToBoolean(value));
+    } else if (category === "detailRegion" && getData) {
+      getData(value);
     } else if (getData) {
       getData(value);
     }
-  }
-  function handleisFocused() {
-    setIsFocused(!isFocused);
   }
   function handleDefaultValueOption(defaultValue: string | null) {
     if (category === "career") {
@@ -61,50 +58,18 @@ function SelectBoxDefault({
       return defaultValue;
     }
   }
-  function switchRegionToEng(value: string | null) {
-    switch (value) {
-      case "서울":
-        return "seoul";
-      case "인천":
-        return "incheon";
-      case "경기":
-        return "gyeonggi";
-      default:
-        return null;
-    }
-  }
-  function switchCareerToBoolean(value: string | null) {
-    switch (value) {
-      case "경력 무관":
-        return "false";
-      case "경력":
-        return "true";
-      default:
-        return null;
-    }
-  }
-  function switchBooleanToCareer(value: string | null) {
-    switch (value) {
-      case "false":
-        return "경력 무관";
-      case "true":
-        return "경력";
-      default:
-        return null;
-    }
-  }
 
-  const getDetailedRegionData = () => {
-    if (categoryData?.detailedRegion && region) {
-      const regionData = categoryData.detailedRegion[region];
+  const getDetailRegionData = () => {
+    if (categoryData?.detailRegion && region) {
+      const regionData = categoryData.detailRegion[region];
       return regionData;
     }
     return [];
   };
 
   const changeData = () => {
-    if (category === "detailedRegion") {
-      return getDetailedRegionData();
+    if (category === "detailRegion") {
+      return getDetailRegionData();
     } else return categoryData?.data;
   };
 
@@ -119,6 +84,7 @@ function SelectBoxDefault({
   return (
     <StyledContainer $size={size}>
       <StyledSelectbox
+        ref={ref}
         value={value}
         placeholder={categoryData?.placeholder}
         data={changeData()}
@@ -130,7 +96,6 @@ function SelectBoxDefault({
             <img src={arrowIcon} />
           )
         }
-        onClear={handleisFocused}
         withCheckIcon={false}
         pointer={true}
         styles={{
@@ -144,7 +109,7 @@ function SelectBoxDefault({
             color: handleBGColor("color"),
           },
         }}
-        $isFocused={isFocused}
+        $isFocused={focused}
         $size={size}
         height={height}
         width={width}
@@ -154,3 +119,24 @@ function SelectBoxDefault({
 }
 
 export default SelectBoxDefault;
+
+function switchCareerToBoolean(value: string | null) {
+  switch (value) {
+    case "경력 무관":
+      return "false";
+    case "경력":
+      return "true";
+    default:
+      return null;
+  }
+}
+function switchBooleanToCareer(value: string | null) {
+  switch (value) {
+    case "false":
+      return "경력 무관";
+    case "true":
+      return "경력";
+    default:
+      return null;
+  }
+}
