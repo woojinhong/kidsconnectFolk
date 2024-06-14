@@ -25,6 +25,7 @@ public class TherapistReview {
     @JoinColumn(name = "therapist_info_id", nullable = false)
     private TherapistInfo therapistInfo;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

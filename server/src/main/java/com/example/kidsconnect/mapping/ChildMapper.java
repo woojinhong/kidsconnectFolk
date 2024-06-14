@@ -1,30 +1,30 @@
 package com.example.kidsconnect.mapping;
 
-import com.example.kidsconnect.dao.SymptomRepository;
 import com.example.kidsconnect.domain.Child;
-import com.example.kidsconnect.domain.ChildSymptom;
 import com.example.kidsconnect.domain.Symptom;
-import com.example.kidsconnect.dto.ChildDto;
+import com.example.kidsconnect.domain.User;
+import com.example.kidsconnect.dto.ChildRequestDto;
 
 import org.mapstruct.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ChildMapper {
 
 
 
-    @Mapping(source = "symptom.id", target = "symptomId")
-    ChildDto toChildDto(Child child,Symptom symptom);
+    //@Mapping(source = "symptom.name", target = "symptomName")
+    ChildRequestDto toChildDto(Child child, Symptom symptom);
 
-    @Mappings({
-            @Mapping(source = "childDto.childId", target = "id"),
-            @Mapping(target = "childSymptom", ignore = true) // childSymptom은 따로 매핑 처리
-    })
-    Child fromChildDto(ChildDto childDto);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "inDate", ignore = true)
+    @Mapping(target = "upDate", ignore = true)
+    @Mapping(target = "firstName", source = "childRequestDto.firstName")
+    @Mapping(target = "lastName", source = "childRequestDto.lastName")
+    @Mapping(target = "dateOfBirth", source = "childRequestDto.dateOfBirth")
+    @Mapping(target = "personality", source = "childRequestDto.personality")
+    @Mapping(target = "user", source = "user")
+    Child fromChildDto(ChildRequestDto childRequestDto, User user);
 
 //
 }

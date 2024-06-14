@@ -5,6 +5,7 @@ import com.example.kidsconnect.domain.*;
 import com.example.kidsconnect.dto.TherapistInfoDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
+import com.example.kidsconnect.mapping.TherapistInfoMapper;
 import com.example.kidsconnect.mapping.ToEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,22 +25,39 @@ public class TherapistInfoService {
     private final TherapistInfoRepository therapistInfoRepository;
     private final SymptomRepository symptomRepository;
     //therpaist_id 외래키 추후에 token으로 대체 예정
-    private final TherapistRepository therapistRepository;
+
+    private final SymptomService symptomService;
+    private final TherapistService therapistService;
     private final TherapistExperienceRepository therapistExperienceRepository;
     private final ToEntity toEntity;
+    private final TherapistInfoMapper therapistInfoMapper;
     @PersistenceContext
     private EntityManager entityManager;
 
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> showTherapistInfo(Long therapistInfoId) {
+
+        TherapistInfo therapistInfo = findById(therapistInfoId);
+
+        TherapistInfoDto therapistInfoDto = therapistInfoMapper.toTherapistInfoDto(therapistInfo);
+
+        return ResponseEntity.ok(therapistInfoDto);
+    }
     @Transactional
-    public ResponseEntity<?> addTherapistInfo(TherapistInfoDto therapistInfoDto) {
+    public ResponseEntity<?> addTherapistInfo(TherapistInfoDto therapistInfoDto, UserPrinciple userDetails) {
         TherapistInfo therapistInfo = toEntity.toTherapistInfo(therapistInfoDto); // dto -> entity + jwt token
 
         addExperiences(therapistInfo, therapistInfoDto.getExperience());
         addEducations(therapistInfo, therapistInfoDto.getEducation());
         addSymptoms(therapistInfo, therapistInfoDto.getSymptom());
 
+
         // Therapist 엔티티를 설정  추후에 token으로 therapist_id 외래키 대체
-        Therapist therapist = therapistRepository.findById(4L).orElseThrow(() -> new RuntimeException("Therapist가 존재하지 않습니다."));
+        Therapist therapist = therapistService.findById(userDetails.getId());
+
+
+        //therapistInfo 에 therapist 객체 저장.
         therapistInfo.setTherapist(therapist);
 
 
@@ -62,9 +80,12 @@ public class TherapistInfoService {
 
 
     @Transactional
-    public ResponseEntity<?> updateTherapistInfo(Long id, TherapistInfoDto therapistInfoDto) {
+    public ResponseEntity<?> updateTherapistInfo(Long id, TherapistInfoDto therapistInfoDto, UserPrinciple userDetails) {
         TherapistInfo existingTherapistInfo = therapistInfoRepository.findById(id)
                 .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
+
+        // 인증된 사용자(therapist)가 이 TherapistInfo의 소유자인지 확인
+        verifyTherapistOwnership(existingTherapistInfo, userDetails);
 
         // Clear and add new experiences
         existingTherapistInfo.getExperience().clear();
@@ -87,6 +108,7 @@ public class TherapistInfoService {
                 therapistInfoDto.getAgeRange(),
                 therapistInfoDto.getImageFile());
 
+        therapistInfoMapper.updateEntityFromDto(therapistInfoDto, existingTherapistInfo);
         // 총 경력 계산 및 설정
         String totalExperience = calculateTotalExperience(existingTherapistInfo.getId());
         existingTherapistInfo.setTotalExperience(totalExperience);
@@ -96,20 +118,17 @@ public class TherapistInfoService {
         return ResponseEntity.ok("수정 성공");
     }
 
+    @Transactional
+    public ResponseEntity<?> deleteTherapistInfo(Long therapistInfoId, UserPrinciple userDetails) {
+        TherapistInfo therapistInfo = findById(therapistInfoId);
 
-    public ResponseEntity<?> deleteTherapistInfo(Long id) {
-        if (!therapistInfoRepository.existsById(id)) {
-            throw new CustomException(CustomCode.NOT_FOUND_MEMBER);
-        }
-        therapistInfoRepository.deleteById(id);
+        // 인증된 사용자(therapist)가 이 TherapistInfo의 소유자인지 확인
+        verifyTherapistOwnership(therapistInfo, userDetails);
+
+        therapistInfoRepository.deleteById(therapistInfoId);
         return ResponseEntity.ok("삭제 성공");
     }
 
-//    private void addTherapistInfo(Therapist therapist, List<TherapistInfo> therapistInfo) {
-//        if (therapistInfo != null) {
-//            therapistInfo.forEach(therapist::addTherapistInfo);
-//        }
-//    }
 
     /**
      * 치료사 경험 정보를 치료사 엔티티에 추가하는 메서드
@@ -138,16 +157,16 @@ public class TherapistInfoService {
      * @param therapistInfo 치료사 엔티티
      * @param symptoms 치료사 증상 정보 리스트
      */
-    private void addSymptoms(TherapistInfo therapistInfo, List<Symptom> symptoms) {
+    private void addSymptoms(TherapistInfo therapistInfo, List<String> symptoms) {
         if (symptoms != null) {
-            symptoms.forEach(symptom -> {
-                Symptom symptomMatch = symptomRepository.findByName(symptom.getName())
-                        .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_SYMPTOM));
-                TherapistInfoSymptom therapistInfoSymptom = new TherapistInfoSymptom(symptomMatch);
+            for (String symptomName : symptoms) {
+                Symptom symptom = symptomService.findByName(symptomName);
+                TherapistInfoSymptom therapistInfoSymptom = new TherapistInfoSymptom(symptom);
                 therapistInfo.addTherapistInfoSymptom(therapistInfoSymptom);
-            });
+            }
         }
     }
+
 
     //총경력 계산 메서드
     public String calculateTotalExperience(Long therapistInfoId) {
@@ -156,29 +175,12 @@ public class TherapistInfoService {
     }
 
 
-    @Transactional(readOnly = true)
-    public ResponseEntity<?> showTherapistInfo(Long id) {
-        TherapistInfo therapistInfo = therapistInfoRepository.findById(id)
-                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
 
-        TherapistInfoDto therapistInfoDto = TherapistInfoDto.builder()
-                .title(therapistInfo.getTitle())
-                .bio(therapistInfo.getBio())
-                .content(therapistInfo.getContent())
-                .identityCheck(therapistInfo.getIdentityCheck())
-                .crimeCheck(therapistInfo.getCrimeCheck())
-                .imageFile(therapistInfo.getImageFile())
-                .viewCnt(therapistInfo.getViewCnt())
-                .certificate(therapistInfo.getCertificate())
-                .ageRange(therapistInfo.getAgeRange())
-                .symptom(therapistInfo.getTherapistInfoSymptom().stream()
-                        .map(TherapistInfoSymptom::getSymptom)
-                        .collect(Collectors.toList()))
-                .experience(therapistInfo.getExperience())
-                .education(therapistInfo.getEducation())
-                .build();
 
-        return ResponseEntity.ok(therapistInfoDto);
+    private void verifyTherapistOwnership(TherapistInfo therapistInfo, UserPrinciple userDetails) {
+        if (!therapistInfo.getTherapist().getId().equals(userDetails.getId())) {
+            throw new CustomException(CustomCode.NOT_VALID_OWNER);
+        }
     }
 
 

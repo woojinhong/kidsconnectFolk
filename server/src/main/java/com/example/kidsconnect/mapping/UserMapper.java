@@ -19,10 +19,9 @@ public interface UserMapper {
 
     User fromUserSignUpDto(UserSignUpDto userSignUpDto);
 
-//    @AfterMapping
-//    default void encryptPassword(@MappingTarget User user, UserSignUpDto userSignUpDto, @Autowired PasswordEncoder passwordEncoder) {
-//        System.out.println("Encrypting password...");
-//        user.setPassword(passwordEncoder.encode(user.getPassword()))
-//
-//    }
+
+    // Update 메서드 추가
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    User updateUserFromSignUpDto(UserSignUpDto userSignUpDto, @MappingTarget User user);
 }
+

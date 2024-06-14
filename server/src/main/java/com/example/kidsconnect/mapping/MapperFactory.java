@@ -19,7 +19,7 @@ public class MapperFactory {
     CenterMapper centerMapper = Mappers.getMapper(CenterMapper.class);
     TherapistInfoMapper therapistInfoMapper = Mappers.getMapper(TherapistInfoMapper.class);
 
-    ReservationMapper reservationMapper = Mappers.getMapper(ReservationMapper.class);
+//    ReservationMapper reservationMapper = Mappers.getMapper(ReservationMapper.class);
 
     ReviewMapper reviewMapper = Mappers.getMapper(ReviewMapper.class);
 

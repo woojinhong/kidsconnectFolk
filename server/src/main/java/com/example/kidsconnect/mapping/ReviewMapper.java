@@ -10,6 +10,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "inDate", ignore = true)
+    @Mapping(target = "upDate", ignore = true)
     @Mapping(target = "therapistInfo", source = "therapistInfo")
     @Mapping(target = "user", source = "user")
     TherapistReview toTherapistReview(ReviewDto reviewDTO, TherapistInfo therapistInfo, User user);

@@ -1,117 +1,164 @@
 package com.example.kidsconnect.service;
 
 
-<<<<<<< HEAD
+
 import com.example.kidsconnect.dao.ChildRepository;
 import com.example.kidsconnect.dao.UserRepository;
-import com.example.kidsconnect.domain.Child;
-import com.example.kidsconnect.domain.TherapistInfo;
-import com.example.kidsconnect.domain.User;
+import com.example.kidsconnect.domain.*;
+
 import com.example.kidsconnect.dto.LoginDto;
-import com.example.kidsconnect.jwt.LoginFilter;
-import com.example.kidsconnect.mapping.ToEntity;
+
+import com.example.kidsconnect.jwt.TokenProvider;
+import com.example.kidsconnect.jwt.dto.TokenInfo;
+
 import com.example.kidsconnect.dto.UserSignUpDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
+import com.example.kidsconnect.mapping.UserMapper;
 import lombok.RequiredArgsConstructor;
-=======
->>>>>>> origin/be/restapi
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< HEAD
-import java.util.List;
-=======
-import com.example.kidsconnect.config.JwtTokenProvider;
-import com.example.kidsconnect.dao.UserRepository;
-import com.example.kidsconnect.domain.User;
-import com.example.kidsconnect.dto.LoginDto;
-import com.example.kidsconnect.dto.UserSignUpDto;
-import com.example.kidsconnect.exception.CustomCode;
-import com.example.kidsconnect.exception.CustomException;
-import com.example.kidsconnect.jwt.LoginFilter;
-import com.example.kidsconnect.mapping.ToEntity;
 
-import lombok.RequiredArgsConstructor;
->>>>>>> origin/be/restapi
+import java.util.List;
+
+
 
 @Service
 //메서드 @Cacheable(value = "myUser") 같은 효과
 //@CacheConfig(cacheNames = "myUser")
 @RequiredArgsConstructor
 public class UserService {
-    private static final Logger logger = LoggerFactory.getLogger(LoginFilter.class);
+
     private final UserRepository userRepository;
-
-    private final ToEntity toEntity;
-
-    private final JwtTokenProvider jwtTokenProvider;
-    
+    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-
-    //객체 매핑 정보 불러오기
-
-
     private final ChildRepository childRepository;
+    private final TokenProvider tokenProvider;
 
+
+    @Transactional
+    public ResponseEntity<String> signUp(UserSignUpDto userSignUpDto) {
+
+        //엔티티 매핑
+        User user = userMapper.fromUserSignUpDto(userSignUpDto);
+
+        //이메일 중복 체크
+        validateEmail(user);
+        //비밀번호 엔코딩
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //권한 부여
+        user.setRole(Role.ROLE_USER);
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok("부모 회원가입 성공");
+    }
+
+
+    @Transactional
+    public ResponseEntity<?> login(LoginDto loginDto) {
+        //loginDto -> User
+        User userEntity = userMapper.fromLoginDto(loginDto);
+
+        User user = findUserByEmail(userEntity.getEmail());
+            
+        checkPassword(loginDto.getPassword(), user);
+
+        //token 생성, 헤더에 삽입
+        TokenInfo tokenInfo = tokenProvider.createToken(user);
+        HttpHeaders httpHeaders = tokenProvider.setHttpHeaders(tokenInfo);
+
+        return ResponseEntity.ok().headers(httpHeaders).body("부모 로그인 성공");
+    }
+
+    @Transactional
+    public ResponseEntity<String> updateUser(Long userId, UserSignUpDto userSignUpDto, UserPrinciple userDetails) {
+        User existingUser = findById(userId);
+
+        // 사용자 권한 검증
+        verifyUserOwnership(existingUser, userDetails);
+
+
+        //update mapstruct
+        userMapper.updateUserFromSignUpDto(userSignUpDto, existingUser);
+
+        // 비밀번호가 변경된 경우에만 업데이트
+        updatePasswordIfChanged(userSignUpDto, existingUser);
+
+        userRepository.save(existingUser);
+
+        return ResponseEntity.ok("부모 정보 업데이트 성공");
+    }
+
+
+    @Transactional
+    public ResponseEntity<?> deleteUser(Long userId, UserPrinciple userDetails) {
+        User user = findById(userId);
+
+        // 사용자 검증
+        verifyUserOwnership(user, userDetails);
+
+
+        userRepository.deleteById(user.getId());
+
+        return ResponseEntity.ok("부모 삭제 성공");
+    }
+
+    private void updatePasswordIfChanged(UserSignUpDto userSignUpDto, User existingUser) {
+        String newPassword = userSignUpDto.getPassword();
+        if (newPassword != null && !newPassword.isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(newPassword));
+        }
+    }
+    //사용자 권한 검증
+    private void verifyUserOwnership(User user, UserPrinciple userDetails) {
+        if (!user.getId().equals(userDetails.getId())) {
+            throw new CustomException(CustomCode.NOT_VALID_OWNER);
+        }
+    }
+
+    private void checkPassword(String rawPassword, User user) {
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new CustomException(CustomCode.NOT_VALID_PASSWORD);
+        }
+    }
+
+    private User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> {
+            throw new CustomException(CustomCode.NOT_FOUND_USER);
+        });
+    }
+
+    //이메일 중복 검사
+    private void validateEmail(User user) {
+        if (userRepository.existsByEmail(user.getEmail()))
+            throw new CustomException(CustomCode.DUPLICATED_EMAIL);
+    }
+
+    //id로 부모 정보 반환
+    @Transactional(readOnly = true)
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_USER));
+    }
+
+    //부모id로 아이 객체 리스트 반환
     @Transactional(readOnly = true)
     public List<Child> getChildrenByUserId(Long userId) {
         return childRepository.findByUserId(userId);
     }
 
-    //사용 추천안함 cacheable
-//    @Cacheable(key = "#login")
-    public ResponseEntity<?> login(LoginDto loginDto) {
-
-        System.out.println("Received login request with email: " + loginDto.getEmail());
-        logger.info("Authentication failed!"+ loginDto.getEmail());
-
-        User user = toEntity.fromUserLoginDto(loginDto);
-                
-        User users = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword()).orElseThrow(
-                () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
-
-        System.out.println(loginDto.getPassword());
-        System.out.println(user.getPassword());
-        
-        // Dto 이메일 패스워드 조건으로 users를 만드는데 왜 한번더 조건을 거는건가요??
-//        if (!passwordEncoder.matches(loginDto.getPassword(), users.getPassword())) {
-//            throw new CustomException(CustomCode.NOT_VALID_AUTHENTICATION);
-//        }
-        String accessToken = jwtTokenProvider.createToken(loginDto.getEmail());
-        String refreshToken = jwtTokenProvider.createRefreshToken(loginDto.getEmail());
-        
-//        System.out.println(accessToken);
-//        System.out.println(refreshToken);
-
-        
-        return ResponseEntity.ok("인증 토큰 : " + accessToken );
-
-    }
-
-    @Transactional
-    public ResponseEntity<String> signUp(UserSignUpDto userSignUpDto) {
-        //mapstruct = dto -> entity, passwordEncoding.encode
-        User user = toEntity.fromUserSignUpDto(userSignUpDto);
-
-        if(userRepository.existsByEmail(user.getEmail()))
-            throw new CustomException(CustomCode.DUPLICATED_EMAIL);
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_ADMIN");
-        userRepository.save(user);
-        return ResponseEntity.ok("부모 회원가입 성공");
-    }
-    
-
+    //이메일, 비번으로 부모 정보 반환
     @Transactional(readOnly = true)
-    public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
+    public User findByEmailAndPassword(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password).orElseThrow(
+                () -> new CustomException(CustomCode.NOT_FOUND_USER));
+
     }
 
 }

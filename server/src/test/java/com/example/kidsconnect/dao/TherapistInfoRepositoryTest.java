@@ -4,7 +4,7 @@ package com.example.kidsconnect.dao;
 import com.example.kidsconnect.domain.TherapistInfo;
 import com.example.kidsconnect.dto.MatchRequestDto;
 import com.example.kidsconnect.dto.MatchResponseDto;
-import com.example.kidsconnect.service.MatchService;
+import com.example.kidsconnect.service.TherapistInfoSearchService;
 import com.example.kidsconnect.service.TherapistInfoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ class TherapistInfoRepositoryTest {
     @Autowired
     private TherapistInfoService therapistInfoService;
     @Autowired
-    private MatchService matchService;
+    private TherapistInfoSearchService therapistInfoSearchService;
 
     private List<MatchResponseDto> mockResponses;
 
@@ -115,7 +115,7 @@ class TherapistInfoRepositoryTest {
                 .build();
 
         // 서비스 메서드 호출
-        List<MatchResponseDto> result = matchService.findTherapistsByCriteria(matchRequestDto);
+        List<MatchResponseDto> result = therapistInfoSearchService.findTherapistsByCriteria(matchRequestDto);
 
         // 검증
 //        assertNotNull(result);

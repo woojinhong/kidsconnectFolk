@@ -29,12 +29,15 @@ public enum CustomCode {
 
         NOT_VALID_AUTHENTICATION(HttpStatus.UNAUTHORIZED, "NOT_VALID_AUTHENTICATION", "인증이 유효하지 않습니다."),
 
-        NOT_VALID_WRITER(HttpStatus.FORBIDDEN, "NOT_VALID_WRITER", "작성자만 이용 가능합니다."),
+        NOT_VALID_OWNER(HttpStatus.FORBIDDEN, "NOT_VALID_OWNER", "권한이 없는 이용자 입니다."),
         NOT_VALID_CHATROOM_MEMBER(HttpStatus.FORBIDDEN, "NOT_VALID_CHATROOM_MEMBER", "채팅방을 이용할 수 없는 사용자입니다."),
 
         NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "NOT_FOUND_MEMBER", "찾을 수 없는 사용자입니다."),
+        NOT_FOUND_USER(HttpStatus.NOT_FOUND, "NOT_FOUND_USER", "찾을 수 없는 부모 회원입니다."),
+        NOT_FOUND_THERAPIST(HttpStatus.NOT_FOUND, "NOT_FOUND_THERAPIST", "찾을 수 없는 치료사 회원입니다."),
         NOT_FOUND_THERAPIST_INFO(HttpStatus.NOT_FOUND, "NOT_FOUND_THERAPIST_INFO", "찾을 수 없는 치료사 상세정보입니다."),
         NOT_FOUND_RESERVATION(HttpStatus.NOT_FOUND,"NOT_FOUND_RESERVATION","찾을 수 없는 예약정보입니다."),
+        NOT_FOUND_CENTER(HttpStatus.NOT_FOUND,"NOT_FOUND_CENTER","찾을 수 없는 센터정보입니다."),
         NOT_FOUND_CHILD(HttpStatus.NOT_FOUND, "NOT_FOUND_CHILD","찾을 수 없는 아이입니다."),
         NOT_FOUND_FEED(HttpStatus.NOT_FOUND, "NOT_FOUND_FEED", "찾을 수 없는 피드입니다."),
         NOT_FOUND_REACTION(HttpStatus.NOT_FOUND, "NOT_FOUND_REACTION", "찾을 수 없는 리액션입니다."),

@@ -1,9 +1,12 @@
 package com.example.kidsconnect.controller;
+import com.example.kidsconnect.domain.User;
+import com.example.kidsconnect.domain.UserPrinciple;
 import com.example.kidsconnect.dto.TherapistInfoDto;
 import com.example.kidsconnect.service.TherapistInfoService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,26 +16,26 @@ public class TherapistInfoController {
 
     private final TherapistInfoService therapistInfoService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> showTherapistInfo(@PathVariable Long id){
-        return therapistInfoService.showTherapistInfo(id);
+    @GetMapping("/{therapistId}")
+    public ResponseEntity<?> showTherapistInfo(@PathVariable Long therapistId){
+        return therapistInfoService.showTherapistInfo(therapistId);
     }
     @PostMapping()
-    public ResponseEntity<?> createTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto) {
+    public ResponseEntity<?> createTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto, @AuthenticationPrincipal UserPrinciple userDetails) {
 
-        return therapistInfoService.addTherapistInfo(therapistInfoDto);
+        return therapistInfoService.addTherapistInfo(therapistInfoDto, userDetails);
     }
 
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> updateTherapistInfo(@PathVariable Long id, @RequestBody TherapistInfoDto therapistInfoDto) {
-        return therapistInfoService.updateTherapistInfo(id, therapistInfoDto);
+    @PatchMapping("/{therapistInfoId}")
+    public ResponseEntity<?> updateTherapistInfo(@PathVariable Long therapistInfoId, @RequestBody TherapistInfoDto therapistInfoDto,@AuthenticationPrincipal UserPrinciple userDetails) {
+        return therapistInfoService.updateTherapistInfo(therapistInfoId, therapistInfoDto, userDetails);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTherapistInfo(@PathVariable Long id) {
+    @DeleteMapping("/{therapistInfoId}")
+    public ResponseEntity<?> deleteTherapistInfo(@PathVariable Long therapistInfoId, @AuthenticationPrincipal UserPrinciple userDetails) {
 
-        return therapistInfoService.deleteTherapistInfo(id);
+        return therapistInfoService.deleteTherapistInfo(therapistInfoId,userDetails);
     }
 
 }

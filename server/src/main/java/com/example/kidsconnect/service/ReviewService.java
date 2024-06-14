@@ -1,19 +1,15 @@
 package com.example.kidsconnect.service;
 
 import com.example.kidsconnect.dao.TherapistReviewRepository;
-import com.example.kidsconnect.domain.Therapist;
-import com.example.kidsconnect.domain.TherapistInfo;
-import com.example.kidsconnect.domain.TherapistReview;
-import com.example.kidsconnect.domain.User;
-import com.example.kidsconnect.dto.ReservationResponseDto;
+import com.example.kidsconnect.domain.*;
 import com.example.kidsconnect.dto.ReviewDto;
 import com.example.kidsconnect.mapping.ToEntity;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +20,7 @@ public class ReviewService {
     private final ToEntity toEntity;
 
     //치료사 리뷰 저장
-    public ResponseEntity<?> addReview(Long therapistInfoId, ReviewDto reviewDTO, UserDetailImpl userDetail ) {
+    public ResponseEntity<?> addReview(Long therapistInfoId, ReviewDto reviewDTO, UserPrinciple userDetail) {
 
         // 엔티티 객체 사용하여 데이터베이스 조회
         TherapistInfo therapistInfo = therapistInfoService.findById(therapistInfoId);
@@ -39,7 +35,7 @@ public class ReviewService {
     }
 
     //리뷰 리스트 조회
-    public ResponseEntity<?> getReviewsByTherapistId(Long therapistId) {
-        return reviewRepository.findByTherapistId(therapistId);
-    }
+//    public ResponseEntity<?> getReviewsByTherapistInfoId(Long Id) {
+//        return reviewRepository.findByTherapistInfoId(Id);
+//    }
 }

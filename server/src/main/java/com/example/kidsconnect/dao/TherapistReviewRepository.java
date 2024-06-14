@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface TherapistReviewRepository extends CrudRepository<TherapistReview,Long> {
-    List<TherapistReview> findByTherapistId(Long therapistId);
+
 }

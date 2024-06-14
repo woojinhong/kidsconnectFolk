@@ -4,19 +4,15 @@ import com.example.kidsconnect.dao.TherapistInfoRepository;
 import com.example.kidsconnect.domain.TherapistInfo;
 import com.example.kidsconnect.dto.MatchRequestDto;
 import com.example.kidsconnect.dto.MatchResponseDto;
-import com.example.kidsconnect.dto.TherapistInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MatchService {
+public class TherapistInfoSearchService {
 
     private final TherapistInfoRepository therapistInfoRepository;
 

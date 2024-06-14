@@ -25,6 +25,10 @@ public class Enrol {
     @JoinColumn(name = "center_id")
     private Center center;
 
+    @ManyToOne
+    @JoinColumn(name = "therapist_id")
+    private Therapist therapist;
+
 
     @PrePersist
     protected void onCreate() {

@@ -26,7 +26,7 @@ public class TherapistInfoDto {
 
     private List<String> certificate;
     private List<String> ageRange;
-    private List<Symptom> symptom;
+    private List<String> symptom;
     private List<TherapistExperience> experience;
 
     private List<TherapistEducation> education;

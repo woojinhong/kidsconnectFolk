@@ -29,4 +29,12 @@ public class ChildSymptom {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Symptom symptom;
 
+
+    public void setChild(Child child) {
+        this.child = child;
+    }
+
+    public void setSymptom(Symptom symptom) {
+        this.symptom = symptom;
+    }
 }

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -61,7 +62,7 @@ class ChildRepositoryTest {
         Child child = Child.builder()
                 .firstName("아이")
                 .lastName("홍")
-                .personality("밝음, 천진난만, 까불이")
+                .personality(Arrays.asList("outgoing", "curious"))
                 .gender('남')
                 .dateOfBirth(new Date())
                 .build();
@@ -102,13 +103,13 @@ class ChildRepositoryTest {
     void deleteSymptom_CascadeDeleteChildSymptom() {
 
         Child child = Child.builder()
-                .lastName("홍테스트1")
+                .lastName("홍테스트2")
                 .gender('M')
                 .build();
         childRepository.save(child);
 
         Symptom symptom = Symptom.builder()
-                .name("테스트증상3")
+                .name("테스트증상2")
                 .build();
         symptomRepository.save(symptom);
 

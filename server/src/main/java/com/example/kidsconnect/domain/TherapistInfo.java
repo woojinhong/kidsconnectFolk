@@ -64,6 +64,9 @@ public class TherapistInfo {
     @JoinColumn(name = "therapist_info_id")
     private List<TherapistInfoSymptom> therapistInfoSymptom;
 
+    @OneToMany(mappedBy = "therapistInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TherapistReview> therapistReview;
+
 
 
     public void addTherapistExperience(TherapistExperience therapistExperience){

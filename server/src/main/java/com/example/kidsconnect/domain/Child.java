@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @DynamicInsert
-@ToString
 public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +25,17 @@ public class Child {
     private String lastName;
     private Date dateOfBirth;
     private char gender;
-    private String personality;
+    @ElementCollection
+    @CollectionTable(name = "child_personality", joinColumns = @JoinColumn(name = "child_id"))
+    @Column(name = "personality")
+    private List<String> personality = new ArrayList<>();
 
     private LocalDateTime inDate;
 
     private LocalDateTime upDate;
 
-    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)
-    private List<ChildSymptom> childSymptom;
+//    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)
+//    private List<ChildSymptom> childSymptom;
 
     @OneToMany(mappedBy = "child", orphanRemoval = true)
     private List<Reservation> reservation;
@@ -49,6 +52,20 @@ public class Child {
         if (this.upDate == null) {
             this.upDate = LocalDateTime.now();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender=" + gender +
+                ", personality=" + personality +
+                ", inDate=" + inDate +
+                ", upDate=" + upDate +
+                '}';
     }
 
     @PreUpdate

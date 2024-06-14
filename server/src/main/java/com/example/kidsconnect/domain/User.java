@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-@ToString
 @DynamicInsert
 public class User implements Loginable {
     @Id
@@ -23,7 +22,8 @@ public class User implements Loginable {
     @Column(length= 30, nullable = false , unique = true)
     private String email;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @Column(length= 30, nullable = false)
     private String firstName;
     @Column(length= 30, nullable = false)
@@ -57,7 +57,7 @@ public class User implements Loginable {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Reservation> reservation;
 
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TherapistReview> therapistReview;
 
 
@@ -96,6 +96,26 @@ public class User implements Loginable {
 
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", addressDetail='" + addressDetail + '\'' +
+                ", address='" + address + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", status=" + status +
+                ", inDate=" + inDate +
+                ", upDate=" + upDate +
+                '}';
+    }
+
     public void setEmail(String email){
         this.email=email;
     }
@@ -104,10 +124,14 @@ public class User implements Loginable {
         this.password = password;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
+    @Override
+    public Long id() {
+        return id;
+    }
     @Override
     public String email() {
         return email;
@@ -119,7 +143,7 @@ public class User implements Loginable {
     }
 
     @Override
-    public String role() {
+    public Enum role() {
         return role;
     }
 }

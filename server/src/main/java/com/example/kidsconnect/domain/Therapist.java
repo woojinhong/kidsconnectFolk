@@ -39,7 +39,8 @@ public class Therapist implements Loginable {
     private boolean freelancer;
     private boolean status;
     private Date dateOfBirth;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
     private LocalDateTime inDate;
@@ -48,11 +49,10 @@ public class Therapist implements Loginable {
 
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "therapist_id")
+    @OneToMany(mappedBy ="therapist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrol> enrol;
 
-    @OneToMany(mappedBy = "therapist", orphanRemoval = true)
+    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservation;
 
 
@@ -60,9 +60,6 @@ public class Therapist implements Loginable {
     private TherapistInfo therapistInfo;
 
 
-
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TherapistReview> therapistReview;
 
 
     public void addTherapistInfo(TherapistInfo therapistInfo){
@@ -93,10 +90,14 @@ public class Therapist implements Loginable {
         this.password = password;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
+    @Override
+    public Long id() {
+        return id;
+    }
     @Override
     public String email() {
         return email;
@@ -108,7 +109,7 @@ public class Therapist implements Loginable {
     }
 
     @Override
-    public String role() {
+    public Enum role() {
         return role;
     }
 }

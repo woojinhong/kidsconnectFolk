@@ -24,6 +24,7 @@ public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final TherapistService therapistService;
     private final UserService userService;
+
     
     
     
@@ -50,11 +51,5 @@ public class AuthController {
 
         return userService.signUp(userSignUpDto);
     }
-    
-    @PostMapping("/test")
-    public ResponseEntity<?> test(@RequestBody LoginDto loginDto) {
-        System.out.println("loginDto = " + loginDto);
-        logger.info("test : {}", loginDto.getEmail());
-        return ResponseEntity.ok("테스트 성공");
-    }    
+
 }
