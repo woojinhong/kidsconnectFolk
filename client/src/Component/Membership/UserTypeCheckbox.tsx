@@ -2,20 +2,31 @@ import { useState } from "react";
 
 import styled from "styled-components";
 import { Checkbox } from "@mantine/core";
+import {
+  setStateStringType,
+  clickInputEvent,
+} from "../../Assets/CommonType/EventType";
 
-function UserTypeCheckbox({
-  handleUserType,
-}: {
-  handleUserType: (userType: string) => void;
-}) {
+function UserTypeCheckbox({ onClick }: { onClick: setStateStringType }) {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [userType, setUserType] = useState<string>("부모님");
 
-  function handleCheck(event: React.MouseEvent<HTMLInputElement>) {
+  const changeValueToEnglish = (value: string) => {
+    if (value === "부모님") {
+      return "parents";
+    } else if (value === "선생님") {
+      return "therapist";
+    } else {
+      return "";
+    }
+  };
+
+  const handleCheck = (event: clickInputEvent) => {
+    const newValue = event.currentTarget.value;
     setIsChecked(!isChecked);
-    setUserType(event.currentTarget.value);
-    handleUserType(event.currentTarget.value);
-  }
+    setUserType(newValue);
+    onClick(changeValueToEnglish(newValue));
+  };
 
   return (
     <StyledCheckboxGroup>
