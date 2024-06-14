@@ -1,6 +1,5 @@
 import { Button } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import DisabledButtonProps from "./DisabledButtonProps";
 import {
   StyledButton,
   getButtonStyles,
@@ -9,17 +8,18 @@ import {
 import IconSent from "../../../Assets/Image/Icon/IconSent.svg";
 import IconSearch from "../../../Assets/Image/Icon/IconSearchWhite.svg";
 
-interface FilledButtonProps extends DisabledButtonProps {
+interface FilledButtonProps {
   variant?: "filled" | "m_filled";
   text?: string;
   backgroundColor?: string;
   onClick?: () => void;
   icon?: "send" | "search"; // 필요한 icon 추가하기
+  disabled?: boolean;
 }
 
 function FilledButton({
   variant = "filled",
-  disabled = [],
+  disabled = false,
   text = "",
   backgroundColor = "#FF7000",
   onClick,
@@ -41,7 +41,7 @@ function FilledButton({
   return (
     <StyledButton ref={ref}>
       <Button
-        disabled={disabled.length > 0}
+        disabled={disabled}
         style={getButtonStyles(variant, disabled, hovered, backgroundColor)}
         variant={
           variant === "filled" || variant === "m_filled" ? "filled" : variant
