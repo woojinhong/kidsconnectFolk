@@ -107,10 +107,10 @@ function Signup() {
 
 export default Signup;
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegex = /^\d{10,11}$/;
-const passwordRegex =
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const passwordRegex =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+const phoneRegex = /^\d{10,11}$/;
 
 const validateCommonFields = (data: {
   email: string;
