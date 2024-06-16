@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import Tag from "../../Tag/Tag";
 import Modal from "../../Modal/Modal";
-import AddChildSurvey from "../../Modal/ModalContent/AddChildSurvey";
+import { useGetChildAge } from "../../../../Services/CustomHooks";
 
 import {
   StyledCard,
@@ -18,33 +18,15 @@ import SymbolMale from "../../../../Assets/Image/Icon/SymbolMale.svg";
 import childData from "../../../../MockData/childData.json";
 import symptomData from "../../../../MockData/child_symptomData.json";
 
-interface Child {
-  id: number;
-  lastName: string;
-  firstName: string;
-  dateOfBirth: string;
-  personality: string;
-  gender: string;
-}
-
-interface SymptomData {
-  id: number;
-  symptomId: number;
-  symptomData: string[];
-}
-
 const ChildCard = () => {
-  const [child, setChild] = useState<Child | null>(null);
+  const [child, setChild] = useState<Child>({} as Child);
   const [symptomTags, setSymptomTags] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!childData || childData.length === 0) return;
-
-    const selectedChild = childData[0] as Child;
-    setChild(selectedChild);
-
+    setChild(childData[0]);
     const childSymptom = symptomData.find(
-      (data: SymptomData) => data.id === selectedChild.id
+      (data: SymptomData) => data.id === child.id
     );
 
     if (childSymptom) {
@@ -52,29 +34,32 @@ const ChildCard = () => {
     }
   }, []);
 
+  const { lastName, firstName, dateOfBirth, personality, gender } = child;
+  const age = useGetChildAge(dateOfBirth);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    window.location.reload();
+  };
+
   const addChildCard = () => (
     <Modal
       buttonVariant="addChild"
       buttonText="아이 등록하기"
-      content={() => <AddChildSurvey />}
+      content="addChild"
       chatInput={true}
+      isOpen={isModalOpen}
+      onClose={closeModal}
+      onOpen={openModal}
     />
   );
 
   if (!child) {
     return addChildCard();
   }
-
-  const { lastName, firstName, dateOfBirth, personality, gender } = child;
-  const age = calculateAge(dateOfBirth);
-
-  const truncatedPersonality =
-    personality.length > 100 ? `${personality.slice(0, 100)}...` : personality;
-
-  const handleEdit = () => {
-    // Edit 기능 구현
-  };
-
   return (
     <StyledCardContainer>
       <StyledCard>
@@ -88,12 +73,11 @@ const ChildCard = () => {
           <img
             src={Edit}
             alt="Edit"
-            onClick={handleEdit}
             style={{ cursor: "pointer", width: "16px", height: "16px" }}
           />
         </InfoGroup>
 
-        <DescriptionText>{truncatedPersonality}</DescriptionText>
+        <DescriptionText>{personality}</DescriptionText>
 
         <TagContainer>
           {symptomTags.map((tag, index) => (
@@ -108,22 +92,19 @@ const ChildCard = () => {
   );
 };
 
-function calculateAge(dateOfBirth: string): number {
-  const today = new Date();
-  const birthDate = new Date(dateOfBirth);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age--;
-  }
-  return age;
-}
-
-function handleRegisterChild() {
-  // 아이 등록하기 기능 구현
-}
-
 export default ChildCard;
+
+interface Child {
+  id: number;
+  lastName: string;
+  firstName: string;
+  dateOfBirth: string;
+  personality: string;
+  gender: string;
+}
+
+interface SymptomData {
+  id: number;
+  symptomId: number;
+  symptomData: string[];
+}
