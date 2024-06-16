@@ -13,6 +13,7 @@ function Category({
   checkbox = true,
   checkedData = [],
   setData = () => {},
+  disabled = false,
 }: CategoryProps) {
   const [isChecked, setIsChecked] = useState(false);
   const { hovered, ref } = useHover();
@@ -29,7 +30,7 @@ function Category({
     } else {
       setIsChecked(false);
     }
-  }, [checkedData, text]);
+  }, [checkedData]);
 
   return (
     <StyledActionIcon
@@ -40,11 +41,24 @@ function Category({
       ref={ref}
       $hovered={hovered}
       $checkbox={checkbox}
+      disabled={disabled}
     >
       <Emoji size={size}>{emoji}</Emoji>
-      <Text size={size}>{text}</Text>
+      <Text size={size} style={{ color: determineColor(disabled, isChecked) }}>
+        {text}
+      </Text>
     </StyledActionIcon>
   );
 }
 
 export default Category;
+
+const determineColor = (disabled: boolean, isChecked: boolean) => {
+  if (disabled) {
+    return "#999999";
+  } else if (isChecked) {
+    return "#333333";
+  } else {
+    return "#999999";
+  }
+};
