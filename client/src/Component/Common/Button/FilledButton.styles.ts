@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledButton = styled.div`
-  display: inline-block;
+  display: block;
   position: relative;
 `;
 
@@ -26,7 +26,7 @@ export const getButtonStyles = (
     height: variant === "filled" ? "56px" : "32px",
     fontSize: variant === "filled" ? "16px" : "14px",
     fontWeight: variant === "filled" ? "700" : "500",
-    color: disabled ? "#999999" : "#ffffff",
+    fontColor: disabled ? "#333" : "#fff",
     backgroundColor: changeBackgroundColor(),
     transition: "0.2s",
   };

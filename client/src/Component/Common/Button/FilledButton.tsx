@@ -7,12 +7,13 @@ import {
 } from "./FilledButton.styles";
 import IconSent from "../../../Assets/Image/Icon/IconSent.svg";
 import IconSearch from "../../../Assets/Image/Icon/IconSearchWhite.svg";
+import { clickButtonEvent } from "../../../Assets/CommonType/EventType";
 
 interface FilledButtonProps {
   variant?: "filled" | "m_filled";
   text?: string;
   backgroundColor?: string;
-  onClick?: () => void;
+  onClick?: (event: clickButtonEvent) => void;
   icon?: "send" | "search"; // 필요한 icon 추가하기
   disabled?: boolean;
 }
@@ -52,7 +53,7 @@ function FilledButton({
         onClick={onClick}
       >
         {icon ? <StyledIcon src={iconMatch(icon)} /> : null}
-        <span>{text}</span>
+        <span style={{ color: "#fff" }}>{text}</span>
       </Button>
     </StyledButton>
   );
