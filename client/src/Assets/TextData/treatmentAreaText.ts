@@ -30,3 +30,34 @@ const treatmentAreaText = [
 ];
 
 export default treatmentAreaText;
+
+export const treatmentNeededText = [
+  {
+    emoji: "❓",
+    text: "진단 필요",
+  },
+  {
+    emoji: "💬",
+    text: "언어발달",
+  },
+  {
+    emoji: "🧩",
+    text: "인지발달",
+  },
+  {
+    emoji: "👟",
+    text: "행동발달",
+  },
+  {
+    emoji: "❤️‍🩹",
+    text: "심리재활",
+  },
+  {
+    emoji: "📚",
+    text: "특수교육",
+  },
+  {
+    emoji: "🎨",
+    text: "창의재활",
+  },
+];

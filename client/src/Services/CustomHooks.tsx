@@ -42,9 +42,9 @@ export const getSelectedTreatmentArea = (
 ) => {
   if (state.includes(text)) {
     setState(state.filter((area) => area !== text));
-  } else if (text === "전체") {
+  } else if (text === "전체" || "진단 필요") {
     setState([text]);
-  } else if (state.includes("전체")) {
+  } else if (state.includes("전체" || "진단 필요")) {
     setState([text]);
   } else {
     setState([...state, text]);

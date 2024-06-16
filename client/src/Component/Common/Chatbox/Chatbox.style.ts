@@ -1,5 +1,5 @@
 import styled from "styled-components";
-// SystemBox
+
 export const StyledChatboxSystemBox = styled.div`
   display: inline-block;
   background-color: #f2f2f2;
@@ -50,5 +50,20 @@ export const StyledAnimationContainer = styled.div`
   & img {
     width: 120px;
     height: 60px;
+  }
+`;
+
+export const StyledCheckboxContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  & > div {
+    width: calc(50% - 4px);
+  }
+  & > div:first-child {
+    width: 100%;
+  }
+  & > div:last-child {
+    width: 100%;
   }
 `;

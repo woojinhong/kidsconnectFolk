@@ -36,9 +36,10 @@ const surveyText = [
   },
   {
     type: "addChild",
-    message: {
+    messages: {
       name: "아이 이름이 뭔가요?",
       birthDate: "아이의 생년월일을 알려주세요",
+      treatmentNeeded: "아이가 필요한 치료를 선택해주세요",
       characteristic: "아이의 성격 또는 성향을 간단하게 입력해주세요",
     },
     placeholder: "날짜 선택하기",

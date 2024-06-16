@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Checkbox, Radio } from "@mantine/core";
 
-import DaumPostCode from "./DaumPostCode/DaumPostCode";
+import DaumPostCode from "./DaumPostModal/DaumPostCode";
 import InputText from "../../Common/Input/InputText";
 import InputPassword from "../../Common/Input/InputPassword";
 import InputDatePicker from "../../Common/Input/InputDatePicker";

@@ -1,7 +1,7 @@
 interface CategoryProps {
   emoji: string;
   text: string;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xxs" | "sm" | "md" | "lg" | "xl";
   onClick?: (
     text: string,
     state: string[],
@@ -11,6 +11,7 @@ interface CategoryProps {
   checkbox?: boolean;
   checkedData?: string[];
   setData?: React.Dispatch<React.SetStateAction<string[]>>;
+  disabled?: boolean;
 }
 
 export default CategoryProps;

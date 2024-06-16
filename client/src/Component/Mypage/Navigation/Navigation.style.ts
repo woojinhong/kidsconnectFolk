@@ -16,19 +16,40 @@ export const StyledNavigation = styled.aside`
     gap: 24px;
   }
   & li {
+    width: 158px;
     line-height: 40px;
     font-weight: 800;
-    color: #999999;
   }
-  & span {
+  & > button {
+    line-height: 40px;
+    background-color: transparent;
+    text-align: left;
+    color: #c1c1c1;
+  }
+  & > ul button {
+    text-align: left;
+    width: 100%;
+    line-height: 40px;
+    background-color: transparent;
+    transition: all 0.2s;
+  }
+  & ul:after {
+    content: "";
+    display: block;
     width: 100%;
     height: 1px;
     background-color: #f2f2f2;
   }
-  & button {
-    line-height: 40px;
-    background-color: transparent;
-    text-align: left;
+
+  & li button:hover {
     color: #999999;
   }
 `;
+
+export const getButtonStyles = (isFocused: boolean) => {
+  if (isFocused) {
+    return {
+      color: "#333333",
+    };
+  } else return { color: "#c1c1c1" };
+};
