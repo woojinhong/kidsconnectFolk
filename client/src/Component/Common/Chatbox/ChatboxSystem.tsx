@@ -1,26 +1,21 @@
-import { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import { Highlight } from "@mantine/core";
-import { DateValue } from "@mantine/dates";
 import OutlineButton from "../Button/OutlineButton";
+import FilledButton from "../Button/FilledButton";
 import InputDatePicker from "../Input/InputDatePicker";
+import Category from "../Category/Category";
 
+import { clickButtonEvent } from "../../../Assets/CommonType/EventType";
+import { getSelectedTreatmentArea } from "../../../Services/CustomHooks";
 import {
   StyledChatboxSystemBox,
   StyledButtonWrapper,
   StyledAnimationContainer,
+  StyledCheckboxContainer,
 } from "./Chatbox.style";
 import LoadingAnimation from "../../../Assets/Animation/Loading.gif";
-
-interface ChatboxSystemProps {
-  highlightWords?: string;
-  messages?: string;
-  button?: string[];
-  selectbox?: boolean;
-  animation?: boolean;
-  onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
-  disabled?: boolean;
-}
+import { treatmentNeededText } from "../../../Assets/TextData/treatmentAreaText";
 
 function ChatboxSystem({
   highlightWords = "",
@@ -29,19 +24,54 @@ function ChatboxSystem({
   animation = false,
   onClick,
   selectbox = false,
+  getDateValue,
+  checkbox = false,
+  setValue,
+  getNeededCheckboxValue,
 }: ChatboxSystemProps) {
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabledCheckbox, setIsDisabledCheckbox] = useState(false);
+  const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
+    []
+  );
 
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClick = (event: clickButtonEvent) => {
     if (onClick) {
       onClick(event);
       setIsDisabled(true);
     }
   };
-  // 나중에 불러들일 데이터가 있을 때 사용
-  const getDateValue = (date: string) => {
-    console.log(date);
+
+  const handleDatePicker = (inputValue: string) => {
+    getDateValue && getDateValue(inputValue as string);
+    setIsDisabled(true);
   };
+
+  const handleOnClickCheckbox = () => {
+    if (getNeededCheckboxValue) {
+      getNeededCheckboxValue(selectedTreatmentArea);
+      setIsDisabledCheckbox(true);
+    }
+  };
+
+  const getSelectedTreatmentArea = useCallback((text: string) => {
+    setSelectedTreatmentArea((prev) => {
+      if (prev.includes(text)) {
+        return prev.filter((area) => area !== text);
+      } else if (text === "진단 필요") {
+        return [text];
+      } else if (prev.includes("진단 필요")) {
+        return [text];
+      } else {
+        return [...prev, text];
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    setValue && setValue(selectedTreatmentArea);
+  }, [selectedTreatmentArea]);
+
   return (
     <StyledChatboxSystemBox>
       <Highlight
@@ -67,7 +97,7 @@ function ChatboxSystem({
                 borderColor="#c1c1c1"
                 onClick={handleOnClick}
                 disabled={isDisabled}
-              ></OutlineButton>
+              />
             );
           })}
         </StyledButtonWrapper>
@@ -76,8 +106,32 @@ function ChatboxSystem({
         <InputDatePicker
           placeholder="날짜 선택하기"
           size="xs"
-          dispatch={getDateValue}
+          dispatch={handleDatePicker}
+          disabled={isDisabled}
         />
+      ) : null}
+      {checkbox ? (
+        <StyledCheckboxContainer>
+          {treatmentNeededText.map((category) => (
+            <Category
+              key={category.text}
+              emoji={category.emoji}
+              text={category.text}
+              size="xxs"
+              main={true}
+              onClick={getSelectedTreatmentArea}
+              checkedData={selectedTreatmentArea}
+              disabled={isDisabledCheckbox}
+            />
+          ))}
+          <FilledButton
+            key="done"
+            text="완료"
+            variant="m_filled"
+            onClick={handleOnClickCheckbox}
+            disabled={isDisabledCheckbox}
+          />
+        </StyledCheckboxContainer>
       ) : null}
       {animation ? (
         <StyledAnimationContainer>
@@ -89,3 +143,18 @@ function ChatboxSystem({
 }
 
 export default ChatboxSystem;
+
+interface ChatboxSystemProps {
+  highlightWords?: string;
+  messages?: string;
+  button?: string[];
+  checkbox?: boolean;
+  selectbox?: boolean;
+  animation?: boolean;
+  onClick?: (event: clickButtonEvent) => void;
+  disabled?: boolean;
+  getDateValue?: (inputValue: string) => void;
+  selectedValue?: string[];
+  setValue?: React.Dispatch<React.SetStateAction<string[]>>;
+  getNeededCheckboxValue?: (inputValue: string[]) => void;
+}
