@@ -1,7 +1,7 @@
 import InputText from "../../Common/Input/InputText";
 import InputPassword from "../../Common/Input/InputPassword";
 import InputDatePicker from "../../Common/Input/InputDatePicker";
-import DaumPostCode from "./DaumPostCode/DaumPostCode";
+import DaumPostCode from "./DaumPostModal/DaumPostCode";
 
 import { changeInputEvent } from "../../../Assets/CommonType/EventType";
 
