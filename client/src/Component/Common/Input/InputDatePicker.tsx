@@ -12,13 +12,15 @@ function InputDatePicker({
   label,
   showWithAsterisk,
   dispatch,
+  disabled,
 }: {
   placeholder: string;
   size?: "xs" | "lg";
   label?: string;
   icon?: boolean;
   showWithAsterisk?: boolean;
-  dispatch: (inputValue: string) => void;
+  dispatch?: (inputValue: string) => void;
+  disabled?: boolean;
 }) {
   const [value, setValue] = useState<Date | null>(null);
   const changeLabelToEnglish = (label: string | undefined) => {
@@ -63,6 +65,7 @@ function InputDatePicker({
         },
       }}
       required={showWithAsterisk}
+      disabled={disabled}
     />
   );
 }
