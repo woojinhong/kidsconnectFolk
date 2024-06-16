@@ -38,6 +38,7 @@ export const StyledAddChildButton = styled.button`
   height: 186px;
   border-radius: 16px;
   background-color: #f2f2f2;
+  transition: all 0.3s;
 
   & > div {
     display: flex;
@@ -49,9 +50,18 @@ export const StyledAddChildButton = styled.button`
     width: 56px;
     height: 56px;
     margin-bottom: 16px;
+    transition: all 0.3s;
   }
   & span {
     font-size: 14px;
     font-weight: 500;
+  }
+
+  &:hover {
+    background-color: #ffd8b8;
+  }
+
+  &:hover img {
+    transform: rotate(90deg);
   }
 `;

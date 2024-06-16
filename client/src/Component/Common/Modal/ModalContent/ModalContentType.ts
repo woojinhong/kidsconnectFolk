@@ -24,9 +24,10 @@ export type ApplicationTextType = {
 };
 
 export type AddChildTextType = {
-  message: {
+  messages: {
     name: string;
     birthDate: string;
+    treatmentNeeded: string;
     characteristic: string;
   };
   placeholder: string;

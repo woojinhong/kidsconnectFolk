@@ -1,3 +1,4 @@
+import { useState, useCallback, useEffect } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal as MantineModal, Input } from "@mantine/core";
 
@@ -6,6 +7,7 @@ import FilledButton from "../Button/FilledButton";
 import TherapistPreference from "./ModalContent/TherapistPreference";
 import AddChildSurvey from "./ModalContent/AddChildSurvey";
 import ApplicationQuestionary from "./ModalContent/ApplicationQuestionary";
+import { changeInputEvent } from "../../../Assets/CommonType/EventType";
 
 import {
   StyledModalHeader,
@@ -29,22 +31,29 @@ function Modal({
   isOpen,
 }: ModalProps) {
   const [opened, { open, close }] = useDisclosure(false);
+  const [chatInputValue, setChatInputValue] = useState<string>("");
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [sendButtonDisabled, setSendButtonDisabled] = useState<boolean>(false);
 
-  const getContentInModal = (
-    type: "therapistPreference" | "addChild" | "apply",
-    props?: () => void
-  ) => {
-    switch (type) {
-      case "therapistPreference":
-        return <TherapistPreference />;
-      case "addChild":
-        return <AddChildSurvey />;
-      case "apply":
-        return <ApplicationQuestionary onClose={props} />;
-      default:
-        return null;
-    }
+  const handleChatInputChange = (e: changeInputEvent) => {
+    setChatInputValue(e.target.value);
   };
+
+  const handleButtonSendOnClick = useCallback(() => {
+    setCurrentStep((prevStep) => prevStep + 1);
+  }, []);
+
+  const onClearChatInput = () => {
+    setChatInputValue("");
+  };
+
+  useEffect(() => {
+    if (currentStep === 1 || currentStep === 4) {
+      setSendButtonDisabled(false);
+    } else {
+      setSendButtonDisabled(true);
+    }
+  }, [currentStep]);
 
   return (
     <>
@@ -64,7 +73,17 @@ function Modal({
             <StyledModalCloseButton icon={<img src={IconRemove} />} />
           </StyledModalHeader>
           <MantineModal.Body>
-            {getContentInModal(content, onClose)}
+            {content === "addChild"
+              ? getContentInModal(
+                  content,
+                  onClose,
+                  onClearChatInput,
+                  chatInputValue,
+                  currentStep,
+                  handleButtonSendOnClick,
+                  setCurrentStep
+                )
+              : getContentInModal(content, onClose)}
           </MantineModal.Body>
           {chatInput ? (
             <StyledChatInput>
@@ -76,7 +95,9 @@ function Modal({
                 }}
               >
                 <Input
+                  value={chatInputValue}
                   placeholder="텍스트를 입력해주세요"
+                  onChange={handleChatInputChange}
                   size="48px"
                   styles={{
                     input: {
@@ -87,7 +108,13 @@ function Modal({
                   }}
                 />
               </Input.Wrapper>
-              <FilledButton text="전송하기" variant="m_filled" icon="send" />
+              <FilledButton
+                text="전송하기"
+                variant="m_filled"
+                icon="send"
+                onClick={handleButtonSendOnClick}
+                disabled={sendButtonDisabled}
+              />
             </StyledChatInput>
           ) : null}
         </MantineModal.Content>
@@ -95,7 +122,7 @@ function Modal({
 
       <div>
         {buttonVariant === "addChild" ? (
-          <StyledAddChildButton onClick={open}>
+          <StyledAddChildButton onClick={onOpen ? onOpen : open}>
             <div>
               <img src={Plus} />
               <span>{buttonText}</span>
@@ -111,6 +138,38 @@ function Modal({
   );
 }
 
+export default Modal;
+
+const getContentInModal = (
+  type: "therapistPreference" | "addChild" | "apply",
+  onClose?: () => void,
+  onClearChatInput?: () => void,
+  chatInputValue?: string,
+  currentStep?: number,
+  handleButtonSendOnClick?: () => void,
+  setCurrentStep?: React.Dispatch<React.SetStateAction<number>>
+) => {
+  switch (type) {
+    case "therapistPreference":
+      return <TherapistPreference />;
+    case "addChild":
+      return (
+        <AddChildSurvey
+          chatInputValue={chatInputValue}
+          onClose={onClose}
+          currentStep={currentStep}
+          onClearChatInput={onClearChatInput}
+          handleButtonSendOnClick={handleButtonSendOnClick}
+          setCurrentStep={setCurrentStep}
+        />
+      );
+    case "apply":
+      return <ApplicationQuestionary onClose={onClose} />;
+    default:
+      return null;
+  }
+};
+
 type ModalProps = {
   content: "apply" | "addChild" | "therapistPreference";
   buttonText: string;
@@ -121,5 +180,3 @@ type ModalProps = {
   isOpen?: boolean;
   onOpen?: (() => void) | undefined;
 };
-
-export default Modal;
