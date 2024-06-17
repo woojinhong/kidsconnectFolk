@@ -1,15 +1,14 @@
 //package com.example.kidsconnect.controller;
-//
-//import com.example.kidsconnect.domain.Reservation;
+//import com.example.kidsconnect.domain.UserPrinciple;
 //import com.example.kidsconnect.dto.ReservationRequestDto;
 //import com.example.kidsconnect.dto.ReservationResponseDto;
-//import com.example.kidsconnect.dto.TherapistSignUpDto;
+//
 //import com.example.kidsconnect.dto.UserReservationDto;
-//import com.example.kidsconnect.service.MatchService;
-//import com.example.kidsconnect.service.ReserveService;
-//import com.example.kidsconnect.service.TherapistInfoService;
+//
+//
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.http.ResponseEntity;
+//import org.springframework.security.core.annotation.AuthenticationPrincipal;
 //import org.springframework.web.bind.annotation.*;
 //
 //import java.util.List;
@@ -19,7 +18,6 @@
 //@RequiredArgsConstructor
 //public class ReserveController {
 //
-//    private final MatchService matchService;
 //    private final ReserveService reserveService;
 //
 //
@@ -35,9 +33,9 @@
 //        return ResponseEntity.ok(confirmedReservations);
 //    }
 //    @PostMapping("{}")
-//    public ResponseEntity<?> createReservation(@RequestBody ReservationRequestDto request) {
+//    public ResponseEntity<?> createReservation(@RequestBody ReservationRequestDto request, @AuthenticationPrincipal UserPrinciple userDetails) {
 //
-//        return reserveService.createReservation(request);
+//        return reserveService.createReservation(request,userDetails);
 //    }
 //    @PostMapping("/{reservationId}/confirm")
 //    public ResponseEntity<?> confirmReservation(@PathVariable Long reservationId) {

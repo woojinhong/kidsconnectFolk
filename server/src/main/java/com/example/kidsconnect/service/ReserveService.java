@@ -21,7 +21,6 @@
 //    private final UserService userService;
 //    private final TherapistService therapistService;
 //    private final ChildService childService;
-//    private final TherapistRepository therapistRepository;
 //    private final TherapistInfoSymptomRepository therapistInfoSymptomRepository;
 //    private final ReservationRepository reservationRepository;
 //
@@ -29,10 +28,11 @@
 //
 //
 //    @Transactional
-//    public ResponseEntity<?> createReservation(ReservationRequestDto requestDto) {
+//    public ResponseEntity<?> createReservation(ReservationRequestDto requestDto, UserPrinciple userDetails) {
+//
 //        // User, Child, Therapist 조회
-//        User user = userService.findById(requestDto.getUserId());
-//        Child child = childService.findById(requestDto.getChildId());
+//        User user = userService.findById(userDetails.getId());
+////        Child child = childService.findById(requestDto.getChildId());
 //        Therapist therapist = therapistService.findById(requestDto.getTherapistId());
 //
 //

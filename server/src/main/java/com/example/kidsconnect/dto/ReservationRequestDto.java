@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Builder
 public class ReservationRequestDto {
 
-    private Long userId;
     private Long childId;
 
     private Long therapistId;
