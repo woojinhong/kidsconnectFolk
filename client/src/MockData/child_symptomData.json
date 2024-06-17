@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "symptomId": 1,
+    "symptomData": ["심리재활", "언어발달"]
+  },
+  {
+    "id": 2,
+    "symptomId": 3,
+    "symptomData": ["행동재활"]
+  },
+  {
+    "id": 3,
+    "symptomId": 5,
+    "symptomData": ["특수교육", "인지발달"]
+  },
+  {
+    "id": 4,
+    "symptomId": 2,
+    "symptomData": ["심리재활", "창의재활"]
+  },
+  {
+    "id": 5,
+    "symptomId": 4,
+    "symptomData": ["언어발달"]
+  }
+]

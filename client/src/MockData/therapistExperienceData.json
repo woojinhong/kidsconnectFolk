@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "therapistId": 5,
+    "place": "정신건강 병원 A",
+    "startDate": "8/4/2022",
+    "endDate": "10/25/2023"
+  },
+  {
+    "id": 2,
+    "therapistId": 2,
+    "place": "아동발달센터 B",
+    "startDate": "8/5/2022",
+    "endDate": "7/17/2023"
+  },
+  {
+    "id": 3,
+    "therapistId": 4,
+    "place": "지역 사회 보건 센터 C",
+    "startDate": "2/12/2021",
+    "endDate": "11/29/2023"
+  },
+  {
+    "id": 4,
+    "therapistId": 1,
+    "place": "전문 정신건강 클리닉 D",
+    "startDate": "3/20/2022",
+    "endDate": "3/2/2024"
+  },
+  {
+    "id": 5,
+    "therapistId": 3,
+    "place": "학교 내 상담실 E",
+    "startDate": "5/20/2023",
+    "endDate": "2/20/2024"
+  }
+]
