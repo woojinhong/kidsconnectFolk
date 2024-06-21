@@ -37,18 +37,19 @@ export function useDelayChatbox(ms: number) {
 //Category Value 가져오는 Custom Hook
 export const getSelectedTreatmentArea = (
   text: string,
-  state: string[],
   setState: React.Dispatch<React.SetStateAction<string[]>>
 ) => {
-  if (state.includes(text)) {
-    setState(state.filter((area) => area !== text));
-  } else if (text === "전체" || "진단 필요") {
-    setState([text]);
-  } else if (state.includes("전체" || "진단 필요")) {
-    setState([text]);
-  } else {
-    setState([...state, text]);
-  }
+  setState((state) => {
+    if (state.includes(text)) {
+      return state.filter((area) => area !== text);
+    } else if (text === "진단 필요" || text === "전체") {
+      return [text];
+    } else if (state.includes("진단 필요") || state.includes("전체")) {
+      return [text];
+    } else {
+      return [...state, text];
+    }
+  });
 };
 
 export const useErrorMessagesAccordingToInputLabel = (label: string) => {

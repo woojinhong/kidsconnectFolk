@@ -1,17 +1,105 @@
+import React, { useState } from "react";
+
 import ProfileSummary from "../../Component/Mypage/TherapistContent/Profile/ProfileSummary";
-import InputText from "../../Component/Common/Input/InputText";
 import InputTextArea from "../../Component/Common/Input/InputTextArea";
 import Category from "../../Component/Common/Category/Category";
 import CheckBoxAgeList from "../../Component/Common/CheckBox/CheckBoxAge/CheckBoxAgeList";
-
-import { Checkbox } from "@mantine/core";
+import AddCareer from "../../Component/Common/CreateIntroduction/AddCareer";
+import AddEducation from "../../Component/Common/CreateIntroduction/AddEducation";
+import AddCertification from "../../Component/Common/CreateIntroduction/AddCertification";
+import InputFile from "../../Component/Common/Input/InputFile";
 
 import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import FilledButton from "../../Component/Common/Button/FilledButton";
-import OutlineButton from "../../Component/Common/Button/OutlineButton";
-import SelectBoxDefault from "../../Component/Common/SelectBox/SelectBoxDefault";
+
+import {
+  gatheredIntroductionDataType,
+  CategoryType,
+  careerType,
+  educationType,
+  licenseType,
+} from "./CreateIntroductionType";
 
 function CreateIntroduction() {
+  const [gatheredIntroductionData, setGatheredIntroductionData] = useState(
+    {} as gatheredIntroductionDataType
+  );
+  const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
+    []
+  );
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string[]>([]);
+
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setGatheredIntroductionData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const getObjectDataToArr = (
+    category: CategoryType,
+    data: careerType[] | educationType[] | licenseType[]
+  ) => {
+    if (category === "career") {
+      setGatheredIntroductionData((prev) => ({
+        ...prev,
+        career: data as careerType[],
+      }));
+    } else if (category === "education") {
+      setGatheredIntroductionData((prev) => ({
+        ...prev,
+        education: data as educationType[],
+      }));
+    } else if (category === "licenses") {
+      setGatheredIntroductionData((prev) => ({
+        ...prev,
+        licenses: data as licenseType[],
+      }));
+    }
+  };
+
+  const getTreatmentData = (
+    inputValue: string,
+    setData: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    const updatedSelectedTreatmentArea = getSelectedTreatmentArea(
+      inputValue,
+      setData
+    );
+
+    setGatheredIntroductionData((prev) => ({
+      ...prev,
+      treatmentArea: updatedSelectedTreatmentArea,
+    }));
+  };
+
+  const getAgeGroupData = (inputValue: string[]) => {
+    setSelectedAgeGroup(inputValue);
+    setGatheredIntroductionData((prev) => ({
+      ...prev,
+      ageGroup: inputValue,
+    }));
+  };
+
+  const handleConfirmBooleanData = (
+    category: CategoryType,
+    file: File | File[]
+  ) => {
+    const valueToBoolean = file ? true : false;
+    setGatheredIntroductionData((prev) => ({
+      ...prev,
+      [category]: valueToBoolean,
+    }));
+  };
+
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (createIntroductionFormValidate(gatheredIntroductionData)) {
+      alert("필수 항목을 입력해주세요.");
+      return;
+    }
+  };
   return (
     <main>
       <section>
@@ -27,13 +115,14 @@ function CreateIntroduction() {
           </ul>
         </div>
         <div>
-          <form>
+          <form onSubmit={handleOnSubmit}>
             <InputTextArea
               label="제목"
               showWithAsterisk={true}
               placeholder="제목을 공백 포함하여 40자 이하로 입력해 주세요."
               height="56px"
               showCharCount={true}
+              dispatch={handleTextAreaChange}
             />
             <InputTextArea
               label="짧은 자기소개"
@@ -42,6 +131,7 @@ function CreateIntroduction() {
               height="56px"
               showCharCount={true}
               maxCharCount={300}
+              dispatch={handleTextAreaChange}
             />
             <div>
               <h4>
@@ -54,6 +144,9 @@ function CreateIntroduction() {
                   emoji={category.emoji}
                   text={category.text}
                   size="lg"
+                  onClick={getTreatmentData}
+                  setData={setSelectedTreatmentArea}
+                  checkedData={selectedTreatmentArea}
                 />
               ))}
             </div>
@@ -61,58 +154,15 @@ function CreateIntroduction() {
               <h4>
                 도울 수 있는 <span>아이 연령</span>
               </h4>
-              <CheckBoxAgeList />
+              <CheckBoxAgeList
+                checkedData={selectedAgeGroup}
+                setData={setSelectedAgeGroup}
+                onChange={getAgeGroupData}
+              />
             </div>
-            <div>
-              <div>
-                <h4>경력</h4>
-                <p>경력증명서를 첨부하셔야 인증 마크가 달려요.</p>
-              </div>
-              <div>
-                <div>
-                  <InputText
-                    placeholder="센터/병원/기관 검색"
-                    apiIcon="search"
-                  />
-                  <InputText />
-                  <span>년</span>
-                  <InputText />
-                  <span>개월</span>
-                </div>
-                <Checkbox label="근무 중" radius="100%" />
-              </div>
-              <div>
-                <FilledButton text="+ 경력 추가하기" />
-                <OutlineButton text="경력증명서 첨부하기" />
-              </div>
-              <div>
-                총 <span>n</span>년 <span>n</span>개월
-              </div>
-            </div>
-            <div>
-              <div>
-                <h4>학력</h4>
-                <p>학력 입력 시, 사실을 증명할 수 있는 서류를 첨부해 주세요.</p>
-              </div>
-              <div>
-                <SelectBoxDefault category="degree" />
-                <InputText placeholder="학교 검색" apiIcon="search" />
-                <InputText placeholder="학과를 입력해 주세요" />
-                <SelectBoxDefault category="degreeCompletion" />
-              </div>
-              <FilledButton text="+ 학력 추가하기" />
-            </div>
-            <div>
-              <div>
-                <h4>자격증</h4>
-                <p>자격증 사진을 첨부하셔야 인증 마크가 달려요.</p>
-              </div>
-              <div>
-                <InputText placeholder="자격증 검색" apiIcon="search" />
-                <OutlineButton text="+ 자격증명서 첨부하기" />
-              </div>
-              <FilledButton text="+ 자격증 추가하기" />
-            </div>
+            <AddCareer getData={getObjectDataToArr} />
+            <AddEducation getData={getObjectDataToArr} />
+            <AddCertification getData={getObjectDataToArr} />
             <div>
               <div>
                 <h4>
@@ -124,10 +174,17 @@ function CreateIntroduction() {
                 </p>
               </div>
               <div>
-                <InputText placeholder="본인 확인 서류" apiIcon="upload" />
-                <InputText
+                <InputFile
+                  inputType="isUploadedId"
+                  placeholder="본인 확인 서류"
+                  icon={true}
+                  onChange={handleConfirmBooleanData}
+                />
+                <InputFile
+                  inputType="isUploadedCriminalRecord"
                   placeholder="범죄여부 사실 확인서"
-                  apiIcon="upload"
+                  icon={true}
+                  onChange={handleConfirmBooleanData}
                 />
               </div>
             </div>
@@ -137,8 +194,15 @@ function CreateIntroduction() {
               showWithAsterisk={true}
               showCharCount={true}
               maxCharCount={3000}
+              dispatch={handleTextAreaChange}
             />
-            <FilledButton text="자기소개서 등록하기" />
+            <FilledButton
+              submit={true}
+              text="자기소개서 등록하기"
+              disabled={createIntroductionFormValidate(
+                gatheredIntroductionData
+              )}
+            />
           </form>
         </div>
       </section>
@@ -147,3 +211,37 @@ function CreateIntroduction() {
 }
 
 export default CreateIntroduction;
+
+const createIntroductionFormValidate = (
+  data: gatheredIntroductionDataType
+): boolean => {
+  return !(
+    data.title &&
+    data.introduction &&
+    data.content &&
+    data.treatmentArea &&
+    data.ageGroup &&
+    data.isUploadedId &&
+    data.isUploadedCriminalRecord
+  );
+};
+
+const getSelectedTreatmentArea = (
+  text: string,
+  setState: React.Dispatch<React.SetStateAction<string[]>>
+) => {
+  let updatedState: string[] = [];
+  setState((state) => {
+    if (state.includes(text)) {
+      updatedState = state.filter((area) => area !== text);
+    } else if (text === "진단 필요" || text === "전체") {
+      updatedState = [text];
+    } else if (state.includes("진단 필요") || state.includes("전체")) {
+      updatedState = [text];
+    } else {
+      updatedState = [...state, text];
+    }
+    return updatedState;
+  });
+  return updatedState;
+};
