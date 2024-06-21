@@ -4,7 +4,6 @@ interface CategoryProps {
   size?: "xxs" | "sm" | "md" | "lg" | "xl";
   onClick?: (
     text: string,
-    state: string[],
     setState: React.Dispatch<React.SetStateAction<string[]>>
   ) => void;
   main?: boolean;

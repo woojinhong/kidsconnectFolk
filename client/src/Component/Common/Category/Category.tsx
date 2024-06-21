@@ -20,7 +20,7 @@ function Category({
 
   function handleCheckbox() {
     if (onClick) {
-      onClick(text, checkedData, setData);
+      onClick(text, setData);
     }
   }
 

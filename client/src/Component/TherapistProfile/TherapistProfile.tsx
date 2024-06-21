@@ -1,19 +1,13 @@
-import CheckBoxAgeList from "../Common/CheckBox/CheckBoxAge/CheckBoxAgeList";
+import Category from "../Common/Category/Category";
 import ConfirmDocLabel from "../Common/Label/ConfirmDocLabel/ConfirmDocLabel";
+import CheckBoxAgeBox from "../Common/CheckBox/CheckBoxAge/CheckBoxAgeBox";
 
 import { ProfileDetailType } from "../Mypage/TherapistContent/Profile/ProfileType";
+import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 
 function TherapistProfile({ data }: { data?: object }) {
-  const {
-    title,
-    bio,
-    content,
-    education,
-    identityCheck,
-    crimeCheck,
-    ageRange,
-    treatmentArea,
-  } = data as ProfileDetailType;
+  const { title, bio, content, education, identityCheck, crimeCheck } =
+    data as ProfileDetailType;
 
   return (
     <div>
@@ -27,19 +21,27 @@ function TherapistProfile({ data }: { data?: object }) {
           <h4>
             <span>도울 수 있는</span> 치료/교육/재활 영역
           </h4>
-          <ul>
-            {treatmentArea.map((area, index) => (
-              <li key={index}>{area}</li>
+          {/* 나중에 treatmentArea 가져오기 */}
+          {treatmentAreaText &&
+            treatmentAreaText.map((category) => (
+              <Category
+                key={category.text}
+                emoji={category.emoji}
+                text={category.text}
+                size="lg"
+              />
             ))}
-          </ul>
         </div>
         <div>
           <h4>
             <span>도울 수 있는</span> 아이 연령
           </h4>
-          <ul>
-            <CheckBoxAgeList treatmentData={ageRange} checked={true} />
-          </ul>
+          {/* 나중에 checkboxAge 가져오기 */}
+          <CheckBoxAgeBox
+            label="유아"
+            description="0세 ~ 7세"
+            checkedData={["유아"]}
+          />
         </div>
         <div>
           <h4>경력</h4>

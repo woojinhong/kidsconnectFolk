@@ -2,16 +2,6 @@ import { useState } from "react";
 import { Textarea } from "@mantine/core";
 import styled from "styled-components";
 
-interface InputComplexProps {
-  label: string;
-  placeholder: string;
-  detailedDescription?: string;
-  showWithAsterisk?: boolean;
-  showCharCount?: boolean;
-  maxCharCount?: number;
-  height?: string;
-}
-
 const InputTextArea: React.FC<InputComplexProps> = ({
   label,
   height = "240px",
@@ -20,6 +10,7 @@ const InputTextArea: React.FC<InputComplexProps> = ({
   placeholder,
   showCharCount = true,
   maxCharCount = 40,
+  dispatch,
 }) => {
   const [value, setValue] = useState<string>("");
   const [charCount, setCharCount] = useState<number>(0);
@@ -30,11 +21,13 @@ const InputTextArea: React.FC<InputComplexProps> = ({
       setValue(inputValue);
       setCharCount(inputValue.length);
     }
+    dispatch && dispatch(event);
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <StyledTextInput
+        name={labelToName(label)}
         size="lg"
         radius="lg"
         label={label}
@@ -66,6 +59,30 @@ const InputTextArea: React.FC<InputComplexProps> = ({
 };
 
 export default InputTextArea;
+
+const labelToName = (label: string) => {
+  switch (label) {
+    case "제목":
+      return "title";
+    case "짧은 자기소개":
+      return "introduction";
+    case "상세 소개":
+      return "content";
+    default:
+      return "";
+  }
+};
+
+interface InputComplexProps {
+  label: string;
+  placeholder: string;
+  detailedDescription?: string;
+  showWithAsterisk?: boolean;
+  showCharCount?: boolean;
+  maxCharCount?: number;
+  height?: string;
+  dispatch?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
 
 export const StyledTextInput = styled(Textarea)`
   & label {

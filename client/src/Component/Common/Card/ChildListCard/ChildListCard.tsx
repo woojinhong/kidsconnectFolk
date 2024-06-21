@@ -49,7 +49,7 @@ function ChildListCard() {
       <StyledTextInfoWrapper>
         <StyledSymptomWrapper>
           {symptomData?.map((symptom) => {
-            return <Tag value={symptom}></Tag>;
+            return <Tag key={symptom} value={symptom}></Tag>;
           })}
         </StyledSymptomWrapper>
         <StyledChildInfoWrapper>
