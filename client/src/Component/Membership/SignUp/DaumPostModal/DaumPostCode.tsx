@@ -17,12 +17,12 @@ const DaumPostCode = ({
   useEffect(() => {
     if (disabled) {
       setValue("");
-      dispatch(switchLabelToType(label), "");
+      dispatch(switchLabelToType(label as string), "");
     }
   }, [disabled]);
   const handleComplete = (data: { address: string }) => {
     const fullAddress = data.address;
-    dispatch(switchLabelToType(label), fullAddress);
+    dispatch(switchLabelToType(label as string), fullAddress);
     setValue(fullAddress);
   };
 
@@ -46,7 +46,7 @@ const switchLabelToType = (label: string) => {
 };
 
 interface DaumPropsType {
-  label: string;
+  label?: string;
   placeholder: string;
   disabled?: boolean;
 }
