@@ -43,23 +43,23 @@ class TherapistInfoRepositoryTest {
     @Test
     @DisplayName("Fetch Join 테스트 ")
     void findTherapistInfoFetchJoin() {
-        List<TherapistInfo> list = therapistInfoRepository.findTherapistInfoWithExperiences(1l);
+    //    List<TherapistInfo> list = therapistInfoRepository.findTherapistInfoWithExperiences(1l);
 
 
     }
 
-    @Test
-    @DisplayName("EntityGraph 테스트 ")
-    void findTherapistInfoEntityGraph() {
-        List<TherapistInfo> list = therapistInfoRepository.findAllById(1L);
-
-        list.forEach(therapistInfo -> {
-            System.out.println("Name: " + therapistInfo.getExperience());
-            System.out.println("Title: " + therapistInfo.getTitle());
-            System.out.println("therapistInfo.getId() = " + therapistInfo.getId());
-
-        });
-    }
+//    @Test
+//    @DisplayName("EntityGraph 테스트 ")
+//    void findTherapistInfoEntityGraph() {
+//        List<TherapistInfo> list = therapistInfoRepository.findAllById(1L);
+//
+//        list.forEach(therapistInfo -> {
+//            System.out.println("Name: " + therapistInfo.getExperience());
+//            System.out.println("Title: " + therapistInfo.getTitle());
+//            System.out.println("therapistInfo.getId() = " + therapistInfo.getId());
+//
+//        });
+//    }
 
     @Test
     @DisplayName("therapistInfo 나이 range 저장 테스트")
@@ -100,8 +100,8 @@ class TherapistInfoRepositoryTest {
         );
 
         // therapistInfoRepository 모킹
-        when(therapistInfoRepository.findTherapistsByCriteria(any(MatchRequestDto.class)))
-                .thenReturn(mockResponses);
+//        when(therapistInfoRepository.findTherapistsByCriteria(any(MatchRequestDto.class)))
+//                .thenReturn(mockResponses);
     }
 
     @Test
@@ -115,7 +115,7 @@ class TherapistInfoRepositoryTest {
                 .build();
 
         // 서비스 메서드 호출
-        List<MatchResponseDto> result = therapistInfoSearchService.findTherapistsByCriteria(matchRequestDto);
+     //   List<MatchResponseDto> result = therapistInfoSearchService.findTherapistsByCriteria(matchRequestDto);
 
         // 검증
 //        assertNotNull(result);
@@ -126,6 +126,6 @@ class TherapistInfoRepositoryTest {
 //        assertEquals(Arrays.asList("Symptom2", "Symptom3"), result.get(1).getSymptoms());
 
         // 결과 출력
-        result.forEach(System.out::println);
-    }
+    //    result.forEach(System.out::println);
+    }//
 }

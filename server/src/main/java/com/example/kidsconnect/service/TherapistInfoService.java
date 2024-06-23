@@ -29,31 +29,39 @@ public class TherapistInfoService {
     private final SymptomService symptomService;
     private final TherapistService therapistService;
     private final TherapistExperienceRepository therapistExperienceRepository;
-    private final ToEntity toEntity;
     private final TherapistInfoMapper therapistInfoMapper;
     @PersistenceContext
     private EntityManager entityManager;
 
 
     @Transactional(readOnly = true)
-    public ResponseEntity<?> showTherapistInfo(Long therapistInfoId) {
+    public ResponseEntity<?> showTherapistInfo(UserPrinciple userDetails) {
 
-        TherapistInfo therapistInfo = findById(therapistInfoId);
+        TherapistInfo therapistInfo = findByTherapistId(userDetails.getId());
+
+        // 인증된 사용자(therapist)가 이 TherapistInfo의 소유자인지 확인
+        verifyTherapistOwnership(therapistInfo, userDetails);
 
         TherapistInfoDto therapistInfoDto = therapistInfoMapper.toTherapistInfoDto(therapistInfo);
 
         return ResponseEntity.ok(therapistInfoDto);
     }
+
     @Transactional
     public ResponseEntity<?> addTherapistInfo(TherapistInfoDto therapistInfoDto, UserPrinciple userDetails) {
-        TherapistInfo therapistInfo = toEntity.toTherapistInfo(therapistInfoDto); // dto -> entity + jwt token
+
+
+        TherapistInfo therapistInfo = therapistInfoMapper.toTherapistInfo(therapistInfoDto); // dto -> entity + jwt token
+
+        // 인증된 사용자(therapist)가 이 TherapistInfo의 소유자인지 확인
+        verifyTherapistOwnership(therapistInfo, userDetails);
 
         addExperiences(therapistInfo, therapistInfoDto.getExperience());
         addEducations(therapistInfo, therapistInfoDto.getEducation());
         addSymptoms(therapistInfo, therapistInfoDto.getSymptom());
 
 
-        // Therapist 엔티티를 설정  추후에 token으로 therapist_id 외래키 대체
+        // Therapist 엔티티 객체 반환
         Therapist therapist = therapistService.findById(userDetails.getId());
 
 
@@ -80,9 +88,9 @@ public class TherapistInfoService {
 
 
     @Transactional
-    public ResponseEntity<?> updateTherapistInfo(Long id, TherapistInfoDto therapistInfoDto, UserPrinciple userDetails) {
-        TherapistInfo existingTherapistInfo = therapistInfoRepository.findById(id)
-                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
+    public ResponseEntity<?> updateTherapistInfo(TherapistInfoDto therapistInfoDto, UserPrinciple userDetails) {
+        TherapistInfo existingTherapistInfo = findByTherapistId(userDetails.getId());
+
 
         // 인증된 사용자(therapist)가 이 TherapistInfo의 소유자인지 확인
         verifyTherapistOwnership(existingTherapistInfo, userDetails);
@@ -99,15 +107,7 @@ public class TherapistInfoService {
         existingTherapistInfo.getTherapistInfoSymptom().clear();
         addSymptoms(existingTherapistInfo, therapistInfoDto.getSymptom());
 
-        existingTherapistInfo.updateTherapistInfo(therapistInfoDto.getTitle(),
-                therapistInfoDto.getBio(),
-                therapistInfoDto.getContent(),
-                therapistInfoDto.getIdentityCheck(),
-                therapistInfoDto.getCrimeCheck(),
-                therapistInfoDto.getCertificate(),
-                therapistInfoDto.getAgeRange(),
-                therapistInfoDto.getImageFile());
-
+        //수정
         therapistInfoMapper.updateEntityFromDto(therapistInfoDto, existingTherapistInfo);
         // 총 경력 계산 및 설정
         String totalExperience = calculateTotalExperience(existingTherapistInfo.getId());
@@ -115,25 +115,26 @@ public class TherapistInfoService {
 
         therapistInfoRepository.save(existingTherapistInfo);
 
-        return ResponseEntity.ok("수정 성공");
+        return ResponseEntity.ok("치료사 상세정보 수정 성공");
     }
 
     @Transactional
-    public ResponseEntity<?> deleteTherapistInfo(Long therapistInfoId, UserPrinciple userDetails) {
-        TherapistInfo therapistInfo = findById(therapistInfoId);
+    public ResponseEntity<?> deleteTherapistInfo(UserPrinciple userDetails) {
+        TherapistInfo therapistInfo = findByTherapistId(userDetails.getId());
 
         // 인증된 사용자(therapist)가 이 TherapistInfo의 소유자인지 확인
         verifyTherapistOwnership(therapistInfo, userDetails);
 
-        therapistInfoRepository.deleteById(therapistInfoId);
-        return ResponseEntity.ok("삭제 성공");
+        therapistInfoRepository.deleteById(therapistInfo.getId());
+        return ResponseEntity.ok("치료사 상세정보 삭제 성공");
     }
 
 
     /**
      * 치료사 경험 정보를 치료사 엔티티에 추가하는 메서드
+     *
      * @param therapistInfo 치료사 엔티티
-     * @param experiences 치료사 경험 정보 리스트
+     * @param experiences   치료사 경험 정보 리스트
      */
     private void addExperiences(TherapistInfo therapistInfo, List<TherapistExperience> experiences) {
         if (experiences != null) {
@@ -143,8 +144,9 @@ public class TherapistInfoService {
 
     /**
      * 치료사 교육 정보를 치료사 엔티티에 추가하는 메서드
+     *
      * @param therapistInfo 치료사 엔티티
-     * @param educations 치료사 교육 정보 리스트
+     * @param educations    치료사 교육 정보 리스트
      */
     private void addEducations(TherapistInfo therapistInfo, List<TherapistEducation> educations) {
         if (educations != null) {
@@ -154,8 +156,9 @@ public class TherapistInfoService {
 
     /**
      * 치료사 증상 정보를 치료사 엔티티에 추가하는 메서드
+     *
      * @param therapistInfo 치료사 엔티티
-     * @param symptoms 치료사 증상 정보 리스트
+     * @param symptoms      치료사 증상 정보 리스트
      */
     private void addSymptoms(TherapistInfo therapistInfo, List<String> symptoms) {
         if (symptoms != null) {
@@ -175,8 +178,6 @@ public class TherapistInfoService {
     }
 
 
-
-
     private void verifyTherapistOwnership(TherapistInfo therapistInfo, UserPrinciple userDetails) {
         if (!therapistInfo.getTherapist().getId().equals(userDetails.getId())) {
             throw new CustomException(CustomCode.NOT_VALID_OWNER);
@@ -188,6 +189,13 @@ public class TherapistInfoService {
     @Transactional(readOnly = true)
     public TherapistInfo findById(Long id) {
         return therapistInfoRepository.findById(id)
+                .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_THERAPIST_INFO));
+    }
+
+
+    @Transactional(readOnly = true)
+    public TherapistInfo findByTherapistId(Long therapistId) {
+        return therapistInfoRepository.findByTherapistId(therapistId)
                 .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_THERAPIST_INFO));
     }
 }

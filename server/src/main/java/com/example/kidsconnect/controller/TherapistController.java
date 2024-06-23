@@ -18,19 +18,18 @@ public class TherapistController {
     @Autowired
     TherapistService therapistService;
 
-    @DeleteMapping("/{therapistId}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long therapistId,
-                                        @AuthenticationPrincipal UserPrinciple userDetails) {
+    //치료사 삭제
+    @DeleteMapping()
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserPrinciple userDetails) {
 
-        return therapistService.deleteTherapist(therapistId, userDetails);
+        return therapistService.deleteTherapist(userDetails);
     }
 
-    // 부모 업데이트
-    @PutMapping("/{therapistId}")
-    public ResponseEntity<?> updateUser(@PathVariable Long therapistId,
-                                        @RequestBody TherapistSignUpDto therapistSignUpDto,
+    // 치료사 업데이트
+    @PutMapping()
+    public ResponseEntity<?> updateUser(@RequestBody TherapistSignUpDto therapistSignUpDto,
                                         @AuthenticationPrincipal UserPrinciple userDetails) {
-        return therapistService.updateTherapist(therapistId, therapistSignUpDto, userDetails);
+        return therapistService.updateTherapist(therapistSignUpDto, userDetails);
     }
 
 }

@@ -38,7 +38,9 @@ public class SecurityConfig {
     private final String[] adminUrl = {"/api/v1/login/admin"};
     private final String[] therapistUrl = {"/api/v1/therapist/**"};
     private final String[] userUrl = {"/api/v1/review/**", "/api/v1/child/**"};
-    private final String[] permitAllUrl = {"/api/v1/auth/login/**"};
+                                        // /api/v1/auth/login/**
+
+    private final String[] permitAllUrl = {"/**"};
     private final String[] anonymousUrl = {"/api/v1/auth/signup/**"};
 
     @Bean

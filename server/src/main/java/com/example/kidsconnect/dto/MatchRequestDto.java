@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class MatchRequestDto {
-    private boolean isExperience;
+    private Boolean isExperience;
     private Character gender;
     private List<String> symptoms;
 

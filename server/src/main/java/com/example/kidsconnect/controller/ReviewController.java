@@ -18,8 +18,18 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
-    @PostMapping("/{therapistInfoId}") //userPrincipal = token jwt, userDetails를 implement한 class
+    @PostMapping("/{therapistInfoId}")
     public ResponseEntity<?> addReview(@PathVariable Long therapistInfoId, @RequestBody ReviewDto reviewDTO, @AuthenticationPrincipal UserPrinciple userDetails) {
         return reviewService.addReview(therapistInfoId, reviewDTO, userDetails);
+    }
+
+    @GetMapping("/user")
+    public List<ReviewDto> getUserReviews(@AuthenticationPrincipal UserPrinciple userDetails) {
+        return reviewService.getReviewsByUser(userDetails);
+    }
+
+    @GetMapping("/therapist")
+    public List<ReviewDto> getTherapistReviews(@AuthenticationPrincipal UserPrinciple userDetails) {
+        return reviewService.getReviewsByTherapist(userDetails);
     }
 }

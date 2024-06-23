@@ -21,26 +21,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //아이 조회
-//    @GetMapping("/{userId}/children")
-//    public ResponseEntity<List<Child>> getChildrenByUserId(@PathVariable Long userId) {
-//        List<Child> children = userService.getChildrenByUserId(userId);
-//        return ResponseEntity.ok(children);
-//    }
-
     // 부모 삭제
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long userId,
-                                        @AuthenticationPrincipal UserPrinciple userDetails) {
+    @DeleteMapping()
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserPrinciple userDetails) {
 
-        return userService.deleteUser(userId, userDetails);
+        return userService.deleteUser(userDetails);
     }
 
     // 부모 업데이트
-    @PutMapping("/{userId}")
-    public ResponseEntity<?> updateUser(@PathVariable Long userId,
-                                        @RequestBody UserSignUpDto userSignUpDto,
+    @PutMapping()
+    public ResponseEntity<?> updateUser(@RequestBody UserSignUpDto userSignUpDto,
                                         @AuthenticationPrincipal UserPrinciple userDetails) {
-        return userService.updateUser(userId, userSignUpDto, userDetails);
+        return userService.updateUser(userSignUpDto, userDetails);
     }
 }

@@ -7,6 +7,8 @@ import com.example.kidsconnect.dto.ReviewDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
     @Mapping(target = "id", ignore = true)
@@ -15,4 +17,9 @@ public interface ReviewMapper {
     @Mapping(target = "therapistInfo", source = "therapistInfo")
     @Mapping(target = "user", source = "user")
     TherapistReview toTherapistReview(ReviewDto reviewDTO, TherapistInfo therapistInfo, User user);
+
+
+
+    List<ReviewDto> toReviewDtoList(List<TherapistReview> therapistReviews);
 }
+

@@ -17,7 +17,7 @@ public class UserReservationDto {
     private Long therapistId;
     private String therapistName;
     private String therapistPhone;
-    private String therapistCenterName;
+    private List<String> therapistCenterName;
     private String therapistTotalExperience;
     private List<String> therapistSymptoms;
     private String addressDetail;

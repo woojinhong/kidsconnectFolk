@@ -33,8 +33,8 @@ public class Reservation {
     private Child child;
 
     @ManyToOne
-    @JoinColumn(name = "therapist_id")
-    private Therapist therapist;
+    @JoinColumn(name = "therapist_info_id")
+    private TherapistInfo therapistInfo;
 
 
 

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -21,7 +22,7 @@ public class ReservationResponseDto {
     private Date childAge;
     private Character childGender;
     private String childPersonality;
-    private String childSymptoms;
+    private List<String> childSymptoms;
     private String addressDetail;
     private ReservationStatus status;
 }
