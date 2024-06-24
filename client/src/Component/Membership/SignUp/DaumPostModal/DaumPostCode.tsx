@@ -8,24 +8,27 @@ const DaumPostCode = ({
   label,
   placeholder,
   dispatch,
+  dispatchPostalCode,
   disabled,
 }: dispatchType) => {
   const [value, setValue] = useState<string>("");
   const props = { label, placeholder, disabled, value };
   const open = useDaumPostcodePopup(postcodeScriptUrl);
-
   useEffect(() => {
     if (disabled) {
       setValue("");
       dispatch(switchLabelToType(label as string), "");
     }
   }, [disabled]);
-  const handleComplete = (data: { address: string }) => {
+
+  const handleComplete = (data: DaumPostCodeType) => {
     const fullAddress = data.address;
     dispatch(switchLabelToType(label as string), fullAddress);
+    const postalCode = data.zonecode;
+    dispatch(switchLabelToType(label as string), fullAddress);
+    dispatchPostalCode && dispatchPostalCode(postalCode);
     setValue(fullAddress);
   };
-
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
@@ -53,4 +56,10 @@ interface DaumPropsType {
 
 export interface dispatchType extends DaumPropsType {
   dispatch: (category: string, inputValue: string) => void;
+  dispatchPostalCode?: (inputValue: string) => void;
 }
+
+type DaumPostCodeType = {
+  address: string;
+  zonecode: string;
+};
