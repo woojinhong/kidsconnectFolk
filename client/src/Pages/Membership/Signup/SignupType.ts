@@ -1,29 +1,29 @@
 export interface ParentStateType {
-  userType: string;
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  birth: string;
+  dateOfBirth: string;
   phoneNum: string;
   address: string;
-  detailAddress: string;
+  addressDetail: string;
+  postalCode: string;
 }
 
 export interface TherapistStateType {
-  userType: string;
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  birth: string;
+  dateOfBirth: string;
   phoneNum: string;
   gender: string;
+  postalCode: string;
   address: string;
-  detailAddress: string;
-  isFreelancer: string;
-  region: string;
-  detailRegion: string;
+  addressDetail: string;
+  centerName: string;
+  status: string;
+  freelancer: string;
 }
 
 export interface Action {
@@ -42,4 +42,13 @@ type ActionType =
   | "SET_DETAILADDRESS"
   | "SET_ISFREELANCER"
   | "SET_USERTYPE"
+  | "SET_POSTALCODE"
+  | "SET_STATUS"
+  | "SET_GENDER"
+  | "SET_CENTERNAME"
   | `SET_${string}`;
+
+export type ToastMessageTypes = {
+  type: "success" | "failed";
+  message: string;
+};

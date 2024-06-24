@@ -1,31 +1,31 @@
 import { ParentStateType, TherapistStateType, Action } from "./SignupType";
 
 export const parentInitialState: ParentStateType = {
-  userType: "parents",
   email: "",
   password: "",
   lastName: "",
   firstName: "",
-  birth: "",
+  dateOfBirth: "",
   phoneNum: "",
   address: "",
-  detailAddress: "",
+  addressDetail: "",
+  postalCode: "",
 };
 
 export const therapistInitialState: TherapistStateType = {
-  userType: "therapist",
   email: "",
   password: "",
   firstName: "",
   lastName: "",
-  birth: "",
-  gender: "",
+  dateOfBirth: "",
   phoneNum: "",
+  gender: "",
+  postalCode: "",
   address: "",
-  detailAddress: "",
-  isFreelancer: "",
-  region: "",
-  detailRegion: "",
+  addressDetail: "",
+  freelancer: "",
+  centerName: "",
+  status: "",
 };
 
 export const parentReducer = (state: ParentStateType, action: Action) => {
@@ -53,7 +53,7 @@ export const parentReducer = (state: ParentStateType, action: Action) => {
     case "SET_BIRTH":
       return {
         ...state,
-        birth: action.payload,
+        dateOfBirth: action.payload,
       };
     case "SET_PHONENUM":
       return {
@@ -68,7 +68,12 @@ export const parentReducer = (state: ParentStateType, action: Action) => {
     case "SET_DETAILADDRESS":
       return {
         ...state,
-        detailAddress: action.payload,
+        addressDetail: action.payload,
+      };
+    case "SET_POSTALCODE":
+      return {
+        ...state,
+        postalCode: action.payload,
       };
     default:
       return state;
@@ -100,7 +105,7 @@ export const therapistReducer = (state: TherapistStateType, action: Action) => {
     case "SET_BIRTH":
       return {
         ...state,
-        birth: action.payload,
+        dateOfBirth: action.payload,
       };
     case "SET_PHONENUM":
       return {
@@ -115,27 +120,32 @@ export const therapistReducer = (state: TherapistStateType, action: Action) => {
     case "SET_DETAILADDRESS":
       return {
         ...state,
-        detailAddress: action.payload,
+        addressDetail: action.payload,
       };
     case "SET_ISFREELANCER":
       return {
         ...state,
-        isFreelancer: action.payload,
+        freelancer: action.payload,
       };
     case "SET_GENDER":
       return {
         ...state,
         gender: action.payload,
       };
-    case "SET_REGION":
+    case "SET_POSTALCODE":
       return {
         ...state,
-        region: action.payload,
+        postalCode: action.payload,
       };
-    case "SET_DETAILREGION":
+    case "SET_CENTERNAME":
       return {
         ...state,
-        detailRegion: action.payload,
+        centerName: action.payload,
+      };
+    case "SET_STATUS":
+      return {
+        ...state,
+        status: action.payload,
       };
     default:
       return state;
