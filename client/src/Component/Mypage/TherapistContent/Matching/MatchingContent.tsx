@@ -15,7 +15,9 @@ function MatchingContent() {
             <i>승인을 하면 연락처와 주소가 부모님께 전달됩니다.</i>
             <div>
               {/* Todo:추후 api 받아오면 map으로 childListcard */}
-              <ChildListCard />
+              <ul>
+                <ChildListCard />
+              </ul>
             </div>
           </div>
           <div>
@@ -24,7 +26,9 @@ function MatchingContent() {
             <span>length</span>
             <div>
               {/* Todo:추후 api 받아오면 map으로 childListcard */}
-              <ChildListCard />
+              <ul>
+                <ChildListCard />
+              </ul>
             </div>
           </div>
         </div>

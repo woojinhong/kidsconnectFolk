@@ -76,7 +76,7 @@ const changeApiIconDueToProps = (iconType: string): JSX.Element => {
 };
 
 interface InputButtonPropsType {
-  label: string;
+  label?: string;
   placeholder: string;
   onClick: (event: clickInputEvent) => void;
   disabled?: boolean;

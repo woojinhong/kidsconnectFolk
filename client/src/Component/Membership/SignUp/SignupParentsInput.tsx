@@ -9,6 +9,7 @@ function SignupParentsInput({
   handleChangeReducer,
   handleClickReducer,
   handleDateChangeReducer,
+  handleInputChangeReducer,
 }: SignupParentsInput) {
   return (
     <div>
@@ -48,6 +49,7 @@ function SignupParentsInput({
         label="주소"
         placeholder="우리집 주소 찾기"
         dispatch={handleClickReducer}
+        dispatchPostalCode={handleInputChangeReducer}
       />
       <InputText
         inputType="detailAddress"
@@ -62,5 +64,6 @@ interface SignupParentsInput {
   handleChangeReducer: (e: changeInputEvent) => void;
   handleClickReducer: (category: string, inputValue: string) => void;
   handleDateChangeReducer: (inputValue: string) => void;
+  handleInputChangeReducer: (inputValue: string) => void;
 }
 export default SignupParentsInput;

@@ -1,4 +1,5 @@
 import { StyledMain, StyledProfileSummary } from "./Profile.style";
+import { Link } from "react-router-dom";
 
 import therapistInfo from "../../../../MockData/therapistInfoData.json";
 
@@ -30,7 +31,9 @@ function ProfileContent() {
                 자기 소개를 작성해야 부모님에게 내 프로필이 노출됩니다
               </span>
             </div>
-            <button>자기 소개 작성하기</button>
+            <Link to="/create">
+              <button>자기 소개 작성하기</button>
+            </Link>
           </div>
         </div>
         <TherapistProfile data={userDetailInfoById} />

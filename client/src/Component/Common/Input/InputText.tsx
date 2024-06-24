@@ -217,7 +217,7 @@ export const StyledTextInput = styled(TextInput)`
 export interface InputComplexProps {
   label?: string;
   placeholder?: string;
-  inputType?: "email" | "detailAddress" | "phoneNum";
+  inputType?: string;
   width?: string;
   detailedDescription?: string;
   showWithAsterisk?: boolean;
