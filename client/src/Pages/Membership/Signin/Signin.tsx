@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate, useNavigationType } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 
 import Toast from "../../../Component/Common/Toast/Toast";
 import InputText from "../../../Component/Common/Input/InputText";
@@ -20,25 +19,15 @@ function Signin() {
     {} as ToastMessageTypes
   );
 
-  const [cookies, setCookie] = useCookies(["token"]);
-  const navigate = useNavigate();
-  const useNavigation = useNavigationType();
-
+  const { postSignin } = usePostSignin();
   const handleChangeReducer = (e: changeInputEvent) => {
     const { name, value } = e.target;
     setPostDataValue({ ...postDataValue, [name]: value });
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    usePostSignin(
-      selectedUserType,
-      postDataValue,
-      setToastMessage,
-      navigate,
-      useNavigation,
-      setCookie
-    );
+    postSignin(selectedUserType, postDataValue, setToastMessage);
   };
 
   return (
