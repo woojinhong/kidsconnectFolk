@@ -1,13 +1,18 @@
 import { axiosApp } from "./axiosApp";
-import { NavigateFunction } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
+
 import {
   ParentStateType,
   TherapistStateType,
   ToastMessageTypes,
 } from "../Pages/Membership/Signup/SignupType";
 import { useDelayChatbox } from "./CustomHooks";
+import { loginStatusActions } from "../Store/Slices/LoginStatus";
 
-export const usePostSignin = async (
+// 회원가입 POST API
+export const usePostSignup = async (
   userData: ParentStateType | undefined,
   therapistData: TherapistStateType | undefined,
   setToastMessage: React.Dispatch<React.SetStateAction<ToastMessageTypes>>,
@@ -25,15 +30,11 @@ export const usePostSignin = async (
   const path = userData ? "user" : "therapist";
 
   try {
-    const res = await axiosApp.post(
-      `/auth/signup/${path}`,
-      JSON.stringify(data),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    await axiosApp.post(`/auth/signup/${path}`, JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     setToastMessage({
       type: "success",
       message: "회원가입이 완료되었습니다. 로그인해주세요.",
@@ -46,4 +47,45 @@ export const usePostSignin = async (
       message: err.response.data.message,
     });
   }
+};
+
+// 로그인 POST API
+export const usePostSignin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["token"]);
+
+  const postSignin = async (
+    userType: string,
+    postData: { email: string; password: string },
+    setToastMessage: React.Dispatch<React.SetStateAction<ToastMessageTypes>>
+  ) => {
+    const path = userType === "parents" ? "user" : "therapist";
+    const loginStatusData = { userType, isLogin: true };
+
+    try {
+      const res = await axiosApp.post(
+        `/auth/login/${path}`,
+        JSON.stringify(postData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setCookie("token", res.data.token);
+      axiosApp.defaults.headers.common["Authorization"] =
+        `Bearer ${res.data.token}`;
+      dispatch(loginStatusActions.setLoginStatus(loginStatusData));
+      await useDelayChatbox(800);
+      navigate("/");
+    } catch (err: any) {
+      setToastMessage({
+        type: "failed",
+        message: "아이디와 비밀번호를 확인해 주세요",
+      });
+    }
+  };
+
+  return { postSignin };
 };

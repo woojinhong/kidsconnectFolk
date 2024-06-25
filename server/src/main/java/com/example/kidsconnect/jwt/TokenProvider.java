@@ -117,6 +117,7 @@ public class TokenProvider {
     public HttpHeaders setHttpHeaders(TokenInfo tokenInfo) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Authorization", "Bearer " + tokenInfo.getAccessToken());
+        httpHeaders.set("Access-Control-Expose-Headers", "Authorization"); 
         return httpHeaders;
     }
 
