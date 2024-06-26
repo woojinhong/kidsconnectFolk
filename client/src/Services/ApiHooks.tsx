@@ -74,6 +74,7 @@ export const usePostSignin = () => {
           },
         }
       );
+      console.log(res);
       setCookie("token", res.headers["authorization"]);
       axiosApp.defaults.headers.common["Authorization"] =
         `Bearer ${res.headers["authorization"]}`;
@@ -98,7 +99,7 @@ export const usePostChild = async (data: GatheredChildDataType) => {
     await axiosApp.post("/child/register", JSON.stringify(data), {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer${cookie.split("=")[1]}`,
+        Authorization: `${cookie.split("=")[1]}`,
       },
     });
   } catch (err: any) {
