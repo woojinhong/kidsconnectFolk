@@ -1,7 +1,9 @@
 import DefaultText from "../Button/DefaultText";
 import FilledButton from "../Button/FilledButton";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
+import { RootState } from "../../../Store/store";
 import {
   StyledHeader,
   StyledContentContainer,
@@ -15,9 +17,7 @@ import imgProfileTeacher from "../../../Assets/Image/ImgProfileTeacher.svg";
 import notification from "../../../Assets/Image/Notification.svg";
 
 function Header() {
-  // 차후 globalLoginStatus, user의 usertype 등 받아와서 조건부 렌더링 해주기
-  const globalLoginStatus: boolean = false;
-  const userType: string = "parents";
+  const loginStatus = useSelector((state: RootState) => state.loginStatus);
 
   return (
     <StyledHeader>
@@ -36,20 +36,27 @@ function Header() {
               <DefaultText leftText="서비스 소개" />
             </StyledLinkButton>
           </section>
-          {globalLoginStatus ? (
+          {loginStatus.isLogin ? (
             <StyledProfileContainer>
               <div className="notification">
                 <img src={notification} alt="알림" />
               </div>
               <div className="profile">
-                <StyledLinkButton to="/mypage" className="mypage">
+                <StyledLinkButton
+                  to={`/mypage/${loginStatus.userType === "parents" ? "p" : "t"}`}
+                  className="mypage"
+                >
                   <h4>
                     김땡땡
-                    <span>{userType === "parents" ? "부모님" : "선생님"}</span>
+                    <span>
+                      {loginStatus.userType === "parents" ? "부모님" : "선생님"}
+                    </span>
                   </h4>
                   <img
                     src={
-                      userType === "parents" ? imgProfile : imgProfileTeacher
+                      loginStatus.userType === "parents"
+                        ? imgProfile
+                        : imgProfileTeacher
                     }
                   />
                 </StyledLinkButton>

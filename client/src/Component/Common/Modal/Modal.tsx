@@ -48,7 +48,7 @@ function Modal({
   };
 
   useEffect(() => {
-    if (currentStep === 1 || currentStep === 4) {
+    if (currentStep === 1 || currentStep === 5) {
       setSendButtonDisabled(false);
     } else {
       setSendButtonDisabled(true);

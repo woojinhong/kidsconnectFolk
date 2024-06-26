@@ -34,7 +34,7 @@ export default treatmentAreaText;
 export const treatmentNeededText = [
   {
     emoji: "❓",
-    text: "진단 필요",
+    text: "진단필요",
   },
   {
     emoji: "💬",

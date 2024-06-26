@@ -27,8 +27,28 @@ export type AddChildTextType = {
   messages: {
     name: string;
     birthDate: string;
+    gender: string;
     treatmentNeeded: string;
     characteristic: string;
   };
+  selectGender: string[];
   placeholder: string;
 };
+
+export type GatheredChildDataType = {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  dateOfBirth: string;
+  symptomName: string[];
+  personality: string;
+};
+
+export interface AddChildSurveyProps {
+  onClose?: () => void;
+  chatInputValue?: string;
+  currentStep?: number;
+  onClearChatInput?: () => void;
+  handleButtonSendOnClick?: () => void;
+  setCurrentStep?: (value: number) => void;
+}

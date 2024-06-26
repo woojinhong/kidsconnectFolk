@@ -16,7 +16,7 @@ function Index() {
   const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
     []
   );
-  // 추후 api 받아와서 id 찾기
+
   const therapistIdThisMonth: number[] = [4, 3, 1, 2];
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ function Index() {
     dispatch(
       matchingSurveyActions.setTreatmentAreaPreference(selectedTreatmentArea)
     );
-  });
+  }, [selectedTreatmentArea]);
 
   return (
     <>
