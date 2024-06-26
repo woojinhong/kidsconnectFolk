@@ -3,6 +3,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
 
+import { GatheredChildDataType } from "../Component/Common/Modal/ModalContent/ModalContentType";
 import {
   ParentStateType,
   TherapistStateType,
@@ -73,9 +74,9 @@ export const usePostSignin = () => {
           },
         }
       );
-      setCookie("token", res.data.token);
+      setCookie("token", res.headers["authorization"]);
       axiosApp.defaults.headers.common["Authorization"] =
-        `Bearer ${res.data.token}`;
+        `Bearer ${res.headers["authorization"]}`;
       dispatch(loginStatusActions.setLoginStatus(loginStatusData));
       await useDelayChatbox(800);
       navigate("/");
@@ -88,4 +89,19 @@ export const usePostSignin = () => {
   };
 
   return { postSignin };
+};
+
+// 아이 등록 POST API
+export const usePostChild = async (data: GatheredChildDataType) => {
+  try {
+    const cookie = document.cookie.replace("Bearer%", "");
+    await axiosApp.post("/child/register", JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer${cookie.split("=")[1]}`,
+      },
+    });
+  } catch (err: any) {
+    console.error(err);
+  }
 };
