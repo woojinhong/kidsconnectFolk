@@ -16,9 +16,9 @@ public class TherapistInfoController {
 
     private final TherapistInfoService therapistInfoService;
 
-    @GetMapping("/{therapistId}")
-    public ResponseEntity<?> showTherapistInfo(@PathVariable Long therapistId){
-        return therapistInfoService.showTherapistInfo(therapistId);
+    @GetMapping()
+    public ResponseEntity<?> showTherapistInfo(@AuthenticationPrincipal UserPrinciple userDetails){
+        return therapistInfoService.showTherapistInfo(userDetails);
     }
     @PostMapping()
     public ResponseEntity<?> createTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto, @AuthenticationPrincipal UserPrinciple userDetails) {
@@ -27,15 +27,15 @@ public class TherapistInfoController {
     }
 
 
-    @PatchMapping("/{therapistInfoId}")
-    public ResponseEntity<?> updateTherapistInfo(@PathVariable Long therapistInfoId, @RequestBody TherapistInfoDto therapistInfoDto,@AuthenticationPrincipal UserPrinciple userDetails) {
-        return therapistInfoService.updateTherapistInfo(therapistInfoId, therapistInfoDto, userDetails);
+    @PatchMapping()
+    public ResponseEntity<?> updateTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto,@AuthenticationPrincipal UserPrinciple userDetails) {
+        return therapistInfoService.updateTherapistInfo(therapistInfoDto, userDetails);
     }
 
-    @DeleteMapping("/{therapistInfoId}")
-    public ResponseEntity<?> deleteTherapistInfo(@PathVariable Long therapistInfoId, @AuthenticationPrincipal UserPrinciple userDetails) {
+    @DeleteMapping()
+    public ResponseEntity<?> deleteTherapistInfo(@AuthenticationPrincipal UserPrinciple userDetails) {
 
-        return therapistInfoService.deleteTherapistInfo(therapistInfoId,userDetails);
+        return therapistInfoService.deleteTherapistInfo(userDetails);
     }
 
 }

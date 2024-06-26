@@ -52,10 +52,6 @@ public class Therapist implements Loginable {
     @OneToMany(mappedBy ="therapist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrol> enrol;
 
-    @OneToMany(mappedBy = "therapist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservation;
-
-
     @OneToOne(mappedBy = "therapist", cascade = CascadeType.ALL, orphanRemoval = true)
     private TherapistInfo therapistInfo;
 

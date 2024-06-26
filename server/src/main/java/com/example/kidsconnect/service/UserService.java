@@ -77,8 +77,8 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseEntity<String> updateUser(Long userId, UserSignUpDto userSignUpDto, UserPrinciple userDetails) {
-        User existingUser = findById(userId);
+    public ResponseEntity<String> updateUser( UserSignUpDto userSignUpDto, UserPrinciple userDetails) {
+        User existingUser = findById(userDetails.getId());
 
         // 사용자 권한 검증
         verifyUserOwnership(existingUser, userDetails);
@@ -92,17 +92,13 @@ public class UserService {
 
         userRepository.save(existingUser);
 
-        return ResponseEntity.ok("부모 정보 업데이트 성공");
+        return ResponseEntity.ok("부모 정보 수정 성공");
     }
 
 
     @Transactional
-    public ResponseEntity<?> deleteUser(Long userId, UserPrinciple userDetails) {
-        User user = findById(userId);
-
-        // 사용자 검증
-        verifyUserOwnership(user, userDetails);
-
+    public ResponseEntity<?> deleteUser(UserPrinciple userDetails) {
+        User user = findById(userDetails.getId());
 
         userRepository.deleteById(user.getId());
 
@@ -147,11 +143,8 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_USER));
     }
 
-    //부모id로 아이 객체 리스트 반환
-    @Transactional(readOnly = true)
-    public List<Child> getChildrenByUserId(Long userId) {
-        return childRepository.findByUserId(userId);
-    }
+
+
 
     //이메일, 비번으로 부모 정보 반환
     @Transactional(readOnly = true)

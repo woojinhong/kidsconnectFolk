@@ -12,11 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewDto {
-
-    private Long id;
     private int rating;
     private String comment;
-
-
-
 }

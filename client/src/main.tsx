@@ -5,6 +5,7 @@ import "./index.css";
 
 import { store } from "./Store/store.ts";
 import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
 
 import { MantineProvider } from "@mantine/core";
 import theme from "./Assets/StyledData/theme.ts";
@@ -12,9 +13,11 @@ import theme from "./Assets/StyledData/theme.ts";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <MantineProvider theme={theme}>
-        <App />
-      </MantineProvider>
+      <CookiesProvider defaultSetOptions={{ path: "/" }}>
+        <MantineProvider theme={theme}>
+          <App />
+        </MantineProvider>
+      </CookiesProvider>
     </Provider>
   </React.StrictMode>
 );

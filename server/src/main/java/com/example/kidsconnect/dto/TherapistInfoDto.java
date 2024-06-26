@@ -15,6 +15,8 @@ import java.util.List;
 @Builder
 @ToString
 public class TherapistInfoDto {
+
+    private Long id;  //해당 치료사 포트폴리오 id 리뷰용
     private String title;
     private String bio;
     private String content;

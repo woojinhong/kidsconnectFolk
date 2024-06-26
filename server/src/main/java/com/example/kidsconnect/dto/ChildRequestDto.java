@@ -12,7 +12,7 @@ public class ChildRequestDto {
     private String lastName;
     private Date dateOfBirth;
     private char gender;
-    private List<String> personality;
+    private String personality;
 
     private List<String> symptomName;
 

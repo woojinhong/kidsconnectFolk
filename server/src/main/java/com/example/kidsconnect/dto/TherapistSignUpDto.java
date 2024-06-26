@@ -10,7 +10,6 @@ import org.mapstruct.factory.Mappers;
 @AllArgsConstructor
 @ToString
 public class TherapistSignUpDto {
-    private Long id;
     private String email;
     private String password;
     private String firstName;

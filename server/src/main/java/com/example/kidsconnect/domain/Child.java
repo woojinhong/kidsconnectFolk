@@ -25,17 +25,13 @@ public class Child {
     private String lastName;
     private Date dateOfBirth;
     private char gender;
-    @ElementCollection
-    @CollectionTable(name = "child_personality", joinColumns = @JoinColumn(name = "child_id"))
-    @Column(name = "personality")
-    private List<String> personality = new ArrayList<>();
+
+    private String personality;
 
     private LocalDateTime inDate;
 
     private LocalDateTime upDate;
 
-//    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)
-//    private List<ChildSymptom> childSymptom;
 
     @OneToMany(mappedBy = "child", orphanRemoval = true)
     private List<Reservation> reservation;

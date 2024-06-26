@@ -39,6 +39,8 @@ public enum CustomCode {
         NOT_FOUND_RESERVATION(HttpStatus.NOT_FOUND,"NOT_FOUND_RESERVATION","찾을 수 없는 예약정보입니다."),
         NOT_FOUND_CENTER(HttpStatus.NOT_FOUND,"NOT_FOUND_CENTER","찾을 수 없는 센터정보입니다."),
         NOT_FOUND_CHILD(HttpStatus.NOT_FOUND, "NOT_FOUND_CHILD","찾을 수 없는 아이입니다."),
+        NOT_FOUND_THERAPIST_SYMPTOM(HttpStatus.NOT_FOUND,"NOT_FOUND_THERAPIST_SYMPTOM","찾을 수 없는 치료사 증상입니다"),
+        NOT_FOUND_CHILD_SYMPTOM(HttpStatus.NOT_FOUND,"NOT_FOUND_CHILD_SYMPTOM","찾을 수 없는 아이증상입니다."),
         NOT_FOUND_FEED(HttpStatus.NOT_FOUND, "NOT_FOUND_FEED", "찾을 수 없는 피드입니다."),
         NOT_FOUND_REACTION(HttpStatus.NOT_FOUND, "NOT_FOUND_REACTION", "찾을 수 없는 리액션입니다."),
         NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, "NOT_FOUND_COMMENT", "찾을 수 없는 댓글입니다."),

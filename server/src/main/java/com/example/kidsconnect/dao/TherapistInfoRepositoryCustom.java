@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface TherapistInfoRepositoryCustom {
     List<MatchResponseDto> findTherapistsByCriteria(MatchRequestDto matchRequestDto);
+
+
+
+
 }

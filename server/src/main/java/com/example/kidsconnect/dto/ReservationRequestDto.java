@@ -13,9 +13,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Builder
 public class ReservationRequestDto {
 
-    private Long childId;
-
-    private Long therapistId;
-
     private String location;
 }

@@ -12,24 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/match")
+@RequestMapping("/api/v1/search")
 @RequiredArgsConstructor
 public class TherapistInfoSearchController {
 
     private final TherapistInfoSearchService therapistInfoSearchService;
     private final TherapistInfoService therapistInfoService;
 
-    @PostMapping()
-    public ResponseEntity<?> matchTherapist(MatchRequestDto matchRequestDto) {
-        // 매칭 서비스를 호출하여 매칭된 치료사 리스트를 받아옴
-        List<TherapistInfo> matchedTherapists = therapistInfoSearchService.findTherapistInfoWithExperience();
-
-        // 매칭된 치료사 리스트를 응답으로 반환
-        return ResponseEntity.ok(matchedTherapists);
-    }
-
-    @PostMapping("/search")
+    @PostMapping("/therapistInfo")
     public List<MatchResponseDto> getTherapistsByCriteria(@RequestBody MatchRequestDto matchRequestDto) {
+        System.out.println("isExperience: " + matchRequestDto.getIsExperience()); // 디버그 출력
+        System.out.println("Symptoms: " + matchRequestDto.getSymptoms()); // 디버그 출력
         return therapistInfoSearchService.findTherapistsByCriteria(matchRequestDto);
     }
 
@@ -40,8 +33,5 @@ public class TherapistInfoSearchController {
         String totalExperience = therapistInfoService.calculateTotalExperience(therapistInfoId);
         return ResponseEntity.ok(totalExperience);
     }
-
-
-
 
 }

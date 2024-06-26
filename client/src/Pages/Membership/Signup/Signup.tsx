@@ -17,7 +17,7 @@ import {
   ToastMessageTypes,
 } from "./SignupType";
 import { changeInputEvent } from "../../../Assets/CommonType/EventType";
-import { usePostSignin } from "../../../Services/ApiHooks";
+import { usePostSignup } from "../../../Services/ApiHooks";
 
 function Signup() {
   const navigate = useNavigate();
@@ -77,14 +77,14 @@ function Signup() {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (selectedUserType === "parents") {
-      usePostSignin(parentState, undefined, setToastMessage, navigate);
+      usePostSignup(parentState, undefined, setToastMessage, navigate);
     } else {
-      usePostSignin(undefined, therapistState, setToastMessage, navigate);
+      usePostSignup(undefined, therapistState, setToastMessage, navigate);
     }
   };
 
   return (
-    <main>
+    <div>
       {toastMessage.type === "success" && (
         <Toast variant={toastMessage.type} title={toastMessage.message} />
       )}
@@ -127,7 +127,7 @@ function Signup() {
           </form>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

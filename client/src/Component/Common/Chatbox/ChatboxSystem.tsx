@@ -7,7 +7,6 @@ import InputDatePicker from "../Input/InputDatePicker";
 import Category from "../Category/Category";
 
 import { clickButtonEvent } from "../../../Assets/CommonType/EventType";
-import { getSelectedTreatmentArea } from "../../../Services/CustomHooks";
 import {
   StyledChatboxSystemBox,
   StyledButtonWrapper,

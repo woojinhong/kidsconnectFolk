@@ -39,7 +39,6 @@ public class TherapistService {
     private final TherapistMapper therapistMapper;
 
 
-    private final ToEntity toEntity;
 
     @Transactional(readOnly = true)
     public ResponseEntity<?> login(LoginDto loginDto) {
@@ -84,13 +83,9 @@ public class TherapistService {
 
 
     @Transactional
-    public ResponseEntity<String> updateTherapist(Long therapistId, TherapistSignUpDto therapistSignUpDto, UserPrinciple userDetails) {
+    public ResponseEntity<?> updateTherapist(TherapistSignUpDto therapistSignUpDto, UserPrinciple userDetails) {
 
-        Therapist existingTherapist = findById(therapistId);
-
-        // 사용자 권한 검증
-        verifyTherapistOwnership(existingTherapist, userDetails);
-
+        Therapist existingTherapist = findById(userDetails.getId());
 
         //update mapstruct
         therapistMapper.updateTherapistFromSignUpDto(therapistSignUpDto,existingTherapist);
@@ -100,15 +95,13 @@ public class TherapistService {
 
         therapistRepository.save(existingTherapist);
 
-        return ResponseEntity.ok("치료사 정보 업데이트 성공");
+        return ResponseEntity.ok("치료사 정보 수정 성공");
     }
 
     @Transactional
-    public ResponseEntity<?> deleteTherapist(Long therapistId, UserPrinciple userDetails) {
-        Therapist therapist = findById(therapistId);
+    public ResponseEntity<?> deleteTherapist(UserPrinciple userDetails) {
 
-        // 사용자 검증
-        verifyTherapistOwnership(therapist, userDetails);
+        Therapist therapist = findById(userDetails.getId());
 
         therapistRepository.deleteById(therapist.getId());
 
@@ -132,6 +125,7 @@ public class TherapistService {
         //프리랜서가 false면
         if (!therapist.isFreelancer()) {
             Center center = centerService.findCenterByName(centerName);
+
             //enrol 에 therapist, center 객체정보 저장 (외래키 자동저장 위해)
             Enrol enrol = Enrol.builder()
                     .center(center)
@@ -159,6 +153,8 @@ public class TherapistService {
             throw new CustomException(CustomCode.NOT_FOUND_THERAPIST);
         });
     }
+
+
 
     @Transactional(readOnly = true)
     public Therapist findById(Long Id) {
