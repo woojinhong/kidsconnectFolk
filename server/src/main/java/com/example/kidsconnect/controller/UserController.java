@@ -2,10 +2,13 @@ package com.example.kidsconnect.controller;
 
 
 import com.example.kidsconnect.domain.Child;
+import com.example.kidsconnect.domain.User;
 import com.example.kidsconnect.domain.UserPrinciple;
 import com.example.kidsconnect.dto.LoginDto;
+import com.example.kidsconnect.dto.UserResponseDto;
 import com.example.kidsconnect.dto.UserSignUpDto;
 import com.example.kidsconnect.service.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -21,6 +24,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+    @GetMapping()
+    public UserResponseDto showUser(@AuthenticationPrincipal UserPrinciple userDetails) {
+        return userService.showUser(userDetails);
+    }
     // 부모 삭제
     @DeleteMapping()
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserPrinciple userDetails) {

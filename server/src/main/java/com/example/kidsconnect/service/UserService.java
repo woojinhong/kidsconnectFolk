@@ -8,6 +8,7 @@ import com.example.kidsconnect.domain.*;
 
 import com.example.kidsconnect.dto.LoginDto;
 
+import com.example.kidsconnect.dto.UserResponseDto;
 import com.example.kidsconnect.jwt.TokenProvider;
 import com.example.kidsconnect.jwt.dto.TokenInfo;
 
@@ -40,6 +41,14 @@ public class UserService {
     private final ChildRepository childRepository;
     private final TokenProvider tokenProvider;
 
+
+    @Transactional(readOnly = true)
+    public UserResponseDto showUser(UserPrinciple userDetails) {
+
+        User user = findById(userDetails.getId());
+
+        return userMapper.toUserResponseDto(user);
+    }
 
     @Transactional
     public ResponseEntity<String> signUp(UserSignUpDto userSignUpDto) {

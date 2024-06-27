@@ -2,6 +2,7 @@ package com.example.kidsconnect.mapping;
 
 import com.example.kidsconnect.domain.User;
 import com.example.kidsconnect.dto.LoginDto;
+import com.example.kidsconnect.dto.UserResponseDto;
 import com.example.kidsconnect.dto.UserSignUpDto;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public interface UserMapper {
     UserSignUpDto toUserSignUpDto(User user);
 
     User fromUserSignUpDto(UserSignUpDto userSignUpDto);
+
+    UserResponseDto toUserResponseDto(User user);
 
 
     // Update 메서드 추가

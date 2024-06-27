@@ -1,0 +1,481 @@
+[33mcommit 794170637cde0383f5bfb57a14be5df526feed6b[m[33m ([m[1;36mHEAD -> [m[1;32mtest/child/api[m[33m, [m[1;31morigin/testdevelop[m[33m)[m
+Merge: af1d45f 97880ab
+Author: WooJin Hans Hong <61961800+woojinhong@users.noreply.github.com>
+Date:   Wed Jun 26 12:06:25 2024 +0900
+
+    Merge pull request #53 from kidsConnection/fe/api/addChild
+    
+    [FE:TEST] register Child api is working on tests
+
+[33mcommit 97880ab52ee7ea872cc8bfd6f648c7ce7d75dff1[m[33m ([m[1;31morigin/fe/api/addChild[m[33m)[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Wed Jun 26 11:58:18 2024 +0900
+
+    [FE:TEST] register child api working tests
+
+[33mcommit 9f0287c842a336217e5f186ce4bba707b6c510e0[m[33m ([m[1;31morigin/new/develop[m[33m)[m
+Merge: 8963e51 10db9cf
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Wed Jun 26 06:48:49 2024 +0900
+
+    Merge pull request #52 from kidsConnection/fe/api/membership
+    
+    [FE:FIX] Login axios functions to handle api
+
+[33mcommit 10db9cf28256ee5db6c7d5f18f5dc8e0c6eaefed[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Tue Jun 25 23:50:57 2024 +0900
+
+    [Feat] Added LoginStatus Slices with react-redux
+
+[33mcommit 6154fb91b145cabe11e98b90a7b2355d085d935b[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Tue Jun 25 18:00:10 2024 +0900
+
+    [Fix] added POST form submit
+
+[33mcommit 5fd5e59328fd28bcde839964ac9822770f5dca55[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Tue Jun 25 17:59:24 2024 +0900
+
+    [chore] added react cookie Provider tag
+
+[33mcommit 4aea35314e6380430b291bcb5af5996c5f14800c[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Tue Jun 25 17:58:45 2024 +0900
+
+    [fix] added can able to access headers authorization script
+
+[33mcommit 034266fe4d948de84070b04cb0061eb6d71c043c[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Tue Jun 25 17:57:40 2024 +0900
+
+    [chore] installed react-cookie
+
+[33mcommit 8963e512c30a1ebc8ad3c28244de431538ac80ad[m[33m ([m[1;32mbackup/develop[m[33m)[m
+Merge: 3344221 af1d45f
+Author: woojin <orolzleim@gmail.com>
+Date:   Mon Jun 24 18:55:46 2024 +0900
+
+    merged with new server api
+
+[33mcommit af1d45f1c2472432f018903115bc3529178fa18d[m
+Merge: 48a69d0 0513548
+Author: WooJin Hans Hong <61961800+woojinhong@users.noreply.github.com>
+Date:   Mon Jun 24 16:46:06 2024 +0900
+
+    Merge pull request #51 from kidsConnection/fe/api/membership
+    
+    [Fe]Membership api working files
+
+[33mcommit 05135481a43833d9fa0fa05e9ff6549c07f3123d[m[33m ([m[1;31morigin/fe/api/membership[m[33m)[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 24 16:10:58 2024 +0900
+
+    [Fe]Mebership api working files
+
+[33mcommit 33442214bd2db3987f174dfbdb514ffea1e086dd[m[33m ([m[1;31morigin/backup/develop[m[33m)[m
+Author: woojin <orolzleim@gmail.com>
+Date:   Sun Jun 23 20:55:58 2024 +0900
+
+    new api
+
+[33mcommit 48a69d0b4bf9346006e59a2a97be926255cf8f91[m
+Merge: e13bc96 d74756b
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Fri Jun 21 10:53:48 2024 +0900
+
+    Merge pull request #50 from kidsConnection/fe/dev
+    
+    Merge Pull Request #49 from kidsConnection/fe/dev
+
+[33mcommit d74756bb8fd6034bba9aafbb0b936397b0105e3f[m[33m ([m[1;31morigin/fe/dev[m[33m)[m
+Merge: decbc91 6b5130a
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Fri Jun 21 10:38:47 2024 +0900
+
+    Merge pull request #49 from kidsConnection/fe/mypage/therapist
+    
+    [FE:Fix] Fixed Therapists' Mypage and Create Introduction Components
+
+[33mcommit 6b5130a927dd592dc5e12e44189488e52e8d976a[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:33:01 2024 +0900
+
+    [Fix] getSelectedTreatmentArea in CustomHooks is fixed due to unfulfilled execution function
+
+[33mcommit e14ec407acc49f4a152974baf0e0b8fba409d070[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:31:35 2024 +0900
+
+    [Fix] MypageTherapist is changed to handle contents due to clicked Nav Menu
+
+[33mcommit 671cdd994f0141dc41e076df268256485149b766[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:30:54 2024 +0900
+
+    [Fix] CreateIntroduction is fixed to handle collecting Data
+
+[33mcommit cc3a3f3070bc0f48f256f7569d742a5e4322cf44[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:30:28 2024 +0900
+
+    [chore] TherapistProfile Component's unnecessary code within data is deleted
+
+[33mcommit 54f7b54dfbd77a0845a25d95253b5be1fd14a764[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:28:42 2024 +0900
+
+    [chore] ProfileContent is modified to connect Link /create
+
+[33mcommit 678bb6035ed925e9811428b92aa11b0918ff2799[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:27:43 2024 +0900
+
+    [Chore] MatchingContent's unnecessary ul tag is deleted
+
+[33mcommit 897b33b96e55ab97cf52254007eb5eb231578ac4[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:26:59 2024 +0900
+
+    [Fix] DaumPostCode is modified to fix error in valueComponet's setState
+
+[33mcommit 29f69183366250a5e52d55dc8d26212f963a7da0[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:25:44 2024 +0900
+
+    [Feat] Created InputNumber Component to use in inserting number input
+
+[33mcommit 934a4163894802b0404efa9642465f7878d46482[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:24:39 2024 +0900
+
+    [Feat] Added InputFile Component to use in File Upload
+
+[33mcommit 10360081c3dbba3e4df3f6766df2362ec83f47ea[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:24:06 2024 +0900
+
+    [Chore] Changed Types in InputButton, InputText, InputTextArea
+
+[33mcommit a300e6823eae81255050cc86e68653de3e965d4c[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:22:30 2024 +0900
+
+    [Feat] AddCareer, AddCertification, AddEducation Components usage in CreateIntroduction Component is added
+
+[33mcommit 648bbf4b209314de76bae118a190fcb1efec13de[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:21:52 2024 +0900
+
+    [Fix] Changed CheckBoxAgeList Props and Function to handle checkbox
+
+[33mcommit ea0208f244f7f1d698bbbdbb63e183da26840729[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:21:16 2024 +0900
+
+    [Fix] li key error is fixed in ChildListCard
+
+[33mcommit 1df2a0f19f9803e78112f90ed4bf6ad96f723e3f[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:20:04 2024 +0900
+
+    [Fix] Fixed FilledButton to change button type to handle submit
+
+[33mcommit 8f994e4abfa9633e609455d0575997df09bf5960[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:19:20 2024 +0900
+
+    [Feat] Fixed Category handling checkbox function
+
+[33mcommit 91bd3615ea65813541d7cf4c5fc549fad284eef8[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:18:16 2024 +0900
+
+    [chore] add Upload Icon in Assets
+
+[33mcommit 77db07e1411d3363dd26a43b7b8fbcc4193b7f4a[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 21 09:17:18 2024 +0900
+
+    [chore] npm install uuid
+
+[33mcommit e13bc9688322429f39a685a7dad2a3f4c49aadc8[m[33m ([m[1;32mtestdevelop[m[33m)[m
+Merge: 3772a57 14476d4
+Author: woojin <orolzleim@gmail.com>
+Date:   Mon Jun 17 14:07:44 2024 +0900
+
+    Merge branch 'testdevelop' of https://github.com/kidsConnection/kidsconnect into testdevelop
+
+[33mcommit 3772a57dbb382e12adc9132cf3d6e8ad151ba022[m
+Author: woojin <orolzleim@gmail.com>
+Date:   Mon Jun 17 14:06:11 2024 +0900
+
+    database global config setting
+
+[33mcommit 14476d43a9416903b3e4ec75a9904e3ba89a3a76[m
+Merge: a112335 decbc91
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Mon Jun 17 11:31:19 2024 +0900
+
+    Merge pull request #48 from kidsConnection/fe/dev
+    
+    [FE:Test] fe/dev branch merges into testdevlop branch to test api
+
+[33mcommit a112335234d009519e403759f4ee19ecb8c8501c[m[33m ([m[1;32mbe/jwt[m[33m)[m
+Author: woojin <orolzleim@gmail.com>
+Date:   Mon Jun 17 11:14:55 2024 +0900
+
+    jwt - api
+
+[33mcommit decbc9102ca4d321c903252ccdda47a15d79380c[m
+Merge: cedc38d eb116d9
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Mon Jun 17 02:02:49 2024 +0900
+
+    Merge pull request #47 from kidsConnection/fe/mypage/parent
+    
+    [Feat] Mypage Parents' features are added and thus following Components are updated.
+
+[33mcommit eb116d91894219a056f9925bcb70afda69349e63[m[33m ([m[1;31morigin/fe/mypage/parent[m[33m)[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:41:54 2024 +0900
+
+    [fix] getSelectedTreatment custom hook is changed
+
+[33mcommit 788121e63123b911d6ccb234aa7829442300d24b[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:41:28 2024 +0900
+
+    [Fix] handling clicked menu states and function is added in Mypage Parent
+
+[33mcommit 7d8fad0f4b4dd49f066c0a95ab20f0e9dbf68c24[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:40:00 2024 +0900
+
+    [Feat] handleNavMenu function is featured to handle inner content in Mypage
+
+[33mcommit 28198f8899d45f3a79e8bd269311d20bd0bf7a91[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:38:57 2024 +0900
+
+    [chore] import DaumPostCode is fixed due to import bug
+
+[33mcommit 533b7015104320ed1a5e940f208b25c5db1b9e9e[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:38:20 2024 +0900
+
+    [Fix] disabled props and css is added in InputDatePicker
+
+[33mcommit 7b92fab7427d0513383b2bba2c73168a767cfc9a[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:37:41 2024 +0900
+
+    [Fix] Modal is fixed to handle Modal with ChatInput option
+
+[33mcommit 7672017b39c8f5b2ec90c766a53de65033851dac[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:36:32 2024 +0900
+
+    [Fix]Added Props and Functions due to handle AddChild Survey Components in ChatboxSystem
+
+[33mcommit de03d8be5c89a9e3a78f811a24c572f06cd5fa43[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:35:41 2024 +0900
+
+    [Fixed] Added props to handle disable checkbox and thus disabled css is added in Category Component
+
+[33mcommit 59c5fc58d77e967137cd83d88fd54ebcfa152485[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:31:58 2024 +0900
+
+    [Fix]  fixed ChildCard due to send Modal States and modal open&close option
+
+[33mcommit 0dce8f0123d654d7c12a5753106e2c781f91da4b[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:30:42 2024 +0900
+
+    [chore] duplicated DaumPostCode due to import bug
+
+[33mcommit 53026de850b7072255404ae345aff4f551027a7a[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:30:04 2024 +0900
+
+    [Fixed] fixed FilledButton props and added disabled options
+
+[33mcommit 0c0cf543faf93071cd2b015ee4608c4e5cf3d100[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Mon Jun 17 01:29:08 2024 +0900
+
+    [Chore] seperated treatmentarea and fixed surveytext
+
+[33mcommit 2380381e6677707f359b8d1459328f6211b98989[m[33m ([m[1;31morigin/be/jwt[m[33m)[m
+Author: woojin <orolzleim@gmail.com>
+Date:   Sat Jun 15 03:36:36 2024 +0900
+
+    jwt, api-code-consistency
+
+[33mcommit cedc38dbee1c0c68caf3416d77dfe86d796f1cb6[m
+Merge: cbb9006 7cc12ed
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Fri Jun 14 17:26:44 2024 +0900
+
+    Merge pull request #46 from kidsConnection/fe/signin
+    
+    [FE:Feat]  Made Function to Gather datas from Child Components in SignIn Page
+
+[33mcommit 7cc12ed6908d54fae20fcc379065b2350968936e[m[33m ([m[1;31morigin/fe/signin[m[33m)[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 17:13:10 2024 +0900
+
+    [Feat] Made PostData States to Handle Data
+
+[33mcommit 8a9c596e834fa522282cdd9ab47ea51147af9c49[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 17:12:20 2024 +0900
+
+    [chore] make variables "emailRegex" and "passwordRegex" exportable to re-use in SignIn Components
+
+[33mcommit cbb900638e86218e79f24cf655e693076cd16119[m
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Fri Jun 14 16:36:19 2024 +0900
+
+    Update Signup.tsx
+
+[33mcommit 97d0a20bbb7a088942ce3d576b66ec34120e0041[m
+Merge: 2c7a4f3 008a70c
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Fri Jun 14 16:33:22 2024 +0900
+
+    Merge pull request #45 from kidsConnection/fe/signup
+    
+    [FE:Feat] Added States and Functions to handle Input Data & Validate Inputs in Form
+
+[33mcommit 008a70cb305de0cfb4a23ba40951a0f9273206b4[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 16:01:27 2024 +0900
+
+    [Fix] Changed Form Content in SignUp : Add Props, add function which get value from child components etc.
+
+[33mcommit f88bcafefece6b9e9e3cb722ef11f4e7f0419cec[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 16:00:03 2024 +0900
+
+    [Feat] Created SignupUseReducer to collect all functions and variables
+
+[33mcommit 3acedade5edea7c5f3b1ed533c6b84f773d1e254[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:58:07 2024 +0900
+
+    [Fix] Add handleCheck Props to get value in UserTypeCheckbox
+
+[33mcommit ed76354593f8be44e3c22ae9a762d02940efd001[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:56:44 2024 +0900
+
+    [Fix] Fixed SelectBoxDefault props and according to Fixed Component, ChatboxSystem Changed props value
+
+[33mcommit b1b7084f6197e836be1853dcd3bf470a21f3f7fd[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:55:36 2024 +0900
+
+    [Fix] added useErrorMessageAccordingToInput Custom Hook
+
+[33mcommit 40243fb04f11c05cbe7fe31e3228fa07eb6101ac[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:55:00 2024 +0900
+
+    [chore] changed Password RegExp
+
+[33mcommit 74b4703f9f454a81091fcd02ee7ddbf6a32ec860[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:54:44 2024 +0900
+
+    [Fix] Changed SignUp Page using useSelctor to handle Input Change value
+
+[33mcommit ac3762418747e5eb3449d7382bef74f78afabf44[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:54:00 2024 +0900
+
+    [Feat] Created DaumPostCode Component to handle DaumPost API
+
+[33mcommit 4bdd4c615c509f0acc8807b50ea384e04fd81d9e[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:53:12 2024 +0900
+
+    [Feat] Created InputButton
+
+[33mcommit cf5da88510d4e52676e034885c43853169388700[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:52:41 2024 +0900
+
+    [Fix] Changed props to handle custom Input Component
+
+[33mcommit e2ca4028bad5b032c4c355aaa40fe818bfb1cd21[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:51:31 2024 +0900
+
+    [Fix] changed disabled prop type to boolean and css according to modification
+
+[33mcommit 1ea3907fdfe72d04a20cc5800725d225cc0f99ef[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:50:49 2024 +0900
+
+    [chore] add Asset Common Event Type & Changed Password RegExp in selectboxData
+
+[33mcommit 2694412aae2e5ca62f0109fad81df164f01f671a[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:50:00 2024 +0900
+
+    [chore] add input placeholder css script
+
+[33mcommit 9660c93eae21f40e9a5ab34e2062b5b07c5d9705[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Fri Jun 14 15:49:31 2024 +0900
+
+    [chore] install Daum API npm
+
+[33mcommit 2c7a4f32948cb3f4ea6163747b9e2511ecffd644[m
+Merge: 062aaf2 7b23529
+Author: heoh06 <124794790+heoh06@users.noreply.github.com>
+Date:   Wed Jun 12 18:31:56 2024 +0900
+
+    Merge pull request #44 from kidsConnection/fe/apply
+    
+    [FE:Feat] Applying Connection to Therapist Feature Updated
+
+[33mcommit 7b23529029b88347e6216a4e85ed6514a17ececc[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Wed Jun 12 18:30:32 2024 +0900
+
+    [fix] fixed Modal opens overlapping because of sharing same state props
+
+[33mcommit 813fac079e3b7be76895cea707f1db2c2dd047d2[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Wed Jun 12 17:10:13 2024 +0900
+
+    [chore]deleted un-used CustomHook
+
+[33mcommit 8f3335b623fa2a685e4d71efcb6c2d8c22d6ef5c[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Wed Jun 12 17:09:57 2024 +0900
+
+    [fix] changed Modal related props
+
+[33mcommit bc56064859f670daf9dc49c87b989976cc79a5a9[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Wed Jun 12 17:09:36 2024 +0900
+
+    [fix] Fixed Chat system step by step
+
+[33mcommit 2327b84de39a6340a1c40add542cf5e88c83befb[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Wed Jun 12 17:09:09 2024 +0900
+
+    [fix]fix Modal adding content change function and handle open and close props
+
+[33mcommit f836e3a5375b7ee613d7b3514f9d36c53c7bbfa8[m
+Author: heoh0613 <heoh0613@gmail.com>
+Date:   Wed Jun 12 17:07:53 2024 +0900
+
+    [fix]fix Therapist Card Adding Modal related Props
