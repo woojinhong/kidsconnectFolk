@@ -53,20 +53,19 @@ public class TherapistInfoService {
 
         TherapistInfo therapistInfo = therapistInfoMapper.toTherapistInfo(therapistInfoDto); // dto -> entity + jwt token
 
+
+        // Therapist 엔티티 객체 반환
+        Therapist therapist = therapistService.findById(userDetails.getId());
+
+        // therapistInfo에 therapist 객체 저장
+        therapistInfo.setTherapist(therapist);
+
         // 인증된 사용자(therapist)가 이 TherapistInfo의 소유자인지 확인
         verifyTherapistOwnership(therapistInfo, userDetails);
 
         addExperiences(therapistInfo, therapistInfoDto.getExperience());
         addEducations(therapistInfo, therapistInfoDto.getEducation());
         addSymptoms(therapistInfo, therapistInfoDto.getSymptom());
-
-
-        // Therapist 엔티티 객체 반환
-        Therapist therapist = therapistService.findById(userDetails.getId());
-
-
-        //therapistInfo 에 therapist 객체 저장.
-        therapistInfo.setTherapist(therapist);
 
 
         // therapistInfo를 임시로 저장하여 ID를 생성

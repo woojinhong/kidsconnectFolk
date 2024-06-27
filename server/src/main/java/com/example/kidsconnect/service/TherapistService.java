@@ -79,6 +79,9 @@ public class TherapistService {
         //권한 부여
         therapist.setRole(Role.ROLE_THERAPIST);
 
+        //회원 상태 true
+        therapist.setStatus(true);
+
         // Center 처리 및 Enrol 생성
         processCenterAndEnrol(therapist, therapistSignUpDto.getCenterName());
 

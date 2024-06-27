@@ -90,6 +90,10 @@ public class Therapist implements Loginable {
         this.role = role;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public Long id() {
         return id;
