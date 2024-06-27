@@ -2,10 +2,8 @@ package com.example.kidsconnect.service;
 
 import com.example.kidsconnect.dao.*;
 import com.example.kidsconnect.domain.*;
-import com.example.kidsconnect.dto.LoginDto;
+import com.example.kidsconnect.dto.*;
 
-import com.example.kidsconnect.dto.TherapistSignUpDto;
-import com.example.kidsconnect.dto.UserSignUpDto;
 import com.example.kidsconnect.exception.CustomCode;
 import com.example.kidsconnect.exception.CustomException;
 import com.example.kidsconnect.jwt.TokenProvider;
@@ -21,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -37,7 +36,15 @@ public class TherapistService {
     private final TokenProvider tokenProvider;
 
     private final TherapistMapper therapistMapper;
+    private final EnrolService enrolService;
 
+    public TherapistResponseDto showTherapist(UserPrinciple userDetails) {
+        Therapist therapist = findById(userDetails.getId());
+
+
+        List<String> centerNames = enrolRepository.findCenterNamesByTherapistId(therapist.getId());
+        return therapistMapper.toTherapistResponseDto(therapist,centerNames);
+    }
 
 
     @Transactional(readOnly = true)
@@ -162,5 +169,5 @@ public class TherapistService {
                 .orElseThrow(() -> new CustomException(CustomCode.NOT_FOUND_THERAPIST));
     }
 
-}
 
+}

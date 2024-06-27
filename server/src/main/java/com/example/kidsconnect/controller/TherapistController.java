@@ -2,10 +2,7 @@ package com.example.kidsconnect.controller;
 
 import com.example.kidsconnect.domain.Therapist;
 import com.example.kidsconnect.domain.UserPrinciple;
-import com.example.kidsconnect.dto.LoginDto;
-import com.example.kidsconnect.dto.TherapistInfoDto;
-import com.example.kidsconnect.dto.TherapistSignUpDto;
-import com.example.kidsconnect.dto.UserSignUpDto;
+import com.example.kidsconnect.dto.*;
 import com.example.kidsconnect.service.TherapistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +15,11 @@ public class TherapistController {
     @Autowired
     TherapistService therapistService;
 
+
+    @GetMapping()
+    public TherapistResponseDto showTherapist (@AuthenticationPrincipal UserPrinciple userDetails) {
+        return therapistService.showTherapist(userDetails);
+    }
     //치료사 삭제
     @DeleteMapping()
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserPrinciple userDetails) {
