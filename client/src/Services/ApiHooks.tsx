@@ -74,7 +74,6 @@ export const usePostSignin = () => {
           },
         }
       );
-      console.log(res);
       setCookie("token", res.headers["authorization"]);
       axiosApp.defaults.headers.common["Authorization"] =
         `Bearer ${res.headers["authorization"]}`;
@@ -105,4 +104,24 @@ export const usePostChild = async (data: GatheredChildDataType) => {
   } catch (err: any) {
     console.error(err);
   }
+};
+
+// 로그인한 부모님 정보 GET API
+export const useGetParentInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getParentInfo = async () => {
+    try {
+      const res = await axiosApp.get("/user", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  return { getParentInfo };
 };
