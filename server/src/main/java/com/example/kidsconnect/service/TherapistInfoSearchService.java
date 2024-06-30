@@ -23,9 +23,6 @@ public class TherapistInfoSearchService {
 
     @Transactional(readOnly = true)
     public List<MatchResponseDto> findTherapistsByCriteria(MatchRequestDto matchRequestDto) {
-        System.out.println("Service - isExperience: " + matchRequestDto.getIsExperience()); // 디버그 출력
-        System.out.println("Service - Symptoms: " + matchRequestDto.getSymptoms()); // 디버그 출력
-
         return therapistInfoRepository.findTherapistsByCriteria(matchRequestDto);
     }
     @Transactional(readOnly = true)

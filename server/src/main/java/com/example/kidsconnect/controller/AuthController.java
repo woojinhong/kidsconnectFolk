@@ -1,5 +1,4 @@
 package com.example.kidsconnect.controller;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +24,11 @@ public class AuthController {
     private final TherapistService therapistService;
     private final UserService userService;
 
-    
-    
-    
+
     @PostMapping("/login/therapist")
     public ResponseEntity<?> therapistLogin(@RequestBody LoginDto loginDto) {
         logger.info("Received login request with email: {}", loginDto.getEmail());
-            return therapistService.login(loginDto);
+        return therapistService.login(loginDto);
     }
 
     @PostMapping("/login/user")
@@ -51,5 +48,4 @@ public class AuthController {
 
         return userService.signUp(userSignUpDto);
     }
-
 }
