@@ -98,10 +98,30 @@ export const usePostChild = async (data: GatheredChildDataType) => {
     await axiosApp.post("/child/register", JSON.stringify(data), {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer${cookie.split("=")[1]}`,
+        Authorization: `${cookie.split("=")[1]}`,
       },
     });
   } catch (err: any) {
     console.error(err);
   }
+};
+
+// 로그인한 부모님 정보 GET API
+export const useGetParentInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getParentInfo = async () => {
+    try {
+      const res = await axiosApp.get("/user", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  return { getParentInfo };
 };

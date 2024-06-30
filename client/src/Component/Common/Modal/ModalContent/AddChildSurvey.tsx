@@ -13,7 +13,6 @@ import {
 } from "./ModalContentType";
 import { useGetChildAge } from "../../../../Services/CustomHooks";
 import { usePostChild } from "../../../../Services/ApiHooks";
-import { DateValue } from "@mantine/dates";
 
 function AddChildSurvey({
   onClose,
