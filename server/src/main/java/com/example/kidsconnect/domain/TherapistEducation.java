@@ -19,6 +19,8 @@ public class TherapistEducation {
     private Long id;
     private String education;
     private String degree;
+    @Column(nullable = false, length = 30)
+    private String status;
 
 
 }
