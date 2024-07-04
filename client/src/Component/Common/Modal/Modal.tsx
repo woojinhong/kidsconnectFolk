@@ -29,6 +29,7 @@ function Modal({
   onClose,
   onOpen,
   isOpen,
+  therapistId,
 }: ModalProps) {
   const [opened, { open, close }] = useDisclosure(false);
   const [chatInputValue, setChatInputValue] = useState<string>("");
@@ -80,6 +81,7 @@ function Modal({
                   onClearChatInput,
                   chatInputValue,
                   currentStep,
+                  therapistId,
                   handleButtonSendOnClick,
                   setCurrentStep
                 )
@@ -146,6 +148,7 @@ const getContentInModal = (
   onClearChatInput?: () => void,
   chatInputValue?: string,
   currentStep?: number,
+  therapistId?: number,
   handleButtonSendOnClick?: () => void,
   setCurrentStep?: React.Dispatch<React.SetStateAction<number>>
 ) => {
@@ -164,7 +167,9 @@ const getContentInModal = (
         />
       );
     case "apply":
-      return <ApplicationQuestionary onClose={onClose} />;
+      return (
+        <ApplicationQuestionary therapistId={therapistId} onClose={onClose} />
+      );
     default:
       return null;
   }
@@ -179,4 +184,5 @@ type ModalProps = {
   onClose?: (() => void) | undefined;
   isOpen?: boolean;
   onOpen?: (() => void) | undefined;
+  therapistId?: number;
 };
