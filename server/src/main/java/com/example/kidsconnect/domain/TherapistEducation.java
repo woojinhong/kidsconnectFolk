@@ -18,7 +18,10 @@ public class TherapistEducation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String education;
+    private String major;
     private String degree;
+
+    private String status;
 
 
 }

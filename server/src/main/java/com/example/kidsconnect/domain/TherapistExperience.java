@@ -20,8 +20,8 @@ public class TherapistExperience {
     private Long id;
 
     private String place;
-    private Date startDate;
-    private Date endDate;
+    private int years; // 경력 년수
+    private int months; // 경력 개월수
 
 
 }

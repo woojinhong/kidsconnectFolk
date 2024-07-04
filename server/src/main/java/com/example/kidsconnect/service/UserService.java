@@ -62,6 +62,8 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         //권한 부여
         user.setRole(Role.ROLE_USER);
+        //유저 상태(탈퇴 여부)
+        user.setStatus(true);
 
         userRepository.save(user);
 

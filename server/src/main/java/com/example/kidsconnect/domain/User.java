@@ -128,6 +128,11 @@ public class User implements Loginable {
         this.role = role;
     }
 
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public Long id() {
         return id;

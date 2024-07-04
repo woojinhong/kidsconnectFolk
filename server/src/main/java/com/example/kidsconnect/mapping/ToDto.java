@@ -21,7 +21,6 @@ public class ToDto extends MapperFactory {
     // from child entity -> to childDto
 
 
-
     // from therapistInfo -> to reservationResponseDto
 
 //    public ReservationResponseDto fromReservationResponse(Therapist therapist, TherapistInfo therapistInfo, Child child, User user ){
