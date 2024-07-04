@@ -24,7 +24,7 @@ function AddEducation({
       ...prev,
       {
         id: uuidv4(),
-        universityName: "",
+        education: "",
         degree: "",
         major: "",
         degreeCompletion: "",
@@ -64,11 +64,11 @@ function AddEducation({
             }
           />
           <InputText
-            inputType="universityName"
+            inputType="education"
             placeholder="학교를 입력해 주세요"
             apiIcon="search"
             dispatch={(e) =>
-              updateEducationData(index, { universityName: e.target.value })
+              updateEducationData(index, { education: e.target.value })
             }
           />
           <InputText
@@ -97,7 +97,7 @@ export default AddEducation;
 const initialEducationState: educationType = {
   id: uuidv4(),
   degree: "",
-  universityName: "",
+  education: "",
   major: "",
   degreeCompletion: "",
 };

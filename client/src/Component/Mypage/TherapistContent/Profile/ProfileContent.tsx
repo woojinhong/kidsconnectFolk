@@ -1,23 +1,32 @@
+import { useState, useEffect } from "react";
 import { StyledMain, StyledProfileSummary } from "./Profile.style";
 import { Link } from "react-router-dom";
 
-import therapistInfo from "../../../../MockData/therapistInfoData.json";
-
+import { useGetTherapistInfo } from "../../../../Services/ApiHooks";
 import TherapistProfile from "../../../TherapistProfile/TherapistProfile";
+import { ProfileType } from "./ProfileType";
 import ProfileSummary from "./ProfileSummary";
+import userDetailInfoById from "../../../../MockData/therapistInfoData.json";
 
 function ProfileContent() {
-  const userId = 1;
-  const userDetailInfoById: object | undefined = therapistInfo.find(
-    (data) => data.id === userId
+  const [therapistInfo, setTherapistInfo] = useState<ProfileType>(
+    {} as ProfileType
   );
+  const { getTherapistInfo } = useGetTherapistInfo();
+
+  useEffect(() => {
+    const fetchTherapistData = async () => {
+      return setTherapistInfo(await getTherapistInfo());
+    };
+    fetchTherapistData();
+  }, []);
 
   return (
     <StyledMain>
       <section>
         <h3>내 프로필</h3>
         <StyledProfileSummary>
-          <ProfileSummary button={true} />
+          <ProfileSummary therapistInfo={therapistInfo} button={true} />
         </StyledProfileSummary>
       </section>
       <section>

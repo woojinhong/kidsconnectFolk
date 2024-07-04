@@ -1,6 +1,11 @@
 export type ProfileType = {
   firstName: string;
   lastName: string;
+  freelancer: boolean;
+  phoneNum: string;
+  address: string;
+  addressDetail: string;
+  centerName?: string;
 };
 
 export type ProfileDetailType = {

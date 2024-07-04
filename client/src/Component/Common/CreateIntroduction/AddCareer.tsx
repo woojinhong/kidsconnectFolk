@@ -8,7 +8,6 @@ import {
   CategoryType,
 } from "../../../Pages/CreateIntroduction/CreateIntroductionType";
 import FilledButton from "../Button/FilledButton";
-import { v4 as uuidv4 } from "uuid";
 
 function AddCareer({
   getData,
@@ -22,7 +21,7 @@ function AddCareer({
   const addNewCareer = () => {
     setCareerList((prev) => [
       ...prev,
-      { id: uuidv4(), centerName: "", year: 0, month: 0, isWorking: false },
+      { centerName: "", startDate: 0, endDate: 0, isWorking: false },
     ]);
   };
 
@@ -50,7 +49,7 @@ function AddCareer({
         <p>경력증명서를 첨부하셔야 인증 마크가 달려요.</p>
       </div>
       {careerList.map((career, index) => (
-        <div key={career.id}>
+        <div key={career.centerName}>
           <DaumPostCode
             placeholder="센터/병원/기관 검색"
             dispatch={(_, inputValue) =>
@@ -61,7 +60,7 @@ function AddCareer({
             label="year"
             placeholder="n"
             dispatch={(_, inputValue) =>
-              updateCareerData(index, { year: Number(inputValue) })
+              updateCareerData(index, { startDate: Number(inputValue) })
             }
           />
           <span>년</span>
@@ -69,7 +68,7 @@ function AddCareer({
             label="month"
             placeholder="n"
             dispatch={(_, inputValue) =>
-              updateCareerData(index, { month: Number(inputValue) })
+              updateCareerData(index, { endDate: Number(inputValue) })
             }
           />
           <span>개월</span>
@@ -96,9 +95,8 @@ function AddCareer({
 export default AddCareer;
 
 const initialCareerState: careerType = {
-  id: uuidv4(),
   centerName: "",
-  year: 0,
-  month: 0,
+  startDate: 0,
+  endDate: 0,
   isWorking: false,
 };

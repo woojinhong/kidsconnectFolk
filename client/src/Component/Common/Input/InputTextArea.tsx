@@ -17,7 +17,7 @@ const InputTextArea: React.FC<InputComplexProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = event.target.value;
-    if (inputValue.length <= 100) {
+    if (inputValue.length <= maxCharCount) {
       setValue(inputValue);
       setCharCount(inputValue.length);
     }
@@ -65,7 +65,7 @@ const labelToName = (label: string) => {
     case "제목":
       return "title";
     case "짧은 자기소개":
-      return "introduction";
+      return "bio";
     case "상세 소개":
       return "content";
     default:

@@ -31,10 +31,13 @@ function InputFile({
 
   const handleFileChanges = (payload: File | File[] | null) => {
     setUploadedFile(payload);
-    if (payload) {
-      onChange && inputType && onChange(inputType, payload);
+    if (payload && inputType) {
+      onChange && onChange(payload, inputType);
+    } else if (payload) {
+      onChange && onChange(payload);
     }
   };
+
   return (
     <div>
       <StyledFileInput
@@ -83,7 +86,7 @@ type InputFilePropsType = {
   multiple?: boolean;
   size?: "sm" | "lg";
   icon?: boolean;
-  onChange?: (category: CategoryType, file: File | File[]) => void;
+  onChange?: (file: File | File[], category?: CategoryType) => void;
 };
 
 const StyledFileInput = styled(FileInput)`

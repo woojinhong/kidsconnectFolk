@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   CommentText,
   Divider,
@@ -9,45 +10,41 @@ import {
   UserTitle,
   RatingText,
 } from "./ReviewList.styles";
-import therapistReviewData from "../../../MockData/therapistReviewData.json";
-import userData from "../../../MockData/userData.json";
 import starSvg from "../../../Assets/Image/star.svg";
 
-interface Review {
-  id: number;
-  userId: number;
-  therapistId: number;
-  rating: number;
-  gender: string;
-  comment: string;
-  inDate: string;
-  upDate: string;
-}
+const ReviewList = ({
+  getCardLength,
+  userInfo,
+}: {
+  getCardLength: (category: string, length: number) => void;
+  userInfo: userName;
+}) => {
+  const [therapistReviewData, setTherapistReviewData] = useState<Review[]>(
+    [] as Review[]
+  );
 
-const ReviewList = () => {
-  const renderStars = (rating: number): JSX.Element => {
+  // useEffect로 불러오기
+
+  if (!therapistReviewData.length) {
     return (
-      <StarsContainer>
-        <StarImage src={starSvg} alt="star" />
-        <RatingText>{rating.toFixed(1)}</RatingText>
-      </StarsContainer>
+      <div>
+        <h4>아직 작성하신 리뷰가 없습니다</h4>
+      </div>
     );
-  };
+  }
 
   return (
     <ReviewContainer>
       {therapistReviewData.map((review: Review) => {
-        const user = userData.find((user) => user.id === review.userId);
-
         return (
           <li key={review.id}>
             <StyledCard>
-              {user && (
+              {userInfo && (
                 <CommentText>
                   {renderStars(review.rating)}
                   <UserName>
-                    {user.lastName}
-                    {user.firstName}
+                    {userInfo.firstName}
+                    {userInfo.lastName}
                   </UserName>
                   <UserTitle> 부모님</UserTitle>
                 </CommentText>
@@ -65,3 +62,27 @@ const ReviewList = () => {
 };
 
 export default ReviewList;
+
+const renderStars = (rating: number): JSX.Element => {
+  return (
+    <StarsContainer>
+      <StarImage src={starSvg} alt="star" />
+      <RatingText>{rating.toFixed(1)}</RatingText>
+    </StarsContainer>
+  );
+};
+interface Review {
+  id: number;
+  userId: number;
+  therapistId: number;
+  rating: number;
+  gender: string;
+  comment: string;
+  inDate: string;
+  upDate: string;
+}
+
+type userName = {
+  firstName: string;
+  lastName: string;
+};

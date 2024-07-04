@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Navigation from "../../Component/Mypage/Navigation/Navigation";
 import MatchingContent from "../../Component/Mypage/TherapistContent/Matching/MatchingContent";
@@ -16,13 +16,6 @@ function MypageTherapist() {
   const handleNavMenuClick = (e: clickButtonEvent) => {
     setClickedNavMenu(e.currentTarget.innerText);
   };
-  function rootBackgroundColorChange() {
-    return (document.body.style.backgroundColor = "#f2f2f2");
-  }
-
-  useEffect(() => {
-    rootBackgroundColorChange();
-  }, []);
 
   return (
     <StyledMypageLayout>
