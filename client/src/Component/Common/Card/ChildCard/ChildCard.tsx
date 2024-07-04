@@ -11,31 +11,30 @@ import {
   TagContainer,
   StyledCardContainer,
 } from "./ChildCard.styles";
+import { useGetParentChildInfo } from "../../../../Services/ApiHooks";
 
 import Edit from "../../../../Assets/Image/Edit.svg";
 import SymbolFemale from "../../../../Assets/Image/Icon/SymbolFemale.svg";
 import SymbolMale from "../../../../Assets/Image/Icon/SymbolMale.svg";
-import childData from "../../../../MockData/childData.json";
-import symptomData from "../../../../MockData/child_symptomData.json";
 
-const ChildCard = () => {
-  const [child, setChild] = useState<Child>({} as Child);
-  const [symptomTags, setSymptomTags] = useState<string[]>([]);
+const ChildCard = ({
+  getCardLength,
+}: {
+  getCardLength: (category: string, length: number) => void;
+}) => {
+  const [childData, setChildData] = useState<Child[]>([] as Child[]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const { getParentChildInfo } = useGetParentChildInfo();
+
   useEffect(() => {
-    setChild(childData[0]);
-    const childSymptom = symptomData.find(
-      (data: SymptomData) => data.id === child.id
-    );
-
-    if (childSymptom) {
-      setSymptomTags(childSymptom.symptomData);
-    }
+    const fetchParentChildInfo = async () => {
+      const parentChildInfo = await getParentChildInfo();
+      setChildData(parentChildInfo);
+      getCardLength("child", parentChildInfo.length);
+    };
+    fetchParentChildInfo();
   }, []);
-
-  const { lastName, firstName, dateOfBirth, personality, gender } = child;
-  const age = useGetChildAge(dateOfBirth);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -46,22 +45,38 @@ const ChildCard = () => {
   };
 
   const addChildCard = () => (
-    <Modal
-      buttonVariant="addChild"
-      buttonText="아이 등록하기"
-      content="addChild"
-      chatInput={true}
-      isOpen={isModalOpen}
-      onClose={closeModal}
-      onOpen={openModal}
-    />
+    <li>
+      <Modal
+        buttonVariant="addChild"
+        buttonText="아이 등록하기"
+        content="addChild"
+        chatInput={true}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onOpen={openModal}
+      />
+    </li>
   );
 
-  if (!child) {
+  if (!childData) {
     return addChildCard();
   }
   return (
     <StyledCardContainer>
+      {childData.map((child: Child, index) => mappingChildData(index, child))}
+      {addChildCard()}
+    </StyledCardContainer>
+  );
+};
+
+export default ChildCard;
+
+const mappingChildData = (index: number, child: Child) => {
+  const { lastName, firstName, dateOfBirth, gender, personality, symptomName } =
+    child;
+  const age = useGetChildAge(dateOfBirth);
+  return (
+    <li key={index}>
       <StyledCard>
         <InfoGroup>
           <div style={{ fontWeight: 700 }}>
@@ -80,19 +95,16 @@ const ChildCard = () => {
         <DescriptionText>{personality}</DescriptionText>
 
         <TagContainer>
-          {symptomTags.map((tag, index) => (
-            <div key={index}>
+          {symptomName.map((tag: string) => (
+            <div key={tag}>
               <Tag value={tag} />
             </div>
           ))}
         </TagContainer>
       </StyledCard>
-      {addChildCard()}
-    </StyledCardContainer>
+    </li>
   );
 };
-
-export default ChildCard;
 
 interface Child {
   id: number;
@@ -101,10 +113,5 @@ interface Child {
   dateOfBirth: string;
   personality: string;
   gender: string;
-}
-
-interface SymptomData {
-  id: number;
-  symptomId: number;
-  symptomData: string[];
+  symptomName: string[];
 }

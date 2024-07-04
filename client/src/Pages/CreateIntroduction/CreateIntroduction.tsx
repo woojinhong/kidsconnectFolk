@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ProfileSummary from "../../Component/Mypage/TherapistContent/Profile/ProfileSummary";
 import InputTextArea from "../../Component/Common/Input/InputTextArea";
@@ -13,11 +13,15 @@ import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import FilledButton from "../../Component/Common/Button/FilledButton";
 
 import {
+  useGetTherapistInfo,
+  usePostTherapistPortfolio,
+} from "../../Services/ApiHooks";
+import { ProfileType } from "../../Component/Mypage/TherapistContent/Profile/ProfileType";
+import {
   gatheredIntroductionDataType,
   CategoryType,
   careerType,
   educationType,
-  licenseType,
 } from "./CreateIntroductionType";
 
 function CreateIntroduction() {
@@ -28,6 +32,11 @@ function CreateIntroduction() {
     []
   );
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string[]>([]);
+  const [therapistInfo, setTherapistInfo] = useState({} as ProfileType);
+  const [toastMessage, setToastMessage] = useState<string>("");
+
+  const { getTherapistInfo } = useGetTherapistInfo();
+  const { postTherapistPortfolio } = usePostTherapistPortfolio();
 
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -37,24 +46,21 @@ function CreateIntroduction() {
     }));
   };
 
+  console.log(gatheredIntroductionData);
+
   const getObjectDataToArr = (
     category: CategoryType,
-    data: careerType[] | educationType[] | licenseType[]
+    data: careerType[] | educationType[]
   ) => {
     if (category === "career") {
       setGatheredIntroductionData((prev) => ({
         ...prev,
-        career: data as careerType[],
+        experience: data as careerType[],
       }));
     } else if (category === "education") {
       setGatheredIntroductionData((prev) => ({
         ...prev,
         education: data as educationType[],
-      }));
-    } else if (category === "licenses") {
-      setGatheredIntroductionData((prev) => ({
-        ...prev,
-        licenses: data as licenseType[],
       }));
     }
   };
@@ -70,7 +76,7 @@ function CreateIntroduction() {
 
     setGatheredIntroductionData((prev) => ({
       ...prev,
-      treatmentArea: updatedSelectedTreatmentArea,
+      symptom: updatedSelectedTreatmentArea,
     }));
   };
 
@@ -78,33 +84,60 @@ function CreateIntroduction() {
     setSelectedAgeGroup(inputValue);
     setGatheredIntroductionData((prev) => ({
       ...prev,
-      ageGroup: inputValue,
+      ageRange: inputValue,
     }));
   };
 
-  const handleConfirmBooleanData = (
-    category: CategoryType,
-    file: File | File[]
-  ) => {
-    const valueToBoolean = file ? true : false;
+  const getCertificateData = (inputValue: string) => {
     setGatheredIntroductionData((prev) => ({
       ...prev,
-      [category]: valueToBoolean,
+      certificate: [...prev.certificate, inputValue],
+    }));
+  };
+  const handleConfirmBooleanData = (
+    file: File | File[],
+    category?: CategoryType
+  ) => {
+    const valueToBoolean = file ? true : false;
+    category &&
+      setGatheredIntroductionData((prev) => ({
+        ...prev,
+        [category]: valueToBoolean,
+      }));
+  };
+
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (createIntroductionFormValidate(gatheredIntroductionData)) {
+      return setToastMessage("필수 항목을 입력해주세요.");
+    } else {
+      await postTherapistPortfolio(gatheredIntroductionData, setToastMessage);
+    }
+  };
+
+  const getUploadedProfileImg = (url: string) => {
+    setGatheredIntroductionData((prev) => ({
+      ...prev,
+      imageFile: url,
     }));
   };
 
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (createIntroductionFormValidate(gatheredIntroductionData)) {
-      alert("필수 항목을 입력해주세요.");
-      return;
-    }
-  };
+  useEffect(() => {
+    const fetchTherapistData = async () => {
+      setTherapistInfo(await getTherapistInfo());
+    };
+    fetchTherapistData();
+  }, []);
+
   return (
     <main>
       <section>
         <h3>내 프로필</h3>
-        <ProfileSummary />
+        <ProfileSummary
+          getData={getUploadedProfileImg}
+          button={true}
+          therapistInfo={therapistInfo}
+        />
       </section>
       <section>
         <div>
@@ -128,7 +161,7 @@ function CreateIntroduction() {
               label="짧은 자기소개"
               showWithAsterisk={true}
               placeholder="짧은 자기 소개를 공백 포함 300자 이하로 입력해주세요."
-              height="56px"
+              height="160px"
               showCharCount={true}
               maxCharCount={300}
               dispatch={handleTextAreaChange}
@@ -162,7 +195,7 @@ function CreateIntroduction() {
             </div>
             <AddCareer getData={getObjectDataToArr} />
             <AddEducation getData={getObjectDataToArr} />
-            <AddCertification getData={getObjectDataToArr} />
+            <AddCertification getData={getCertificateData} />
             <div>
               <div>
                 <h4>
@@ -175,13 +208,13 @@ function CreateIntroduction() {
               </div>
               <div>
                 <InputFile
-                  inputType="isUploadedId"
+                  inputType="identityCheck"
                   placeholder="본인 확인 서류"
                   icon={true}
                   onChange={handleConfirmBooleanData}
                 />
                 <InputFile
-                  inputType="isUploadedCriminalRecord"
+                  inputType="crimeCheck"
                   placeholder="범죄여부 사실 확인서"
                   icon={true}
                   onChange={handleConfirmBooleanData}
@@ -203,6 +236,7 @@ function CreateIntroduction() {
                 gatheredIntroductionData
               )}
             />
+            <span>{toastMessage}</span>
           </form>
         </div>
       </section>
@@ -217,12 +251,12 @@ const createIntroductionFormValidate = (
 ): boolean => {
   return !(
     data.title &&
-    data.introduction &&
+    data.bio &&
     data.content &&
-    data.treatmentArea &&
-    data.ageGroup &&
-    data.isUploadedId &&
-    data.isUploadedCriminalRecord
+    data.symptom &&
+    data.ageRange &&
+    data.identityCheck &&
+    data.crimeCheck
   );
 };
 

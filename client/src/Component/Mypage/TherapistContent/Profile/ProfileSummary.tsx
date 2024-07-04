@@ -1,51 +1,72 @@
-import OutlineButton from "../../../Common/Button/OutlineButton";
+import { useState } from "react";
 
-import {
-  ProfileType,
-  ProfileDetailType,
-  ProfileCareerType,
-} from "./ProfileType";
+import InputFile from "../../../Common/Input/InputFile";
+import { ProfileType } from "./ProfileType";
 
-import therapistProfileData from "../../../../MockData/therapistData.json";
-import therapistCareer from "../../../../MockData/therapistExperienceData.json";
-import therapistInfo from "../../../../MockData/therapistInfoData.json";
-
+import ProfileImg from "../../../../Assets/Image/ImgProfileTeacher.svg";
 import IconReview from "../../../../Assets/Image/IconReview.svg";
 
-function ProfileSummary({ button = false }: { button?: boolean }) {
-  const userId = 1;
-  const userCareerById = therapistCareer.find(
-    (data) => data.therapistId === userId
-  );
-  const userProfileById = therapistProfileData.find(
-    (data) => data.id === userId
-  );
-  const userDetailInfoById: object | undefined = therapistInfo.find(
-    (data) => data.id === userId
-  );
+function ProfileSummary({
+  therapistInfo,
+  button = false,
+  getData,
+}: {
+  therapistInfo: ProfileType;
+  button?: boolean;
+  getData?: (url: string) => void;
+}) {
+  const {
+    firstName,
+    lastName,
+    freelancer,
+    centerName,
+    phoneNum,
+    address,
+    addressDetail,
+  } = therapistInfo;
+  const [uploadedImgUrl, setUploadedImgUrl] = useState<File | null>(null);
 
-  const { firstName, lastName } = userProfileById as ProfileType;
-  const { imageFile, review } = userDetailInfoById as ProfileDetailType;
-  const { place } = userCareerById as ProfileCareerType;
+  const getUploadedProfileImg = (file: File | File[] | null) => {
+    if (file && Array.isArray(file)) {
+      setUploadedImgUrl(file[0]);
+      getData && getData(URL.createObjectURL(file[0]));
+    }
+  };
+
   return (
     <div>
       <div>
-        <img src={imageFile} alt="프로필 이미지" />
+        <img
+          src={
+            uploadedImgUrl ? URL.createObjectURL(uploadedImgUrl) : ProfileImg
+          }
+          alt="프로필 이미지"
+        />
       </div>
       <div>
         <h4>
-          {firstName}
           {lastName}
+          {firstName}
         </h4>
         <div>
           <img src={IconReview} />
-          {review}
+          <span>0.0</span>
         </div>
-        <span>{place}근무 중</span>
+        <div>
+          <strong>
+            {address}
+            {addressDetail}
+          </strong>
+          <span>{phoneNum}</span>
+        </div>
+        <span>{freelancer ? "프리랜서" : centerName} 근무 중</span>
       </div>
       {button ? (
         <div>
-          <OutlineButton variant="m_outline" text="프로필 수정" />
+          <InputFile
+            placeholder="프로필 수정"
+            onChange={getUploadedProfileImg}
+          />
         </div>
       ) : null}
     </div>

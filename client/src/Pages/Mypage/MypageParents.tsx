@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Navigation from "../../Component/Mypage/Navigation/Navigation";
 import ProfileContent from "../../Component/Mypage/ParentsContent/Profile/ProfileContent";
@@ -6,24 +6,15 @@ import MatchingContent from "../../Component/Mypage/ParentsContent/Matching/Matc
 
 import { clickButtonEvent } from "../../Assets/CommonType/EventType";
 import { StyledMypageLayout } from "../../Assets/StyledData/PageLayout.style";
-import { useGetParentInfo } from "../../Services/ApiHooks";
 
 function MypageParents() {
   const [clickedNavMenu, setClickedNavMenu] = useState<string>(
     initialClickedNavMenu
   );
-  const { getParentInfo } = useGetParentInfo();
 
   const handleNavMenuClick = (e: clickButtonEvent) => {
     setClickedNavMenu(e.currentTarget.innerText);
   };
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      await getParentInfo();
-    };
-    fetchUserData();
-  });
 
   return (
     <StyledMypageLayout>

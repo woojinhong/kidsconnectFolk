@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { axiosApp } from "./axiosApp";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
 
+import { gatheredIntroductionDataType } from "../Pages/CreateIntroduction/CreateIntroductionType";
 import { GatheredChildDataType } from "../Component/Common/Modal/ModalContent/ModalContentType";
 import {
   ParentStateType,
@@ -124,4 +126,103 @@ export const useGetParentInfo = () => {
   };
 
   return { getParentInfo };
+};
+
+// 로그인한 부모님의 아이 정보 GET API
+export const useGetParentChildInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getParentChildInfo = async () => {
+    try {
+      const res = await axiosApp.get("/child", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getParentChildInfo };
+};
+
+// 로그인한 therapist 정보 GET API
+export const useGetTherapistInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getTherapistInfo = async () => {
+    try {
+      const res = await axiosApp.get("/therapist", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  return { getTherapistInfo };
+};
+
+// 치료사 portfolio POST API
+export const usePostTherapistPortfolio = () => {
+  const [cookie] = useCookies(["token"]);
+  const navigate = useNavigate();
+
+  const postTherapistPortfolio = async (
+    data: gatheredIntroductionDataType,
+    setToastMessage: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const cleanedExperience = data.experience.map(({ startDate, endDate }) => ({
+      startDate: new Date(startDate).toISOString().split("T")[0],
+      endDate: new Date(endDate).toISOString().split("T")[0],
+    }));
+
+    const cleanedEducation = data.education.map(({ education, degree }) => ({
+      education,
+      degree,
+    }));
+
+    const cleanedData = {
+      ...data,
+      // experience: cleanedExperience,
+      education: [
+        {
+          education: "Education 34",
+          degree: "Degree 34",
+        },
+      ],
+      certificate: ["Certificate 23"],
+      imageFile:
+        "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+      symptom: ["장애3", "장애4"],
+      ageRange: ["0-3세", "4-6세"],
+      experience: [
+        {
+          startDate: "2020-01-01",
+          endDate: "2021-01-01",
+        },
+      ],
+    };
+
+    try {
+      await axiosApp.post("/therapist/info", JSON.stringify(cleanedData), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookie.token,
+        },
+      });
+      console.log("자기소개서가 등록되었습니다");
+      // setToastMessage("자기소개서가 등록되었습니다");
+      // navigate("/mypage/t");
+    } catch (err: any) {
+      // setToastMessage(err.response.data.message);
+      console.error(err);
+    }
+  };
+
+  return { postTherapistPortfolio };
 };

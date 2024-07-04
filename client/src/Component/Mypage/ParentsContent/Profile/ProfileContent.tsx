@@ -1,16 +1,35 @@
+import { useState, useEffect } from "react";
+
 import { StyledMain } from "../../TherapistContent/Profile/Profile.style";
 import OutlineButton from "../../../Common/Button/OutlineButton";
 import ChildCard from "../../../Common/Card/ChildCard/ChildCard";
 import ReviewList from "../../../Common/Review/ReviewList";
 
+import { useGetParentInfo } from "../../../../Services/ApiHooks";
 import ImgProfile from "../../../../Assets/Image/ImgProfile.svg";
-import userData from "../../../../MockData/userData.json";
 
 function ProfileContent() {
-  const userId = 1;
-  const userProfileById = userData.find((data) => data.id === userId);
-  const { firstName, lastName, address, addressDetail, phoneNum } =
-    userProfileById as ProfileType;
+  const [userInfo, setUserInfo] = useState<ProfileType>({} as ProfileType);
+  const [childLength, setChildLength] = useState<number>(0);
+  const [reviewLength, setReviewLength] = useState<number>(0);
+
+  const { getParentInfo } = useGetParentInfo();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      return setUserInfo(await getParentInfo());
+    };
+    fetchUserData();
+  }, []);
+
+  const getCardLength = (category: string, length: number) => {
+    if (category === "child") {
+      setChildLength(length);
+    } else {
+      setReviewLength(length);
+    }
+  };
+
   return (
     <section>
       <StyledMain>
@@ -23,8 +42,8 @@ function ProfileContent() {
                 <div>
                   <h4>
                     <span>
-                      {firstName}
-                      {lastName}
+                      {userInfo.lastName}
+                      {userInfo.firstName}
                     </span>
                     부모님
                   </h4>
@@ -33,24 +52,24 @@ function ProfileContent() {
               <OutlineButton variant="m_outline" text="프로필 수정" />
             </div>
             <ul>
-              <li>{phoneNum}</li>
+              <li>{userInfo.phoneNum}</li>
               <li>
-                {address}
-                {addressDetail}
+                {userInfo.address}
+                {userInfo.addressDetail}
               </li>
             </ul>
             <div>
               <div>
                 <h4>
-                  아이<span>length</span>
+                  아이<span>{childLength}</span>
                 </h4>
-                <ChildCard />
+                <ChildCard getCardLength={getCardLength} />
               </div>
               <div>
                 <h4>
-                  내가 쓴 리뷰<span>length</span>
+                  내가 쓴 리뷰<span>{reviewLength}</span>
                 </h4>
-                <ReviewList />
+                <ReviewList userInfo={userInfo} getCardLength={getCardLength} />
               </div>
             </div>
           </div>
@@ -66,7 +85,7 @@ type ProfileType = {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNum: string;
   address: string;
   addressDetail: string;
+  phoneNum: string;
 };
