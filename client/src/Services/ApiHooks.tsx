@@ -188,24 +188,8 @@ export const usePostTherapistPortfolio = () => {
 
     const cleanedData = {
       ...data,
-      // experience: cleanedExperience,
-      education: [
-        {
-          education: "Education 34",
-          degree: "Degree 34",
-        },
-      ],
-      certificate: ["Certificate 23"],
-      imageFile:
-        "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
-      symptom: ["장애3", "장애4"],
-      ageRange: ["0-3세", "4-6세"],
-      experience: [
-        {
-          startDate: "2020-01-01",
-          endDate: "2021-01-01",
-        },
-      ],
+      experience: cleanedExperience,
+      education: cleanedEducation,
     };
 
     try {
@@ -215,12 +199,10 @@ export const usePostTherapistPortfolio = () => {
           Authorization: cookie.token,
         },
       });
-      console.log("자기소개서가 등록되었습니다");
-      // setToastMessage("자기소개서가 등록되었습니다");
-      // navigate("/mypage/t");
+      setToastMessage("자기소개서가 등록되었습니다");
+      navigate("/mypage/t");
     } catch (err: any) {
-      // setToastMessage(err.response.data.message);
-      console.error(err);
+      setToastMessage(err.response.data.message);
     }
   };
 
