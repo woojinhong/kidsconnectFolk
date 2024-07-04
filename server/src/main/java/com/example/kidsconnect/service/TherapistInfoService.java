@@ -178,7 +178,7 @@ public class TherapistInfoService {
 
 
     private void verifyTherapistOwnership(TherapistInfo therapistInfo, UserPrinciple userDetails) {
-        if (!therapistInfo.getTherapist().getId().equals(userDetails.getId())) {
+        if (therapistInfo.getTherapist() == null || !therapistInfo.getTherapist().getId().equals(userDetails.getId())) {
             throw new CustomException(CustomCode.NOT_VALID_OWNER);
         }
     }

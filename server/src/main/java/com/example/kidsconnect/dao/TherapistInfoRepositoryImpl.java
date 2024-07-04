@@ -12,6 +12,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.JPAExpressions;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -21,6 +22,7 @@ import com.querydsl.core.Tuple;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCustom {
 
         private final JPAQueryFactory queryFactory;
@@ -302,15 +304,12 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                 qTherapistInfo.totalExperience,
                                 qTherapist.freelancer, // 추가된 필드
                                 qCenter.name,
-                                qSymptom.name,
                                 qTherapistReview.rating.avg().coalesce(0.0).as("averageRating")
                         )
                         .from(qTherapistInfo)
                         .join(qTherapistInfo.therapist, qTherapist)
                         .leftJoin(qTherapist.enrol, qEnrol)
                         .leftJoin(qEnrol.center, qCenter)
-                        .leftJoin(qTherapistInfo.therapistInfoSymptom, qTherapistInfoSymptom)
-                        .leftJoin(qTherapistInfoSymptom.symptom, qSymptom)
                         .leftJoin(qTherapistInfo.therapistReview, qTherapistReview)
                         .groupBy(
                                 qTherapistInfo.id,
@@ -319,13 +318,18 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                 qTherapistInfo.imageFile,
                                 qTherapistInfo.totalExperience,
                                 qTherapist.freelancer, // 추가된 필드
-                                qCenter.name,
-                                qSymptom.name
+                                qCenter.name
                         )
                         .orderBy(qTherapistReview.rating.avg().desc(), qTherapistInfo.inDate.desc())
                         .limit(4);
 
                 List<Tuple> results = query.fetch();
+
+                // 쿼리 실행 결과 로그 출력
+                log.info("Query result size: {}", results.size());
+                for (Tuple result : results) {
+                        log.info(result.toString());
+                }
 
                 Map<Long, TopTherapistResponseDto> resultMap = new HashMap<>();
 
@@ -337,7 +341,6 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         String totalExperience = row.get(qTherapistInfo.totalExperience);
                         Boolean freelancer = row.get(qTherapist.freelancer);
                         String centerName = freelancer != null && freelancer ? "프리랜서" : row.get(qCenter.name);
-                        String symptomName = row.get(qSymptom.name);
                         Double avgRating = row.get(qTherapistReview.rating.avg());
 
                         TopTherapistResponseDto dto = resultMap.get(therapistInfoId);
@@ -349,15 +352,32 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                         .totalExperience(totalExperience)
                                         .centerName(centerName)
                                         .symptoms(new ArrayList<>())
-                                        .avgRating(avgRating != null ? avgRating : 0.0) // Handle null avgRating
+                                        .avgRating(avgRating) // Handle null avgRating
                                         .build();
                                 resultMap.put(therapistInfoId, dto);
-                        }
-                        if (symptomName != null && !dto.getSymptoms().contains(symptomName)) {
-                                dto.getSymptoms().add(symptomName);
+                        } else {
+                                dto.setAvgRating(avgRating != null ? avgRating : 0.0); // Ensure avgRating is set correctly
                         }
                 }
 
+                // 증상 목록을 별도로 가져와서 그룹화
+                List<Tuple> symptomResults = queryFactory
+                        .select(qTherapistInfo.id, qSymptom.name)
+                        .from(qTherapistInfo)
+                        .leftJoin(qTherapistInfo.therapistInfoSymptom, qTherapistInfoSymptom)
+                        .leftJoin(qTherapistInfoSymptom.symptom, qSymptom)
+                        .where(qTherapistInfo.id.in(resultMap.keySet()))
+                        .fetch();
+
+                for (Tuple symptomRow : symptomResults) {
+                        Long therapistInfoId = symptomRow.get(qTherapistInfo.id);
+                        String symptomName = symptomRow.get(qSymptom.name);
+
+                        TopTherapistResponseDto dto = resultMap.get(therapistInfoId);
+                        if (dto != null && symptomName != null && !dto.getSymptoms().contains(symptomName)) {
+                                dto.getSymptoms().add(symptomName);
+                        }
+                }
                 return new ArrayList<>(resultMap.values());
         }
 }
