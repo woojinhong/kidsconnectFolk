@@ -24,4 +24,5 @@ public class TherapistExperience {
     private int months; // 경력 개월수
 
 
+
 }

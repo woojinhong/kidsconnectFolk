@@ -40,6 +40,7 @@ public class TherapistInfo {
     @Column(name = "age_range")
     private List<String> ageRange =new ArrayList<>();
     @Lob
+    @Column(name = "image_file", columnDefinition = "BLOB")
     private byte[] imageFile;
     private int viewCnt;
 

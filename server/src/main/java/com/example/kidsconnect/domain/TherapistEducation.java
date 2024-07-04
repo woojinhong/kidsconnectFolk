@@ -21,7 +21,7 @@ public class TherapistEducation {
     private String major;
     private String degree;
 
-    private String status;
+    private Boolean status;
 
 
 }
