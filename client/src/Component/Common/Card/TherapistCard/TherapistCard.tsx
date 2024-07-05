@@ -123,6 +123,7 @@ function TherapistCard({ variants, therapistId }: TherapistCardProps) {
             onClose={closeModal}
             isOpen={isModalOpen}
             onOpen={openModal}
+            therapistId={therapistId}
           />
         </StyledButtonWrapper>
       ) : null}

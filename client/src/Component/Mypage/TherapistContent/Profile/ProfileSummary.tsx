@@ -19,7 +19,7 @@ function ProfileSummary({
 }: {
   therapistInfo: ProfileType;
   button?: boolean;
-  getData?: (url: string) => void;
+  getData?: (file: File) => void;
 }) {
   const {
     firstName,
@@ -35,7 +35,7 @@ function ProfileSummary({
   const getUploadedProfileImg = (file: File | File[] | null) => {
     if (file && Array.isArray(file)) {
       setUploadedImgUrl(file[0]);
-      getData && getData(URL.createObjectURL(file[0]));
+      getData && getData(file[0]);
     }
   };
 

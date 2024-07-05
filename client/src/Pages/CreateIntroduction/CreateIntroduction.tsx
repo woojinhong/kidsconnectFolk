@@ -121,11 +121,16 @@ function CreateIntroduction() {
     }
   };
 
-  const getUploadedProfileImg = (url: string) => {
-    setGatheredIntroductionData((prev) => ({
-      ...prev,
-      imageFile: url,
-    }));
+  const getUploadedProfileImg = (file: File) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const readerResult = reader.result as string;
+      setGatheredIntroductionData((prev) => ({
+        ...prev,
+        imageFile: readerResult.replace("data:image/png;base64,", ""),
+      }));
+    };
   };
 
   useEffect(() => {
