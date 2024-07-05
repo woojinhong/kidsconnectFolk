@@ -5,8 +5,8 @@ import MatchingContent from "../../Component/Mypage/TherapistContent/Matching/Ma
 import ProfileContent from "../../Component/Mypage/TherapistContent/Profile/ProfileContent";
 import ReviewContent from "../../Component/Mypage/TherapistContent/Review/ReviewContent";
 
-import { StyledMypageLayout } from "../../Assets/StyledData/PageLayout.style";
 import { clickButtonEvent } from "../../Assets/CommonType/EventType";
+import { StyledMypageLayout } from "./Mypage.style";
 
 function MypageTherapist() {
   const [clickedNavMenu, setClickedNavMenu] = useState<string>(

@@ -12,6 +12,15 @@ import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import externalRecommendSites from "../../Assets/TextData/externalRecommendSites";
 import SubBannerImg from "../../Assets/Image/Banner/subBannerImg.png";
 
+import {
+  IndexContainer,
+  MainBannerContainer,
+  CategoryContainer,
+  RecommendSitesContainer,
+  StyledTopTherapistContainer,
+  StyledSubBanner,
+} from "./Index.style";
+
 function Index() {
   const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
     []
@@ -28,17 +37,18 @@ function Index() {
 
   return (
     <>
-      <main>
+      <IndexContainer>
         <section style={{ backgroundColor: "#f2f2f2" }}>
-          <div>
+          <MainBannerContainer>
             <div>
               <h2>
-                <strong>우리 아이,</strong> 도울 수 있는 <strong>선생님</strong>
-                을 찾아 드려요
+                <span>우리 아이,</span> 도울 수 있는
+                <br />
+                <span>선생님</span>을 찾아 드려요
               </h2>
-              <span>아래 필요한 도움을 선택하시고 찾아 보세요!</span>
+              <strong>아래 필요한 도움을 선택하시고 찾아 보세요!</strong>
             </div>
-            <div>
+            <CategoryContainer>
               {treatmentAreaText.map((category) => (
                 <Category
                   key={category.text}
@@ -51,15 +61,17 @@ function Index() {
                   onClick={getSelectedTreatmentArea}
                 />
               ))}
+            </CategoryContainer>
+            <div>
+              <Modal
+                buttonText="선생님 찾아보기"
+                content={"therapistPreference"}
+                buttonIcon="search"
+              />
             </div>
-            <Modal
-              buttonText="선생님 찾아보기"
-              content={"therapistPreference"}
-              buttonIcon="search"
-            />
-          </div>
+          </MainBannerContainer>
         </section>
-        <section>
+        <RecommendSitesContainer>
           <h3>💡 우리 아이에게 필요한 도움 찾기</h3>
           <ul>
             {externalRecommendSites.map((site, index) => (
@@ -73,8 +85,8 @@ function Index() {
               </li>
             ))}
           </ul>
-        </section>
-        <section>
+        </RecommendSitesContainer>
+        <StyledTopTherapistContainer>
           <h3>🏆 이 달의 인기 선생님</h3>
           <div>
             {therapistIdThisMonth.map((therapistId) => (
@@ -85,8 +97,8 @@ function Index() {
               />
             ))}
           </div>
-        </section>
-        <section>
+        </StyledTopTherapistContainer>
+        <StyledSubBanner>
           <div>
             <div>
               <h4>키즈커넥트, 왜 만들어졌나요?</h4>
@@ -94,8 +106,8 @@ function Index() {
             </div>
             <img src={SubBannerImg} />
           </div>
-        </section>
-      </main>
+        </StyledSubBanner>
+      </IndexContainer>
     </>
   );
 }

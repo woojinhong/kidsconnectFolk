@@ -7,6 +7,7 @@ const { primaryColor, black, white, gray1, gray2, lightGray1, lightGray2 } =
 export const StyledCardContainer = styled.li`
   display: flex;
   flex-direction: row;
+  gap: 24px;
   justify-content: space-between;
   align-items: center;
   padding: 24px 0 24px;

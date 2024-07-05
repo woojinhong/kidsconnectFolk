@@ -30,6 +30,10 @@ body {
   background-color: #ffffff;
 }
 
+body.bg-gray {
+  background-color: #c1c1c1;
+}
+
 /* 기본 여백을 제거하여 작성된 CSS를 제어. */
 body,
 h1,

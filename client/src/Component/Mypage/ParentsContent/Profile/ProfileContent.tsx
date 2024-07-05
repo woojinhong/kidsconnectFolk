@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 
-import { StyledMain } from "../../TherapistContent/Profile/Profile.style";
 import OutlineButton from "../../../Common/Button/OutlineButton";
 import ChildCard from "../../../Common/Card/ChildCard/ChildCard";
 import ReviewList from "../../../Common/Review/ReviewList";
 
 import { useGetParentInfo } from "../../../../Services/ApiHooks";
 import ImgProfile from "../../../../Assets/Image/ImgProfile.svg";
+import {
+  StyledMain,
+  StyledProfileContainer,
+  StyledAdressContainer,
+  StyledContentContainer,
+} from "../../../../Pages/Mypage/Mypage.style";
 
 function ProfileContent() {
   const [userInfo, setUserInfo] = useState<ProfileType>({} as ProfileType);
@@ -33,10 +38,10 @@ function ProfileContent() {
   return (
     <section>
       <StyledMain>
-        <section>
-          <h3>마이페이지</h3>
+        <h3>마이페이지</h3>
+        <div>
           <div>
-            <div>
+            <StyledProfileContainer>
               <div>
                 <img src={ImgProfile} />
                 <div>
@@ -50,16 +55,16 @@ function ProfileContent() {
                 </div>
               </div>
               <OutlineButton variant="m_outline" text="프로필 수정" />
-            </div>
-            <ul>
+            </StyledProfileContainer>
+            <StyledAdressContainer>
               <li>{userInfo.phoneNum}</li>
               <li>
                 {userInfo.address}
                 {userInfo.addressDetail}
               </li>
-            </ul>
-            <div>
-              <div>
+            </StyledAdressContainer>
+            <StyledContentContainer>
+              <div className="childList">
                 <h4>
                   아이<span>{childLength}</span>
                 </h4>
@@ -71,9 +76,9 @@ function ProfileContent() {
                 </h4>
                 <ReviewList userInfo={userInfo} getCardLength={getCardLength} />
               </div>
-            </div>
+            </StyledContentContainer>
           </div>
-        </section>
+        </div>
       </StyledMain>
     </section>
   );

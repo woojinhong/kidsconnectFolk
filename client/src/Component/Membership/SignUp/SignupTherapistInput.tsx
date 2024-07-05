@@ -7,6 +7,14 @@ import InputPassword from "../../Common/Input/InputPassword";
 import InputDatePicker from "../../Common/Input/InputDatePicker";
 import { changeInputEvent } from "../../../Assets/CommonType/EventType";
 
+import {
+  StyledInputContainer,
+  StyledDetailInfoContainer,
+  StyledAddressContainer,
+  StyledNameGenderContainer,
+  StyledCenterContainer,
+} from "../../../Pages/Membership/Membership.style";
+
 function SignupTherapistInput({
   handleChangeReducer,
   handleClickReducer,
@@ -28,10 +36,10 @@ function SignupTherapistInput({
   };
 
   return (
-    <div>
+    <StyledInputContainer>
       <InputText inputType="email" dispatch={handleChangeReducer} />
       <InputPassword dispatch={handleChangeReducer} />
-      <div>
+      <StyledNameGenderContainer>
         <InputText
           label="성"
           dispatch={handleChangeReducer}
@@ -58,10 +66,11 @@ function SignupTherapistInput({
             checked={genderChecked}
             value="남성"
             onChange={handleGenderRadio}
+            styles={{ root: { marginTop: "6px" } }}
           />
         </Radio.Group>
-      </div>
-      <div>
+      </StyledNameGenderContainer>
+      <StyledDetailInfoContainer>
         <InputDatePicker
           label="생년월일"
           placeholder="날짜 선택하기"
@@ -76,9 +85,9 @@ function SignupTherapistInput({
           inputType="phoneNum"
           showWithAsterisk={true}
         />
-      </div>
+      </StyledDetailInfoContainer>
       <div>
-        <div>
+        <StyledAddressContainer>
           <DaumPostCode
             label="주소"
             placeholder="우리집 주소 찾기"
@@ -90,9 +99,9 @@ function SignupTherapistInput({
             dispatch={handleChangeReducer}
             placeholder="상세 주소 입력하기"
           />
-        </div>
+        </StyledAddressContainer>
       </div>
-      <div>
+      <StyledCenterContainer>
         <Checkbox
           label="프리랜서로 일하고 있어요"
           checked={isFreelancer}
@@ -104,8 +113,8 @@ function SignupTherapistInput({
           dispatch={handleClickReducer}
           disabled={isFreelancer ? true : false}
         />
-      </div>
-    </div>
+      </StyledCenterContainer>
+    </StyledInputContainer>
   );
 }
 

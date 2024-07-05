@@ -65,3 +65,13 @@ export const StyledAddChildButton = styled.button`
     transform: rotate(90deg);
   }
 `;
+
+export const StyledModalContentContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  height: 416px;
+  padding: 16px 0 40px;
+  overflow-y: scroll;
+`;

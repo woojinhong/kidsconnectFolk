@@ -13,6 +13,9 @@ import surveyText from "../../../../Assets/TextData/surveyText";
 import { ApplicationTextType } from "./ModalContentType";
 import { GatheredChildDataType } from "./ModalContentType";
 
+import { StyledModalContentContainer } from "../Modal.style";
+
+
 function ApplicationQuestionary({
   therapistId,
   onClose,
@@ -168,7 +171,9 @@ function ApplicationQuestionary({
     [selectParams, toMypage, toHistory]
   );
 
-  return <section>{conversation}</section>;
+  return (
+    <StyledModalContentContainer>{conversation}</StyledModalContentContainer>
+  );
 }
 
 export default ApplicationQuestionary;

@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-import styled from "styled-components";
 import { useDelayChatbox } from "../../../../Services/CustomHooks";
 import ChatboxSystem from "../../Chatbox/ChatboxSystem";
 import ChatboxUser from "../../Chatbox/ChatboxUser";
@@ -13,6 +12,8 @@ import {
 } from "./ModalContentType";
 import { useGetChildAge } from "../../../../Services/CustomHooks";
 import { usePostChild } from "../../../../Services/ApiHooks";
+
+import { StyledModalContentContainer } from "../Modal.style";
 
 function AddChildSurvey({
   onClose,
@@ -254,12 +255,9 @@ function AddChildSurvey({
     onClose && onClose();
   }, []);
 
-  return <SurveyStyled>{conversation}</SurveyStyled>;
+  return (
+    <StyledModalContentContainer>{conversation}</StyledModalContentContainer>
+  );
 }
 
 export default AddChildSurvey;
-
-const SurveyStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-`;

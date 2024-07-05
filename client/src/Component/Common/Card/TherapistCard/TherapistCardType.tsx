@@ -1,5 +1,6 @@
 import { StyledButtonWrapper } from "./TherapistCard.style";
 import FilledButton from "../../Button/FilledButton";
+import OutlineButton from "../../Button/OutlineButton";
 
 export type TherapistCardProps = {
   variants: "default" | "applied" | "summary";
@@ -43,13 +44,13 @@ export function showAppliedButtonByMatchingStatus(
   } else if (isMatched && !hasReviewed) {
     return (
       <StyledButtonWrapper>
-        <FilledButton text="리뷰 쓰기" />
+        <OutlineButton text="리뷰 쓰기" />
       </StyledButtonWrapper>
     );
   } else {
     return (
       <StyledButtonWrapper>
-        <FilledButton text="리뷰 쓰기" disabled={["disabledDark"]} />
+        <OutlineButton text="리뷰 쓰기" disabled={true} />
       </StyledButtonWrapper>
     );
   }

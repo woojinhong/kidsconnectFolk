@@ -4,6 +4,7 @@ export const StyledNavigation = styled.aside`
   display: flex;
   flex-direction: column;
   width: 270px;
+  height: fit-content;
   padding: 56px 56px 140px;
   gap: 24px;
   border-radius: 24px;

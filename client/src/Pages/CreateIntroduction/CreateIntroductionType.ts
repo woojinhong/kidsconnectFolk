@@ -2,7 +2,6 @@ export type careerType = {
   centerName: string;
   startDate: number;
   endDate: number;
-  isWorking: boolean;
 };
 
 export type educationType = {
