@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -37,6 +38,15 @@ public class TherapistService {
 
     private final TherapistMapper therapistMapper;
     private final EnrolService enrolService;
+
+    @Transactional(readOnly = true)
+    public List<Long> getAllTherapistIds() {
+        List<Therapist> therapists = (List<Therapist>) therapistRepository.findAll();
+        return therapists.stream()
+                .map(Therapist::getId)
+                .collect(Collectors.toList());
+    }
+
 
     public TherapistResponseDto showTherapist(UserPrinciple userDetails) {
         Therapist therapist = findById(userDetails.getId());

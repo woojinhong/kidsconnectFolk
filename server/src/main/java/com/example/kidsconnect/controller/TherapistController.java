@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/therapist")
 public class TherapistController {
@@ -16,6 +18,11 @@ public class TherapistController {
     TherapistService therapistService;
 
 
+    @GetMapping("/showAll")
+    public ResponseEntity<List<Long>> getAllTherapistIds() {
+        List<Long> therapistIds = therapistService.getAllTherapistIds();
+        return ResponseEntity.ok(therapistIds);
+    }
     @GetMapping()
     public TherapistResponseDto showTherapist (@AuthenticationPrincipal UserPrinciple userDetails) {
         return therapistService.showTherapist(userDetails);
