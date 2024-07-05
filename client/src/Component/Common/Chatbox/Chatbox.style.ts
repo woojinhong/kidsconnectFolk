@@ -37,6 +37,7 @@ export const StyledButtonWrapper = styled.div`
 `;
 
 export const StyledChatboxUserBox = styled(StyledChatboxSystemBox)`
+  align-self: end;
   background-color: #333333;
   border-radius: 16px 16px 0 16px;
   & span {

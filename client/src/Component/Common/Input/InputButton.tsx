@@ -50,27 +50,29 @@ export default InputButton;
 const changeApiIconDueToProps = (iconType: string): JSX.Element => {
   const apiIconDueToIconType = iconType === "search" ? SearchIcon : UploadIcon;
   return (
-    <div
-      style={{
-        width: "32px",
-        height: "32px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        cursor: "pointer",
-        backgroundColor: "#FFB274",
-        borderRadius: "50%",
-      }}
-    >
-      <img
-        src={apiIconDueToIconType}
-        alt={"주소 찾기"}
+    <div style={{ paddingRight: "16px" }}>
+      <div
         style={{
+          width: "32px",
+          height: "32px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           cursor: "pointer",
-          width: "16px",
-          height: "16px",
+          backgroundColor: "#FFB274",
+          borderRadius: "50%",
         }}
-      />
+      >
+        <img
+          src={apiIconDueToIconType}
+          alt={"주소 찾기"}
+          style={{
+            cursor: "pointer",
+            width: "16px",
+            height: "16px",
+          }}
+        />
+      </div>
     </div>
   );
 };

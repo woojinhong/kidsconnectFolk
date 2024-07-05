@@ -10,6 +10,12 @@ import {
 } from "../../../Pages/CreateIntroduction/CreateIntroductionType";
 import { v4 as uuidv4 } from "uuid";
 
+import {
+  StyledCommonContainer,
+  StyledEducationInputContainer,
+  StyledCareerButtonContainer,
+} from "../../../Pages/CreateIntroduction/CreateIntroduction.style";
+
 function AddEducation({
   getData,
 }: {
@@ -24,7 +30,7 @@ function AddEducation({
       ...prev,
       {
         id: uuidv4(),
-        universityName: "",
+        education: "",
         degree: "",
         major: "",
         degreeCompletion: "",
@@ -50,25 +56,26 @@ function AddEducation({
   }, [educationList]);
 
   return (
-    <div>
+    <StyledCommonContainer>
       <div>
         <h4>학력</h4>
         <p>학력 입력 시, 사실을 증명할 수 있는 서류를 첨부해 주세요.</p>
       </div>
       {educationList.map((education, index) => (
-        <div key={education.id}>
+        <StyledEducationInputContainer key={education.id}>
           <SelectBoxDefault
+            width="100%"
             category="degree"
             getData={(inputValue) =>
               updateEducationData(index, { degree: inputValue })
             }
           />
           <InputText
-            inputType="universityName"
+            inputType="education"
             placeholder="학교를 입력해 주세요"
             apiIcon="search"
             dispatch={(e) =>
-              updateEducationData(index, { universityName: e.target.value })
+              updateEducationData(index, { education: e.target.value })
             }
           />
           <InputText
@@ -79,16 +86,24 @@ function AddEducation({
             }
           />
           <SelectBoxDefault
+            width="100%"
             category="degreeCompletion"
             getData={(inputValue) =>
               updateEducationData(index, { degreeCompletion: inputValue })
             }
           />
-        </div>
+        </StyledEducationInputContainer>
       ))}
-      <FilledButton text="+ 학력 추가하기" onClick={addNewEducation} />
-      <InputFile placeholder="학력증명서 추가하기" />
-    </div>
+      <StyledCareerButtonContainer>
+        <FilledButton
+          variant="m_filled"
+          height="40px"
+          text="+ 학력 추가하기"
+          onClick={addNewEducation}
+        />
+        <InputFile size="sm" height="40px" placeholder="학력증명서 추가하기" />
+      </StyledCareerButtonContainer>
+    </StyledCommonContainer>
   );
 }
 
@@ -97,7 +112,7 @@ export default AddEducation;
 const initialEducationState: educationType = {
   id: uuidv4(),
   degree: "",
-  universityName: "",
+  education: "",
   major: "",
   degreeCompletion: "",
 };

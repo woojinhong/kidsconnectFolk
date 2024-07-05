@@ -4,6 +4,12 @@ import InputDatePicker from "../../Common/Input/InputDatePicker";
 import DaumPostCode from "./DaumPostModal/DaumPostCode";
 
 import { changeInputEvent } from "../../../Assets/CommonType/EventType";
+import {
+  StyledInputContainer,
+  StyledNameInputContainer,
+  StyledDetailInfoContainer,
+  StyledAddressContainer,
+} from "../../../Pages/Membership/Membership.style";
 
 function SignupParentsInput({
   handleChangeReducer,
@@ -12,10 +18,10 @@ function SignupParentsInput({
   handleInputChangeReducer,
 }: SignupParentsInput) {
   return (
-    <div>
+    <StyledInputContainer>
       <InputText inputType="email" dispatch={handleChangeReducer} />
       <InputPassword dispatch={handleChangeReducer} />
-      <div>
+      <StyledNameInputContainer>
         <InputText
           label="성"
           dispatch={handleChangeReducer}
@@ -28,8 +34,8 @@ function SignupParentsInput({
           placeholder="이름 First Name"
           showWithAsterisk={true}
         />
-      </div>
-      <div>
+      </StyledNameInputContainer>
+      <StyledDetailInfoContainer>
         <InputDatePicker
           label="생년월일"
           placeholder="날짜 선택하기"
@@ -44,19 +50,21 @@ function SignupParentsInput({
           inputType="phoneNum"
           showWithAsterisk={true}
         />
-      </div>
-      <DaumPostCode
-        label="주소"
-        placeholder="우리집 주소 찾기"
-        dispatch={handleClickReducer}
-        dispatchPostalCode={handleInputChangeReducer}
-      />
-      <InputText
-        inputType="detailAddress"
-        dispatch={handleChangeReducer}
-        placeholder="상세 주소 입력하기"
-      />
-    </div>
+      </StyledDetailInfoContainer>
+      <StyledAddressContainer>
+        <DaumPostCode
+          label="주소"
+          placeholder="우리집 주소 찾기"
+          dispatch={handleClickReducer}
+          dispatchPostalCode={handleInputChangeReducer}
+        />
+        <InputText
+          inputType="detailAddress"
+          dispatch={handleChangeReducer}
+          placeholder="상세 주소 입력하기"
+        />
+      </StyledAddressContainer>
+    </StyledInputContainer>
   );
 }
 

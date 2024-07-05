@@ -1,7 +1,7 @@
 import { Card, Group, Text } from "@mantine/core";
 import styled from "styled-components";
 
-export const StyledCardContainer = styled.div`
+export const StyledCardContainer = styled.ul`
   display: flex;
   flex-direction: row;
   gap: 16px;

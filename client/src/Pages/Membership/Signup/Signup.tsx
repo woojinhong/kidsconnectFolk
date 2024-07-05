@@ -19,6 +19,14 @@ import {
 import { changeInputEvent } from "../../../Assets/CommonType/EventType";
 import { usePostSignup } from "../../../Services/ApiHooks";
 
+import {
+  StyledMainContainer,
+  StyledHeadContainer,
+  StyledSectionContainer,
+  StyledUserTypeContainer,
+  StyledFormContainer,
+} from "../Membership.style";
+
 function Signup() {
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState<ToastMessageTypes>(
@@ -84,21 +92,23 @@ function Signup() {
   };
 
   return (
-    <div>
+    <StyledMainContainer>
       {toastMessage.type === "success" && (
         <Toast variant={toastMessage.type} title={toastMessage.message} />
       )}
-      <div>
+      <StyledHeadContainer>
         <h2>📝 회원가입</h2>
         <span>
           이미 가입한 회원이신가요? <Link to="/login">로그인 하기</Link>
         </span>
-      </div>
-      <section>
+      </StyledHeadContainer>
+      <StyledSectionContainer>
         <div>
-          <h3>회원 유형</h3>
-          <span>회원가입 유형을 선택 후 가입해 주세요</span>
-          <form onSubmit={handleFormSubmit}>
+          <StyledUserTypeContainer>
+            <h3>회원 유형</h3>
+            <span>회원가입 유형을 선택 후 가입해 주세요</span>
+          </StyledUserTypeContainer>
+          <StyledFormContainer onSubmit={handleFormSubmit}>
             <UserTypeCheckbox onClick={setSelectedUserType} />
             {selectedUserType === "parents" ? (
               <SignupParentsInput
@@ -124,10 +134,10 @@ function Signup() {
             {toastMessage.type === "failed" && (
               <span>{toastMessage.message}</span>
             )}
-          </form>
+          </StyledFormContainer>
         </div>
-      </section>
-    </div>
+      </StyledSectionContainer>
+    </StyledMainContainer>
   );
 }
 

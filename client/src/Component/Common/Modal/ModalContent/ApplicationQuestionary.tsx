@@ -5,41 +5,74 @@ import { useDelayChatbox } from "../../../../Services/CustomHooks";
 import ChatboxSystem from "../../Chatbox/ChatboxSystem";
 import ChatboxUser from "../../Chatbox/ChatboxUser";
 
+import {
+  useGetChildInfo,
+  usePostMatchingSurvey,
+} from "../../../../Services/ApiHooks";
 import surveyText from "../../../../Assets/TextData/surveyText";
 import { ApplicationTextType } from "./ModalContentType";
+import { GatheredChildDataType } from "./ModalContentType";
 
-function ApplicationQuestionary({ onClose }: { onClose?: () => void }) {
+import { StyledModalContentContainer } from "../Modal.style";
+
+
+function ApplicationQuestionary({
+  therapistId,
+  onClose,
+}: {
+  therapistId: number | undefined;
+  onClose?: () => void;
+}) {
   const textData: object | undefined = surveyText.find(
     (data) => data.type === "application"
   );
 
-  const {
-    messages,
-    selectChild,
-    selectLocation,
-    selectParams,
-    toMypage,
-    toHistory,
-  } = textData as ApplicationTextType;
+  const { messages, selectLocation, selectParams, toMypage, toHistory } =
+    textData as ApplicationTextType;
 
-  const [appliedOptionData, setAppliedOptionData] = useState<object>({});
+  const [appliedOptionData, setAppliedOptionData] =
+    useState<AppliedOptionDataType>({} as AppliedOptionDataType);
   const [conversation, setConversation] = useState<JSX.Element[]>([]);
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [childData, setChildData] = useState<GatheredChildDataType[]>(
+    [] as GatheredChildDataType[]
+  );
+
+  const selectChildList = ["+ 아이 등록하기"];
   const navigate = useNavigate();
+  const { getChildInfo } = useGetChildInfo();
+  const { postMatchingSurvey } = usePostMatchingSurvey();
 
   useEffect(() => {
+    const getChildData = async () => {
+      const data = await getChildInfo();
+      setChildData(data);
+    };
+    getChildData();
+    setAppliedOptionData((prev) => ({
+      ...prev,
+      therapistId: 4,
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (childData.length > 0) {
+      selectChildList.unshift(
+        ...childData.map((child) => `${child.firstName}${child.lastName}`)
+      );
+    }
     const initialConversation = [
       <ChatboxSystem
         key="childSelect"
         messages={messages.childSelect}
-        button={selectChild}
+        button={selectChildList}
         highlightWords="어떤 아이가 도움"
         onClick={getChildSelectAnswer}
       />,
     ];
     setConversation(initialConversation);
     setCurrentStep(1);
-  }, [messages.childSelect]);
+  }, [messages.childSelect, childData]);
 
   useEffect(() => {
     const addConversationStep = async () => {
@@ -56,6 +89,7 @@ function ApplicationQuestionary({ onClose }: { onClose?: () => void }) {
           />,
         ]);
       } else if (currentStep === 3) {
+        await postMatchingSurvey(appliedOptionData);
         await useDelayChatbox(1000);
         setConversation((prev) => [
           ...prev,
@@ -85,7 +119,10 @@ function ApplicationQuestionary({ onClose }: { onClose?: () => void }) {
       if (answer === "+ 아이 등록하기") {
         navigate("/mypage/p");
       } else {
-        setAppliedOptionData({ childId: answer });
+        setAppliedOptionData((prev) => ({
+          ...prev,
+          childId: 5,
+        }));
         setConversation((prev) => [
           ...prev,
           <ChatboxUser
@@ -104,7 +141,10 @@ function ApplicationQuestionary({ onClose }: { onClose?: () => void }) {
     (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       const answer = event.currentTarget.textContent as string;
-      setAppliedOptionData({ location: answer });
+      setAppliedOptionData((prev) => ({
+        ...prev,
+        location: switchLocationAnswerToEnglish(answer),
+      }));
       setConversation((prev) => [
         ...prev,
         <ChatboxUser
@@ -131,7 +171,26 @@ function ApplicationQuestionary({ onClose }: { onClose?: () => void }) {
     [selectParams, toMypage, toHistory]
   );
 
-  return <section>{conversation}</section>;
+  return (
+    <StyledModalContentContainer>{conversation}</StyledModalContentContainer>
+  );
 }
 
 export default ApplicationQuestionary;
+
+export type AppliedOptionDataType = {
+  childId: number;
+  therapistId: number;
+  location: "therapist" | "home" | null;
+};
+
+const switchLocationAnswerToEnglish = (answer: string) => {
+  switch (answer) {
+    case "집에서 받고 싶어요!":
+      return "home";
+    case "선생님이 근무하는 곳으로 갈게요!":
+      return "therapist";
+    default:
+      return null;
+  }
+};

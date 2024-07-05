@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { axiosApp } from "./axiosApp";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
 
+import { gatheredIntroductionDataType } from "../Pages/CreateIntroduction/CreateIntroductionType";
 import { GatheredChildDataType } from "../Component/Common/Modal/ModalContent/ModalContentType";
 import {
   ParentStateType,
@@ -11,6 +13,7 @@ import {
 } from "../Pages/Membership/Signup/SignupType";
 import { useDelayChatbox } from "./CustomHooks";
 import { loginStatusActions } from "../Store/Slices/LoginStatus";
+import { AppliedOptionDataType } from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
 
 // 회원가입 POST API
 export const usePostSignup = async (
@@ -124,4 +127,130 @@ export const useGetParentInfo = () => {
   };
 
   return { getParentInfo };
+};
+
+// 로그인한 부모님의 아이 정보 GET API
+export const useGetParentChildInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getParentChildInfo = async () => {
+    try {
+      const res = await axiosApp.get("/child", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getParentChildInfo };
+};
+
+// 로그인한 therapist 정보 GET API
+export const useGetTherapistInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getTherapistInfo = async () => {
+    try {
+      const res = await axiosApp.get("/therapist", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  return { getTherapistInfo };
+};
+
+// 치료사 portfolio POST API
+export const usePostTherapistPortfolio = () => {
+  const [cookie] = useCookies(["token"]);
+  const navigate = useNavigate();
+
+  const postTherapistPortfolio = async (
+    data: gatheredIntroductionDataType,
+    setToastMessage: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const cleanedExperience = data.experience.map(({ startDate, endDate }) => ({
+      startDate: new Date(startDate).toISOString().split("T")[0],
+      endDate: new Date(endDate).toISOString().split("T")[0],
+    }));
+
+    const cleanedEducation = data.education.map(({ education, degree }) => ({
+      education,
+      degree,
+    }));
+
+    const cleanedData = {
+      ...data,
+      experience: cleanedExperience,
+      education: cleanedEducation,
+    };
+
+    try {
+      await axiosApp.post("/therapist/info", JSON.stringify(cleanedData), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookie.token,
+        },
+      });
+      setToastMessage("자기소개서가 등록되었습니다");
+      navigate("/mypage/t");
+    } catch (err: any) {
+      setToastMessage(err.response.data.message);
+    }
+  };
+
+  return { postTherapistPortfolio };
+};
+
+// 아이 정보 GET API
+export const useGetChildInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getChildInfo = async () => {
+    try {
+      const res = await axiosApp.get("/child", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  return { getChildInfo };
+};
+// 매칭 신청 서베이 POST API
+export const usePostMatchingSurvey = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const postMatchingSurvey = async (data: AppliedOptionDataType) => {
+    const location = {
+      location: data.location,
+    };
+    try {
+      await axiosApp.post(
+        `/reservation/child/${data.childId}/therapist/${data.therapistId}`,
+        JSON.stringify(location),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: cookie.token,
+          },
+        }
+      );
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { postMatchingSurvey };
 };

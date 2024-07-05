@@ -1,40 +1,39 @@
 export type careerType = {
-  id: string;
   centerName: string;
-  year: number;
-  month: number;
-  isWorking: boolean;
+  startDate: number;
+  endDate: number;
 };
 
 export type educationType = {
   id: string;
-  universityName: string;
+  education: string;
   major: string;
   degree: string | null;
   degreeCompletion: string | null;
 };
 
-export type licenseType = {
-  id: string;
-  licenseId: string;
-};
-
 export interface gatheredIntroductionDataType {
   title: string;
-  introduction: string;
+  imageFile: string;
+  bio: string;
   content: string;
-  career: careerType[];
+  experience: careerType[];
   education: educationType[];
-  license: licenseType[];
-  treatmentArea: string[];
-  ageGroup: string[];
-  isUploadedId: boolean;
-  isUploadedCriminalRecord: boolean;
+  certificate: string[];
+  symptom: string[];
+  ageRange: string[];
+  identityCheck: boolean;
+  crimeCheck: boolean;
 }
 
 export type CategoryType =
   | "career"
   | "education"
   | "licenses"
-  | "isUploadedId"
-  | "isUploadedCriminalRecord";
+  | "identityCheck"
+  | "crimeCheck";
+
+// export type licenseType = {
+//   id: string;
+//   licenseId: string;
+// };

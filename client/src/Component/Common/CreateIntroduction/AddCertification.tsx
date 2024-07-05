@@ -1,71 +1,64 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import InputText from "../Input/InputText";
 import FilledButton from "../Button/FilledButton";
 import InputFile from "../Input/InputFile";
-import {
-  CategoryType,
-  licenseType,
-} from "../../../Pages/CreateIntroduction/CreateIntroductionType";
-import { v4 as uuidv4 } from "uuid";
 
+import {
+  StyledCommonContainer,
+  StyledCertificateContainer,
+} from "../../../Pages/CreateIntroduction/CreateIntroduction.style";
 function AddCertification({
   getData,
 }: {
-  getData: (category: CategoryType, data: licenseType[]) => void;
+  getData: (inputValue: string) => void;
 }) {
-  const [certificationList, setCertificationList] = useState<licenseType[]>([
-    intialCertificationState,
-  ]);
+  const [certificationList, setCertificationList] = useState<string[]>([""]);
 
   const addNewCertification = () => {
-    setCertificationList((prev) => [...prev, { id: uuidv4(), licenseId: "" }]);
+    setCertificationList((prev) => [...prev, ""]);
   };
 
-  const updateCertificationData = (
-    index: number,
-    updatedData: Partial<licenseType>
-  ) => {
+  const updateCertificationData = (index: number, updatedData: string) => {
     setCertificationList((prev) => {
       const newList = [...prev];
-      newList[index] = { ...newList[index], ...updatedData };
+      newList[index] = updatedData;
       return newList;
     });
+    getData;
   };
 
-  useEffect(() => {
-    if (certificationList.length > 0) {
-      getData("licenses", certificationList);
-    }
-  }, [certificationList]);
-
   return (
-    <div>
+    <StyledCommonContainer>
       <div>
         <h4>자격증</h4>
         <p>자격증 사진을 첨부하셔야 인증 마크가 달려요.</p>
       </div>
       {certificationList.map((certification, index) => (
-        <div key={certification.id}>
+        <StyledCertificateContainer key={certification}>
           <InputText
             inputType="certification"
             placeholder="자격증 검색"
             apiIcon="search"
-            dispatch={(e) =>
-              updateCertificationData(index, { licenseId: e.target.value })
-            }
+            dispatch={(e) => updateCertificationData(index, e.target.value)}
           />
-          <InputFile placeholder="자격증 추가하기" />
-        </div>
+          <InputFile
+            size="sm"
+            height="56px"
+            placeholder="자격증명서 첨부하기"
+          />
+        </StyledCertificateContainer>
       ))}
-      <FilledButton text="+ 자격증 추가하기" onClick={addNewCertification} />
-    </div>
+      <div style={{ width: "148px" }}>
+        <FilledButton
+          variant="m_filled"
+          height="40px"
+          text="+ 자격증 추가하기"
+          onClick={addNewCertification}
+        />
+      </div>
+    </StyledCommonContainer>
   );
 }
 
 export default AddCertification;
-
-const intialCertificationState: licenseType = {
-  id: uuidv4(),
-  licenseId: "",
-};

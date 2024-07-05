@@ -2,13 +2,17 @@ import { useState, useEffect } from "react";
 import DaumPostCode from "../../Membership/SignUp/DaumPostModal/DaumPostCode";
 import InputNumber from "../Input/InputNumber";
 import InputFile from "../Input/InputFile";
-import { Checkbox } from "@mantine/core";
 import {
   careerType,
   CategoryType,
 } from "../../../Pages/CreateIntroduction/CreateIntroductionType";
 import FilledButton from "../Button/FilledButton";
-import { v4 as uuidv4 } from "uuid";
+
+import {
+  StyledCommonContainer,
+  StyledCareerInputContainer,
+  StyledCareerButtonContainer,
+} from "../../../Pages/CreateIntroduction/CreateIntroduction.style";
 
 function AddCareer({
   getData,
@@ -22,7 +26,7 @@ function AddCareer({
   const addNewCareer = () => {
     setCareerList((prev) => [
       ...prev,
-      { id: uuidv4(), centerName: "", year: 0, month: 0, isWorking: false },
+      { centerName: "", startDate: 0, endDate: 0 },
     ]);
   };
 
@@ -44,13 +48,13 @@ function AddCareer({
   }, [careerList]);
 
   return (
-    <div>
+    <StyledCommonContainer>
       <div>
         <h4>경력</h4>
         <p>경력증명서를 첨부하셔야 인증 마크가 달려요.</p>
       </div>
       {careerList.map((career, index) => (
-        <div key={career.id}>
+        <StyledCareerInputContainer key={career.centerName}>
           <DaumPostCode
             placeholder="센터/병원/기관 검색"
             dispatch={(_, inputValue) =>
@@ -61,7 +65,7 @@ function AddCareer({
             label="year"
             placeholder="n"
             dispatch={(_, inputValue) =>
-              updateCareerData(index, { year: Number(inputValue) })
+              updateCareerData(index, { startDate: Number(inputValue) })
             }
           />
           <span>년</span>
@@ -69,36 +73,29 @@ function AddCareer({
             label="month"
             placeholder="n"
             dispatch={(_, inputValue) =>
-              updateCareerData(index, { month: Number(inputValue) })
+              updateCareerData(index, { endDate: Number(inputValue) })
             }
           />
           <span>개월</span>
-          <Checkbox
-            label="근무 중"
-            radius="100%"
-            onChange={(e) =>
-              updateCareerData(index, { isWorking: e.currentTarget.checked })
-            }
-          />
-        </div>
+        </StyledCareerInputContainer>
       ))}
-      <div>
-        <FilledButton text="+ 경력 추가하기" onClick={addNewCareer} />
-        <InputFile placeholder="경력증명서 첨부하기" />
-      </div>
-      <div>
-        총 <span>n</span>년 <span>n</span>개월
-      </div>
-    </div>
+      <StyledCareerButtonContainer>
+        <FilledButton
+          variant="m_filled"
+          height="40px"
+          text="+ 경력 추가하기"
+          onClick={addNewCareer}
+        />
+        <InputFile size="sm" height="40px" placeholder="경력증명서 첨부하기" />
+      </StyledCareerButtonContainer>
+    </StyledCommonContainer>
   );
 }
 
 export default AddCareer;
 
 const initialCareerState: careerType = {
-  id: uuidv4(),
   centerName: "",
-  year: 0,
-  month: 0,
-  isWorking: false,
+  startDate: 0,
+  endDate: 0,
 };

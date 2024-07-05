@@ -11,6 +11,8 @@ import { matchingSurveyActions } from "../../../../Store/Slices/MatchingSurveySl
 import surveyText from "../../../../Assets/TextData/surveyText";
 import { PreferenceTextType } from "./ModalContentType";
 
+import { StyledModalContentContainer } from "../Modal.style";
+
 function TherapistPreference() {
   const textData: PreferenceTextType | undefined = surveyText.find(
     (data) => data.type === "preference"
@@ -132,7 +134,9 @@ function TherapistPreference() {
     [dispatch]
   );
 
-  return <section>{conversation}</section>;
+  return (
+    <StyledModalContentContainer>{conversation}</StyledModalContentContainer>
+  );
 }
 
 export default TherapistPreference;

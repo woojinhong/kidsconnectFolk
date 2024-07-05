@@ -9,6 +9,14 @@ import { PreferenceSurveyState } from "../../Store/Slices/MatchingSurveySlice";
 import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import { getSelectedTreatmentArea } from "../../Services/CustomHooks";
 
+import {
+  StyledMainContainer,
+  StyledFilterContainer,
+  StyledSymptomContainer,
+  StyledFilterButtonContainer,
+  StyledTherapistCardContainer,
+} from "./FindMatching.style";
+
 interface RootState {
   preferenceData: PreferenceSurveyState;
 }
@@ -39,9 +47,9 @@ function FindMatching() {
   const therapistId: number[] = [1, 2, 3, 4];
 
   return (
-    <main>
-      <section>
-        <div>
+    <StyledMainContainer>
+      <StyledFilterContainer>
+        <StyledSymptomContainer>
           {treatmentAreaText.map((category) => (
             <Category
               key={category.text}
@@ -53,8 +61,8 @@ function FindMatching() {
               setData={setSelectedTreatmentArea}
             />
           ))}
-        </div>
-        <div>
+        </StyledSymptomContainer>
+        <StyledFilterButtonContainer>
           <SelectBoxDefault
             category="userRegion"
             getData={setSelectedRegion}
@@ -81,9 +89,9 @@ function FindMatching() {
             size="sm"
             defaultSelectedValue="최신순"
           />
-        </div>
-      </section>
-      <section>
+        </StyledFilterButtonContainer>
+      </StyledFilterContainer>
+      <StyledTherapistCardContainer>
         <div>
           {therapistId.map((therapistId) => (
             <TherapistCard
@@ -93,8 +101,8 @@ function FindMatching() {
             />
           ))}
         </div>
-      </section>
-    </main>
+      </StyledTherapistCardContainer>
+    </StyledMainContainer>
   );
 }
 

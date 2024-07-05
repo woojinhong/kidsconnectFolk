@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Navigation from "../../Component/Mypage/Navigation/Navigation";
 import MatchingContent from "../../Component/Mypage/TherapistContent/Matching/MatchingContent";
 import ProfileContent from "../../Component/Mypage/TherapistContent/Profile/ProfileContent";
 import ReviewContent from "../../Component/Mypage/TherapistContent/Review/ReviewContent";
 
-import { StyledMypageLayout } from "../../Assets/StyledData/PageLayout.style";
 import { clickButtonEvent } from "../../Assets/CommonType/EventType";
+import { StyledMypageLayout } from "./Mypage.style";
 
 function MypageTherapist() {
   const [clickedNavMenu, setClickedNavMenu] = useState<string>(
@@ -16,13 +16,6 @@ function MypageTherapist() {
   const handleNavMenuClick = (e: clickButtonEvent) => {
     setClickedNavMenu(e.currentTarget.innerText);
   };
-  function rootBackgroundColorChange() {
-    return (document.body.style.backgroundColor = "#f2f2f2");
-  }
-
-  useEffect(() => {
-    rootBackgroundColorChange();
-  }, []);
 
   return (
     <StyledMypageLayout>
