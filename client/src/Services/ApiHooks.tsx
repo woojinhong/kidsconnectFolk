@@ -13,6 +13,7 @@ import {
 } from "../Pages/Membership/Signup/SignupType";
 import { useDelayChatbox } from "./CustomHooks";
 import { loginStatusActions } from "../Store/Slices/LoginStatus";
+import { AppliedOptionDataType } from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
 
 // 회원가입 POST API
 export const usePostSignup = async (
@@ -207,4 +208,49 @@ export const usePostTherapistPortfolio = () => {
   };
 
   return { postTherapistPortfolio };
+};
+
+// 아이 정보 GET API
+export const useGetChildInfo = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getChildInfo = async () => {
+    try {
+      const res = await axiosApp.get("/child", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  return { getChildInfo };
+};
+// 매칭 신청 서베이 POST API
+export const usePostMatchingSurvey = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const postMatchingSurvey = async (data: AppliedOptionDataType) => {
+    const location = {
+      location: data.location,
+    };
+    try {
+      await axiosApp.post(
+        `/reservation/child/${data.childId}/therapist/${data.therapistId}`,
+        JSON.stringify(location),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: cookie.token,
+          },
+        }
+      );
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { postMatchingSurvey };
 };
