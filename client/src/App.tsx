@@ -18,14 +18,14 @@ function App() {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route path="/" element={<Index />} />
-          <Route path="/mypage/t" element={<MypageTherapist />} />
-          <Route path="/mypage/p" element={<MypageParents />} />
           <Route path="/matching" element={<FindMatching />} />
-          <Route path="/create" element={<CreateIntroduction />} />
         </Route>
-        <Route element={<DefaultLayout />}>
+        <Route element={<DefaultLayout bgColor="lightGray" />}>
           <Route path="/login" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/mypage/t" element={<MypageTherapist />} />
+          <Route path="/mypage/p" element={<MypageParents />} />
+          <Route path="/create" element={<CreateIntroduction />} />
           <Route path="/therapist/:id" element={<TherapistIntroduction />} />
         </Route>
       </Routes>

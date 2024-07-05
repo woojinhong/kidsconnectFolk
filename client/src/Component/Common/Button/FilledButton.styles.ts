@@ -9,7 +9,8 @@ export const getButtonStyles = (
   variant: string,
   disabled: boolean,
   hovered: boolean,
-  backgroundColor: string
+  backgroundColor: string,
+  height?: string
 ) => {
   const changeBackgroundColor = () => {
     if (disabled) {
@@ -23,7 +24,7 @@ export const getButtonStyles = (
   return {
     width: "100%",
     padding: variant === "filled" ? "0 16px" : "0 8px",
-    height: variant === "filled" ? "56px" : "32px",
+    height: height ? height : variant === "filled" ? "56px" : "32px",
     fontSize: variant === "filled" ? "16px" : "14px",
     fontWeight: variant === "filled" ? "700" : "500",
     fontColor: disabled ? "#333" : "#fff",

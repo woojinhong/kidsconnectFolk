@@ -28,8 +28,33 @@ function InputDatePicker({
     return label;
   };
   const calendarIcon = (
-    <div style={{ backgroundColor: "#ff7000" }}>
-      <img src={IconCalendar} alt="클릭하여 날짜 선택" />
+    <div
+      style={{
+        paddingRight: "16px",
+      }}
+    >
+      <div
+        style={{
+          width: "32px",
+          height: "32px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          cursor: "pointer",
+          backgroundColor: "#FFB274",
+          borderRadius: "50%",
+        }}
+      >
+        <img
+          src={IconCalendar}
+          alt="클릭하여 날짜 선택"
+          style={{
+            cursor: "pointer",
+            width: "16px",
+            height: "16px",
+          }}
+        />
+      </div>
     </div>
   );
   const handleOnChange = (value: DateValue) => {

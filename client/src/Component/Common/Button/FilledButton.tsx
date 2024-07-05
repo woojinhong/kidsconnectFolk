@@ -17,6 +17,7 @@ interface FilledButtonProps {
   icon?: "send" | "search"; // 필요한 icon 추가하기
   disabled?: boolean;
   submit?: boolean;
+  height?: string;
 }
 
 function FilledButton({
@@ -27,6 +28,7 @@ function FilledButton({
   onClick,
   icon,
   submit = false,
+  height,
 }: FilledButtonProps) {
   const { hovered, ref } = useHover();
 
@@ -46,7 +48,13 @@ function FilledButton({
       <Button
         type={submit ? "submit" : "button"}
         disabled={disabled}
-        style={getButtonStyles(variant, disabled, hovered, backgroundColor)}
+        style={getButtonStyles(
+          variant,
+          disabled,
+          hovered,
+          backgroundColor,
+          height
+        )}
         variant={
           variant === "filled" || variant === "m_filled" ? "filled" : variant
         }

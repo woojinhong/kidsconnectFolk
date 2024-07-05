@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   CommentText,
   Divider,
@@ -11,6 +11,8 @@ import {
   RatingText,
 } from "./ReviewList.styles";
 import starSvg from "../../../Assets/Image/star.svg";
+
+import { StyledEmptyReviewContainer } from "../../../Pages/Mypage/Mypage.style";
 
 const ReviewList = ({
   getCardLength,
@@ -27,9 +29,9 @@ const ReviewList = ({
 
   if (!therapistReviewData.length) {
     return (
-      <div>
+      <StyledEmptyReviewContainer>
         <h4>아직 작성하신 리뷰가 없습니다</h4>
-      </div>
+      </StyledEmptyReviewContainer>
     );
   }
 

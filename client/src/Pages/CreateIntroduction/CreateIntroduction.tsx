@@ -24,6 +24,14 @@ import {
   educationType,
 } from "./CreateIntroductionType";
 
+import {
+  StyledMainContainer,
+  StyledFormContainer,
+  StyledCheckboxContainer,
+  StyledCommonContainer,
+  StyledIdentityCheckContainer,
+} from "./CreateIntroduction.style";
+
 function CreateIntroduction() {
   const [gatheredIntroductionData, setGatheredIntroductionData] = useState(
     {} as gatheredIntroductionDataType
@@ -45,8 +53,6 @@ function CreateIntroduction() {
       [name]: value,
     }));
   };
-
-  console.log(gatheredIntroductionData);
 
   const getObjectDataToArr = (
     category: CategoryType,
@@ -130,9 +136,8 @@ function CreateIntroduction() {
   }, []);
 
   return (
-    <main>
+    <StyledMainContainer>
       <section>
-        <h3>내 프로필</h3>
         <ProfileSummary
           getData={getUploadedProfileImg}
           button={true}
@@ -141,14 +146,7 @@ function CreateIntroduction() {
       </section>
       <section>
         <div>
-          <h3>자기 소개</h3>
-          <ul>
-            <li>삭제</li>
-            <li>수정</li>
-          </ul>
-        </div>
-        <div>
-          <form onSubmit={handleOnSubmit}>
+          <StyledFormContainer onSubmit={handleOnSubmit}>
             <InputTextArea
               label="제목"
               showWithAsterisk={true}
@@ -166,60 +164,76 @@ function CreateIntroduction() {
               maxCharCount={300}
               dispatch={handleTextAreaChange}
             />
-            <div>
+            <StyledCheckboxContainer>
               <h4>
-                도울 수 있는 <span>치료/교육/재활 영역</span>
+                <span>도울 수 있는 </span>치료/교육/재활 영역
               </h4>
               <span>*</span>
-              {treatmentAreaText.map((category) => (
-                <Category
-                  key={category.text}
-                  emoji={category.emoji}
-                  text={category.text}
-                  size="lg"
-                  onClick={getTreatmentData}
-                  setData={setSelectedTreatmentArea}
-                  checkedData={selectedTreatmentArea}
-                />
-              ))}
-            </div>
-            <div>
+              <div>
+                {treatmentAreaText
+                  .slice(1, treatmentAreaText.length)
+                  .map((category) => (
+                    <Category
+                      key={category.text}
+                      emoji={category.emoji}
+                      text={category.text}
+                      size="xl"
+                      onClick={getTreatmentData}
+                      setData={setSelectedTreatmentArea}
+                      checkedData={selectedTreatmentArea}
+                    />
+                  ))}
+              </div>
+            </StyledCheckboxContainer>
+            <StyledCheckboxContainer>
               <h4>
-                도울 수 있는 <span>아이 연령</span>
+                <span>도울 수 있는</span>아이 연령
               </h4>
+              <span>*</span>
               <CheckBoxAgeList
                 checkedData={selectedAgeGroup}
                 setData={setSelectedAgeGroup}
                 onChange={getAgeGroupData}
               />
-            </div>
+            </StyledCheckboxContainer>
             <AddCareer getData={getObjectDataToArr} />
             <AddEducation getData={getObjectDataToArr} />
             <AddCertification getData={getCertificateData} />
             <div>
-              <div>
-                <h4>
-                  본인 확인 서류<span>*</span>
-                </h4>
-                <p>
-                  본인 확인 서류(등본/신분증/가족 관계 증명서 중 택 1)과
-                  범죄여부 사실 확인서를 첨부해 주세요
-                </p>
-              </div>
-              <div>
+              <StyledCommonContainer>
+                <div>
+                  <h4>
+                    본인 확인 서류
+                    <span style={{ color: "#FF2727", marginLeft: "4px" }}>
+                      *
+                    </span>
+                  </h4>
+                  <p>
+                    본인 확인 서류(등본/신분증/가족 관계 증명서 중 택 1)과
+                    범죄여부 사실 확인서를 첨부해 주세요
+                  </p>
+                </div>
+              </StyledCommonContainer>
+              <StyledIdentityCheckContainer>
                 <InputFile
+                  size="sm"
+                  height="56px"
                   inputType="identityCheck"
                   placeholder="본인 확인 서류"
                   icon={true}
                   onChange={handleConfirmBooleanData}
+                  style="normal"
                 />
                 <InputFile
+                  size="sm"
+                  height="56px"
                   inputType="crimeCheck"
                   placeholder="범죄여부 사실 확인서"
                   icon={true}
                   onChange={handleConfirmBooleanData}
+                  style="normal"
                 />
-              </div>
+              </StyledIdentityCheckContainer>
             </div>
             <InputTextArea
               label="상세 소개"
@@ -237,10 +251,10 @@ function CreateIntroduction() {
               )}
             />
             <span>{toastMessage}</span>
-          </form>
+          </StyledFormContainer>
         </div>
       </section>
-    </main>
+    </StyledMainContainer>
   );
 }
 

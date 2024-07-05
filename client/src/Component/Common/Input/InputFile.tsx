@@ -12,6 +12,9 @@ function InputFile({
   icon = false,
   onChange,
   inputType,
+  showValue = false,
+  height,
+  style = "primary",
 }: InputFilePropsType) {
   const [uploadedFile, setUploadedFile] = useState<File | File[] | null>(null);
   const ValueComponent: FileInputProps["valueComponent"] = ({ value }) => {
@@ -22,10 +25,12 @@ function InputFile({
   };
 
   const handleMappingFile = (file: File | File[]) => {
-    if (Array.isArray(file)) {
+    if (Array.isArray(file) && showValue) {
       return file.map((file) => <li key={file.name}>{file.name}</li>);
-    } else {
+    } else if (!Array.isArray(file) && showValue) {
       return <li>{file.name}</li>;
+    } else {
+      return null;
     }
   };
 
@@ -41,6 +46,12 @@ function InputFile({
   return (
     <div>
       <StyledFileInput
+        styles={{
+          input: {
+            border: `1px solid ${changeBorderColor(style)}`,
+            height: height,
+          },
+        }}
         onChange={onChange ? handleFileChanges : undefined}
         accept="image/png, image/jpeg"
         placeholder={placeholder}
@@ -50,26 +61,28 @@ function InputFile({
         valueComponent={ValueComponent}
         rightSection={
           icon ? (
-            <div
-              style={{
-                width: "32px",
-                height: "32px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: "pointer",
-                backgroundColor: "#FFB274",
-                borderRadius: "50%",
-              }}
-            >
-              <img
-                src={UploadIconWt}
+            <div style={{ marginRight: "16px" }}>
+              <div
                 style={{
+                  width: "32px",
+                  height: "32px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                   cursor: "pointer",
-                  width: "16px",
-                  height: "16px",
+                  backgroundColor: "#FFB274",
+                  borderRadius: "50%",
                 }}
-              />
+              >
+                <img
+                  src={UploadIconWt}
+                  style={{
+                    cursor: "pointer",
+                    width: "16px",
+                    height: "16px",
+                  }}
+                />
+              </div>
             </div>
           ) : null
         }
@@ -87,10 +100,12 @@ type InputFilePropsType = {
   size?: "sm" | "lg";
   icon?: boolean;
   onChange?: (file: File | File[], category?: CategoryType) => void;
+  showValue?: boolean;
+  height?: string;
+  style?: "normal" | "primary";
 };
 
 const StyledFileInput = styled(FileInput)`
-  padding: 24px;
   & span {
     color: #ff7000;
   }
@@ -102,3 +117,11 @@ const StyledFileInput = styled(FileInput)`
     border: 1px solid #ff7000;
   }
 `;
+
+const changeBorderColor = (style: "normal" | "primary") => {
+  if (style === "normal") {
+    return "#c1c1c1";
+  } else {
+    return "#ff7000";
+  }
+};

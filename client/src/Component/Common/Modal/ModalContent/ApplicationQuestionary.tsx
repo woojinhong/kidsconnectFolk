@@ -8,6 +8,8 @@ import ChatboxUser from "../../Chatbox/ChatboxUser";
 import surveyText from "../../../../Assets/TextData/surveyText";
 import { ApplicationTextType } from "./ModalContentType";
 
+import { StyledModalContentContainer } from "../Modal.style";
+
 function ApplicationQuestionary({ onClose }: { onClose?: () => void }) {
   const textData: object | undefined = surveyText.find(
     (data) => data.type === "application"
@@ -131,7 +133,9 @@ function ApplicationQuestionary({ onClose }: { onClose?: () => void }) {
     [selectParams, toMypage, toHistory]
   );
 
-  return <section>{conversation}</section>;
+  return (
+    <StyledModalContentContainer>{conversation}</StyledModalContentContainer>
+  );
 }
 
 export default ApplicationQuestionary;

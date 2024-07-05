@@ -5,7 +5,7 @@ import ProfileContent from "../../Component/Mypage/ParentsContent/Profile/Profil
 import MatchingContent from "../../Component/Mypage/ParentsContent/Matching/MatchingContent";
 
 import { clickButtonEvent } from "../../Assets/CommonType/EventType";
-import { StyledMypageLayout } from "../../Assets/StyledData/PageLayout.style";
+import { StyledMypageLayout } from "./Mypage.style";
 
 function MypageParents() {
   const [clickedNavMenu, setClickedNavMenu] = useState<string>(

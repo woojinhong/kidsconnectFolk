@@ -11,6 +11,15 @@ import { changeInputEvent } from "../../../Assets/CommonType/EventType";
 import { ToastMessageTypes } from "../Signup/SignupType";
 import { emailRegex, passwordRegex } from "../Signup/Signup";
 
+import {
+  StyledMainContainer,
+  StyledHeadContainer,
+  StyledSectionContainer,
+  StyledUserTypeContainer,
+  StyledFormContainer,
+  StyledInputContainer,
+} from "../Membership.style";
+
 function Signin() {
   const [selectedUserType, setSelectedUserType] = useState<string>("parents");
   const [postDataValue, setPostDataValue] = useState(initialPostData);
@@ -31,38 +40,40 @@ function Signin() {
   };
 
   return (
-    <div>
+    <StyledMainContainer>
       {toastMessage.type === "success" && (
         <Toast variant={toastMessage.type} title={toastMessage.message} />
       )}
-      <div>
+      <StyledHeadContainer>
         <h2>🔑 로그인</h2>
         <span>
           가입을 안 하셨나요? <Link to="/signup">회원가입 하기</Link>
         </span>
-      </div>
-      <section>
+      </StyledHeadContainer>
+      <StyledSectionContainer>
         <div>
-          <h3>회원 유형</h3>
-          <span>가입했던 회원 유형을 선택 후 로그인해 주세요</span>
-          <form onSubmit={handleFormSubmit}>
+          <StyledUserTypeContainer>
+            <h3>회원 유형</h3>
+            <span>가입했던 회원 유형을 선택 후 로그인해 주세요</span>
+          </StyledUserTypeContainer>
+          <StyledFormContainer onSubmit={handleFormSubmit}>
             <UserTypeCheckbox onClick={setSelectedUserType} />
-            <div>
+            <StyledInputContainer>
               <InputText inputType="email" dispatch={handleChangeReducer} />
               <InputPassword dispatch={handleChangeReducer} />
-              <FilledButton
-                submit={true}
-                text="로그인"
-                disabled={isFormInvalid}
-              />
-              {toastMessage.type === "failed" && (
-                <span>{toastMessage.message}</span>
-              )}
-            </div>
-          </form>
+            </StyledInputContainer>
+            <FilledButton
+              submit={true}
+              text="로그인"
+              disabled={isFormInvalid}
+            />
+            {toastMessage.type === "failed" && (
+              <span>{toastMessage.message}</span>
+            )}
+          </StyledFormContainer>
         </div>
-      </section>
-    </div>
+      </StyledSectionContainer>
+    </StyledMainContainer>
   );
 }
 
