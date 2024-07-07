@@ -23,9 +23,9 @@ public class TherapistController {
         List<Long> therapistIds = therapistService.getAllTherapistIds();
         return ResponseEntity.ok(therapistIds);
     }
-    @GetMapping()
-    public TherapistResponseDto showTherapist (@AuthenticationPrincipal UserPrinciple userDetails) {
-        return therapistService.showTherapist(userDetails);
+    @GetMapping("/{therapistId}")
+    public TherapistResponseDto showTherapist(@PathVariable Long therapistId) {
+        return therapistService.showTherapist(therapistId);
     }
     //치료사 삭제
     @DeleteMapping()

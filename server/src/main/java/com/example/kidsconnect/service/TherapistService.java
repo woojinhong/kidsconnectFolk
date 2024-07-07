@@ -48,8 +48,8 @@ public class TherapistService {
     }
 
 
-    public TherapistResponseDto showTherapist(UserPrinciple userDetails) {
-        Therapist therapist = findById(userDetails.getId());
+    public TherapistResponseDto showTherapist(Long therapistId) {
+        Therapist therapist = findById(therapistId);
 
 
         List<String> centerNames = enrolRepository.findCenterNamesByTherapistId(therapist.getId());

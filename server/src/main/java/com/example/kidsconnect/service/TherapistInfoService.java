@@ -35,6 +35,16 @@ public class TherapistInfoService {
 
 
     @Transactional(readOnly = true)
+    public ResponseEntity<?> showTherapistInfoWithTherapistId(Long therapistId) {
+
+        TherapistInfo therapistInfo = findByTherapistId(therapistId);
+
+
+        TherapistInfoDto therapistInfoDto = therapistInfoMapper.toTherapistInfoDto(therapistInfo);
+
+        return ResponseEntity.ok(therapistInfoDto);
+    }
+    @Transactional(readOnly = true)
     public ResponseEntity<?> showTherapistInfo(UserPrinciple userDetails) {
 
         TherapistInfo therapistInfo = findByTherapistId(userDetails.getId());

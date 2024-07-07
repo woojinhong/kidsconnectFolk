@@ -20,6 +20,10 @@ public class TherapistInfoController {
     public ResponseEntity<?> showTherapistInfo(@AuthenticationPrincipal UserPrinciple userDetails){
         return therapistInfoService.showTherapistInfo(userDetails);
     }
+    @GetMapping("/therapist/{therapistId}")
+    public ResponseEntity<?> showTherapistInfo(@PathVariable Long therapistId){
+        return therapistInfoService.showTherapistInfoWithTherapistId(therapistId);
+    }
     @PostMapping()
     public ResponseEntity<?> createTherapistInfo(@RequestBody TherapistInfoDto therapistInfoDto, @AuthenticationPrincipal UserPrinciple userDetails) {
 
