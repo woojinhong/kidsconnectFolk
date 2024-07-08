@@ -53,6 +53,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                 List<Tuple> results = queryFactory
                         .select(
                                 qTherapistInfo.id,
+                                qTherapist.id,
                                 qTherapist.firstName,
                                 qTherapistInfo.bio,
                                 qTherapistInfo.imageFile,
@@ -73,6 +74,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
 
                 for (Tuple row : results) {
                         Long therapistInfoId = row.get(qTherapistInfo.id);
+                        Long therapistId = row.get(qTherapist.id);
                         String therapistName = row.get(qTherapist.firstName);
                         String bio = row.get(qTherapistInfo.bio);
                         byte[] imageFile = row.get(qTherapistInfo.imageFile);
@@ -83,6 +85,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         MatchResponseDto dto = resultMap.get(therapistInfoId);
                         if (dto == null) {
                                 dto = new MatchResponseDto(
+                                        therapistId,
                                         therapistName,
                                         bio,
                                         imageFile,
@@ -195,6 +198,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                 JPQLQuery<Tuple> query = queryFactory
                         .select(
                                 qTherapistInfo.id,
+                                qTherapist.id,
                                 qTherapist.firstName,
                                 qTherapistInfo.bio,
                                 qTherapistInfo.imageFile,
@@ -220,6 +224,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                 case "rating":
                                         query.groupBy(
                                                         qTherapistInfo.id,
+                                                        qTherapist.id,
                                                         qTherapist.firstName,
                                                         qTherapistInfo.bio,
                                                         qTherapistInfo.imageFile,
@@ -239,6 +244,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
 
                 for (Tuple row : results) {
                         Long therapistInfoId = row.get(qTherapistInfo.id);
+                        Long therapistId = row.get(qTherapist.id);
                         String therapistName = row.get(qTherapist.firstName);
                         String bio = row.get(qTherapistInfo.bio);
                         byte[] imageFile = row.get(qTherapistInfo.imageFile);
@@ -249,6 +255,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         MatchResponseDto dto = resultMap.get(therapistInfoId);
                         if (dto == null) {
                                 dto = MatchResponseDto.builder()
+                                        .therapistId(therapistId)
                                         .therapistName(therapistName)
                                         .bio(bio)
                                         .imageFile(imageFile)

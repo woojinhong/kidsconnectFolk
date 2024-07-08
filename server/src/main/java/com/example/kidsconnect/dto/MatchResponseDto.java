@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class MatchResponseDto {
+    private Long therapistId;
     private String therapistName;
     private String bio;
     private byte[] imageFile;
