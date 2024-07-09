@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "해피키즈 발달센터",
+    "phoneNum": "02-1234-5678",
+    "centerNum": "CD-001",
+    "postalCode": "12345",
+    "addressDetail": "서울특별시 강남구 역삼동 123번지",
+    "address": "강남구",
+    "imageFile": "http://dummyimage.com/214x100.png/cc0000/ffffff",
+    "inDate": "4/1/2022",
+    "upDate": "11/22/2023"
+  },
+  {
+    "id": 2,
+    "name": "스마일키즈 성장센터",
+    "phoneNum": "031-9876-5432",
+    "centerNum": "CD-002",
+    "postalCode": "54321",
+    "addressDetail": "경기도 수원시 장안구 광교동 456번지",
+    "address": "수원시",
+    "imageFile": "http://dummyimage.com/184x100.png/cc0000/ffffff",
+    "inDate": "12/7/2021",
+    "upDate": "7/2/2023"
+  },
+  {
+    "id": 3,
+    "name": "헬로우토이즈 아동발달센터",
+    "phoneNum": "051-1111-2222",
+    "centerNum": "CD-003",
+    "postalCode": "67890",
+    "addressDetail": "부산광역시 해운대구 우동 789번지",
+    "address": "해운대구",
+    "imageFile": "http://dummyimage.com/139x100.png/dddddd/000000",
+    "inDate": "12/22/2023",
+    "upDate": "5/5/2024"
+  },
+  {
+    "id": 4,
+    "name": "러블리키즈 발달클럽",
+    "phoneNum": "042-3333-4444",
+    "centerNum": "CD-004",
+    "postalCode": "98765",
+    "addressDetail": "대전광역시 서구 둔산동 321번지",
+    "address": "서구",
+    "imageFile": "http://dummyimage.com/219x100.png/cc0000/ffffff",
+    "inDate": "6/15/2023",
+    "upDate": "12/21/2023"
+  },
+  {
+    "id": 5,
+    "name": "신나는키즈 성장원",
+    "phoneNum": "032-5555-6666",
+    "centerNum": "CD-005",
+    "postalCode": "13579",
+    "addressDetail": "인천광역시 남동구 만수동 789번지",
+    "address": "남동구",
+    "imageFile": "http://dummyimage.com/133x100.png/cc0000/ffffff",
+    "inDate": "1/5/2023",
+    "upDate": "5/11/2023"
+  }
+]

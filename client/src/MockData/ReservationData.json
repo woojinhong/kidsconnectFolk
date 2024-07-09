@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "userId": 5,
+    "therapistId": 2,
+    "address": "서울특별시 강남구 역삼동 123번지",
+    "postalCode": "12345",
+    "addressDetail": "강남타워 오피스텔 304호",
+    "inDate": "10/15/2022",
+    "upDate": "10/24/2023"
+  },
+  {
+    "id": 2,
+    "userId": 4,
+    "therapistId": 3,
+    "address": "경기도 수원시 장안구 광교동 456번지",
+    "postalCode": "54321",
+    "addressDetail": "광교 아파트 102동 201호",
+    "inDate": "1/28/2021",
+    "upDate": "9/24/2023"
+  },
+  {
+    "id": 3,
+    "userId": 3,
+    "therapistId": 1,
+    "address": "인천광역시 남동구 만수동 789번지",
+    "postalCode": "98765",
+    "addressDetail": "만수빌딩 5층 501호",
+    "inDate": "5/24/2022",
+    "upDate": "9/21/2023"
+  },
+  {
+    "id": 4,
+    "userId": 2,
+    "therapistId": 5,
+    "address": "대전광역시 서구 둔산동 321번지",
+    "postalCode": "67890",
+    "addressDetail": "둔산타워 오피스텔 1103호",
+    "inDate": "7/26/2020",
+    "upDate": "8/26/2023"
+  },
+  {
+    "id": 5,
+    "userId": 1,
+    "therapistId": 4,
+    "address": "부산광역시 해운대구 우동 567번지",
+    "postalCode": "13579",
+    "addressDetail": "해운대해변 아파트 3동 1501호",
+    "inDate": "6/27/2023",
+    "upDate": "10/6/2023"
+  }
+]

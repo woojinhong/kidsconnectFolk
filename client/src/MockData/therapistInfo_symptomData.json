@@ -1,0 +1,22 @@
+[
+  {
+    "therapistInfoId": 1,
+    "symptomId": 2
+  },
+  {
+    "therapistInfoId": 2,
+    "symptomId": 5
+  },
+  {
+    "therapistInfoId": 3,
+    "symptomId": 1
+  },
+  {
+    "therapistInfoId": 4,
+    "symptomId": 4
+  },
+  {
+    "therapistInfoId": 5,
+    "symptomId": 3
+  }
+]

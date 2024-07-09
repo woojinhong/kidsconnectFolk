@@ -1,17 +1,19 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
+@DynamicInsert
+@ToString
 public class Center {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +27,31 @@ public class Center {
     private String address;
     @Lob
     private byte[] imageFile;
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime upDate;
 
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+    private LocalDateTime inDate;
+
+    private LocalDateTime upDate;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "center_id")
     private List<CenterReview> centerReview;
 
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "center",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrol> enrol;
 
+
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
 }

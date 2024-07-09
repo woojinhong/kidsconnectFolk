@@ -1,9 +1,7 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.security.Timestamp;
 import java.time.LocalDateTime;
@@ -12,24 +10,52 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
+@AllArgsConstructor
+@Builder
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String address;
-    private String postalCode;
     private String addressDetail;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime upDate;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "therapist_id")
-    private Therapist therapist;
+    @JoinColumn(name = "child_id")
+    private Child child;
+
+    @ManyToOne
+    @JoinColumn(name = "therapist_info_id")
+    private TherapistInfo therapistInfo;
+
+
+
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
+
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
+    }
 }

@@ -1,12 +1,12 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +14,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
+@AllArgsConstructor
+@Builder
+@DynamicInsert
 public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +24,48 @@ public class Child {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
-    private String gender;
+    private char gender;
+
     private String personality;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime inDate;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDateTime upDate;
 
-    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)
-    private List<ChildSymptom> childSymptom;
 
+    @OneToMany(mappedBy = "child", orphanRemoval = true)
+    private List<Reservation> reservation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.inDate == null) {
+            this.inDate = LocalDateTime.now();
+        }
+        if (this.upDate == null) {
+            this.upDate = LocalDateTime.now();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender=" + gender +
+                ", personality=" + personality +
+                ", inDate=" + inDate +
+                ", upDate=" + upDate +
+                '}';
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.upDate = LocalDateTime.now();
+    }
 }
