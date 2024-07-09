@@ -311,7 +311,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                 qTherapistInfo.totalExperience,
                                 qTherapist.freelancer, // 추가된 필드
                                 qCenter.name,
-                                qTherapistReview.rating.avg().coalesce(0.0).as("averageRating")
+                                qTherapistReview.rating.avg()
                         )
                         .from(qTherapistInfo)
                         .join(qTherapistInfo.therapist, qTherapist)
@@ -359,11 +359,9 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                         .totalExperience(totalExperience)
                                         .centerName(centerName)
                                         .symptoms(new ArrayList<>())
-                                        .avgRating(avgRating) // Handle null avgRating
+                                        .avgRating(avgRating != null ? avgRating : 0.0) // Handle null avgRating
                                         .build();
                                 resultMap.put(therapistInfoId, dto);
-                        } else {
-                                dto.setAvgRating(avgRating != null ? avgRating : 0.0); // Ensure avgRating is set correctly
                         }
                 }
 
