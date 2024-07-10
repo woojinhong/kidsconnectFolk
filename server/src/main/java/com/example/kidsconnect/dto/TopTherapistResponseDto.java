@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class TopTherapistResponseDto {
+    private Long id;
     private String therapistName;
     private String bio;
     private byte[] imageFile;
