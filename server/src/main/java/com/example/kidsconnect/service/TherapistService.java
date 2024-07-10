@@ -39,6 +39,15 @@ public class TherapistService {
     private final TherapistMapper therapistMapper;
     private final EnrolService enrolService;
 
+
+    @Transactional(readOnly = true)
+    public TherapistResponseDto getTherapist(UserPrinciple userDetails) {
+
+        Therapist therapist = findById(userDetails.getId());
+
+        List<String> centerNames = enrolRepository.findCenterNamesByTherapistId(therapist.getId());
+        return therapistMapper.toTherapistResponseDto(therapist, centerNames);
+    }
     @Transactional(readOnly = true)
     public List<Long> getAllTherapistIds() {
         List<Therapist> therapists = (List<Therapist>) therapistRepository.findAll();
