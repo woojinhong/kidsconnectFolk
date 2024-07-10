@@ -9,11 +9,18 @@ function DefaultLayout({ bgColor }: { bgColor?: "lightGray" | undefined }) {
     document.body.style.backgroundColor = "#F2F2F2";
   };
 
+  const modifyBackgroundColorWhite = () => {
+    document.body.style.backgroundColor = "#ffffff";
+  };
+
   useEffect(() => {
     if (bgColor === "lightGray") {
       modifyBackgroundColor();
+    } else {
+      modifyBackgroundColorWhite();
     }
   });
+
   return (
     <div>
       <Header />

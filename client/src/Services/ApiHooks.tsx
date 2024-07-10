@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { axiosApp } from "./axiosApp";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -14,6 +13,7 @@ import {
 import { useDelayChatbox } from "./CustomHooks";
 import { loginStatusActions } from "../Store/Slices/LoginStatus";
 import { AppliedOptionDataType } from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
+import { PreferenceSurveyState } from "../Store/Slices/MatchingSurveySlice";
 
 // 회원가입 POST API
 export const usePostSignup = async (
@@ -253,4 +253,105 @@ export const usePostMatchingSurvey = () => {
     }
   };
   return { postMatchingSurvey };
+};
+
+//모든 therapist 정보 가져오는 API
+export const useGetAllTherapist = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getAllTherapist = async () => {
+    try {
+      const res = await axiosApp.get("/therapist/showAll", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getAllTherapist };
+};
+
+// id값에 따라 therapist 정보 가져오는 API
+export const useGetTherapistById = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getTherapistById = async (id: number) => {
+    try {
+      const res = await axiosApp.get(`/therapist/${id}`, {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getTherapistById };
+};
+
+export const useGetTherapistInfoById = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getTherapistInfoById = async (id: number) => {
+    try {
+      const res = await axiosApp.get(`/therapist/info/therapist/${id}`, {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getTherapistInfoById };
+};
+
+export const useGetFilteredTherapist = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getFilteredTherapist = async (
+    preferenceData: PreferenceSurveyState,
+    region: string
+  ) => {
+    try {
+      const params = {
+        address: region ? (region === "전체" ? "" : region) : "",
+        isExperience: preferenceData.preference.career ? "true" : "",
+        gender: switchGenderToEng(preferenceData.preference.gender) || "",
+        symptoms: preferenceData.treatmentArea
+          ? preferenceData.treatmentArea.includes("전체")
+            ? ""
+            : preferenceData.treatmentArea.join(",")
+          : "",
+        sort: "rating",
+      };
+
+      const res = await axiosApp.get("/search/filter", {
+        params: params,
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getFilteredTherapist };
+};
+
+const switchGenderToEng = (value: string | undefined) => {
+  switch (value) {
+    case "여성":
+      return "F";
+    case "남성":
+      return "M";
+    default:
+      return "";
+  }
 };
