@@ -23,6 +23,7 @@ function Tag({ ...props }: TagProps) {
           fontSize: fontVariant,
           borderRadius: "8px",
           padding: paddingVariant,
+          color: "#666666",
         },
         label: {
           marginTop: "1px",

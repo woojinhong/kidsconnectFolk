@@ -157,6 +157,8 @@ export const RecommendSitesContainer = styled.section`
 export const StyledTopTherapistContainer = styled.section`
   display: flex;
   flex-direction: column;
+  width: 1060px;
+  overflow: hidden;
   gap: 32px;
 
   & > div {
@@ -164,6 +166,10 @@ export const StyledTopTherapistContainer = styled.section`
     flex-direction: row;
     justify-content: space-between;
     gap: 16px;
+  }
+
+  & > div > a {
+    flex: 1;
   }
 `;
 
