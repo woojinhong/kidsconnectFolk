@@ -37,6 +37,8 @@ function AddChildSurvey({
     []
   );
 
+  const { postChild } = usePostChild();
+
   const getBirthValue = (inputValue: string) => {
     const date = new Date(inputValue);
     inputValue && setSelectedBirthValue(inputValue);
@@ -137,7 +139,7 @@ function AddChildSurvey({
         getCharacteristicAnswer(chatInputValue as string);
         setCurrentStep && setCurrentStep(7);
       } else if (currentStep === 7) {
-        usePostChild(gatheredChildData);
+        postChild(gatheredChildData);
         await useDelayChatbox(1000);
         setConversation((prev) => [
           ...prev,
