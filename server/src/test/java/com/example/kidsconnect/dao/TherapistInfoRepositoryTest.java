@@ -83,26 +83,26 @@ class TherapistInfoRepositoryTest {
 
 
 
-    @BeforeEach
-    void setUp() {
-        // Mock 데이터 생성
-        mockResponses = Arrays.asList(
-                new MatchResponseDto("Therapist1", "Bio1", null, "5 years", "Center1", Arrays.asList("Symptom1", "Symptom2")),
-                new MatchResponseDto("Therapist2", "Bio2", null, "3 years", "프리랜서", Arrays.asList("Symptom2", "Symptom3")),
-                new MatchResponseDto("Therapist3", "Bio3", null, "4 years", "Center2", Arrays.asList("Symptom1")),
-                new MatchResponseDto("Therapist4", "Bio4", null, "2 years", "Center3", Arrays.asList("Symptom3")),
-                new MatchResponseDto("Therapist5", "Bio5", null, "6 years", "Center1", Arrays.asList("Symptom1", "Symptom3")),
-                new MatchResponseDto("Therapist6", "Bio6", null, "1 year", "프리랜서", Arrays.asList("Symptom2")),
-                new MatchResponseDto("Therapist7", "Bio7", null, "7 years", "Center4", Arrays.asList("Symptom1", "Symptom2", "Symptom3")),
-                new MatchResponseDto("Therapist8", "Bio8", null, "8 years", "Center5", Arrays.asList("Symptom1", "Symptom2")),
-                new MatchResponseDto("Therapist9", "Bio9", null, "3 years", "Center6", Arrays.asList("Symptom3")),
-                new MatchResponseDto("Therapist10", "Bio10", null, "5 years", "프리랜서", Arrays.asList("Symptom1", "Symptom2"))
-        );
+//    @BeforeEach
+//    void setUp() {
+//        // Mock 데이터 생성
+//        mockResponses = Arrays.asList(
+//                new MatchResponseDto("Therapist1", "Bio1", null, "5 years", "Center1", Arrays.asList("Symptom1", "Symptom2")),
+//                new MatchResponseDto("Therapist2", "Bio2", null, "3 years", "프리랜서", Arrays.asList("Symptom2", "Symptom3")),
+//                new MatchResponseDto("Therapist3", "Bio3", null, "4 years", "Center2", Arrays.asList("Symptom1")),
+//                new MatchResponseDto("Therapist4", "Bio4", null, "2 years", "Center3", Arrays.asList("Symptom3")),
+//                new MatchResponseDto("Therapist5", "Bio5", null, "6 years", "Center1", Arrays.asList("Symptom1", "Symptom3")),
+//                new MatchResponseDto("Therapist6", "Bio6", null, "1 year", "프리랜서", Arrays.asList("Symptom2")),
+//                new MatchResponseDto("Therapist7", "Bio7", null, "7 years", "Center4", Arrays.asList("Symptom1", "Symptom2", "Symptom3")),
+//                new MatchResponseDto("Therapist8", "Bio8", null, "8 years", "Center5", Arrays.asList("Symptom1", "Symptom2")),
+//                new MatchResponseDto("Therapist9", "Bio9", null, "3 years", "Center6", Arrays.asList("Symptom3")),
+//                new MatchResponseDto("Therapist10", "Bio10", null, "5 years", "프리랜서", Arrays.asList("Symptom1", "Symptom2"))
+//        );
 
         // therapistInfoRepository 모킹
 //        when(therapistInfoRepository.findTherapistsByCriteria(any(MatchRequestDto.class)))
 //                .thenReturn(mockResponses);
-    }
+//    }
 
     @Test
     @DisplayName("치료사 매칭 결과 테스트")

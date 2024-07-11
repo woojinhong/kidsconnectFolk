@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface TherapistInfoMapper {
 
-
+    List<TherapistInfoDto> toTherapistInfoDtos(List<TherapistInfo> therapistInfos);
 
     TherapistInfo toTherapistInfo(TherapistInfoDto therapistInfoDto);
 

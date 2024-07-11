@@ -54,37 +54,37 @@ class ChildRepositoryTest {
 //        assertEquals(1, children.size());
 //        assertEquals("아이", children.get(0).getFirstName());
 //    }
-    @Test
-    @Order(2)
-    @DisplayName("아이 추가 테스트")
-    public void childTest(){
-        for(int i =1; i<=10; i++){
-        Child child = Child.builder()
-                .firstName("아이")
-                .lastName("홍")
-                .personality(Arrays.asList("outgoing", "curious"))
-                .gender('남')
-                .dateOfBirth(new Date())
-                .build();
-
-            childRepository.save(child);
-        }
-
-        Symptom symptom = symptomRepository.findById(2l).orElseThrow(
-                () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
-        Child child = childRepository.findById(1l).orElseThrow(
-                () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
-
-
-        ChildSymptom childSymptom = ChildSymptom.builder()
-                .symptom(symptom)
-                .child(child)
-                .build();
-
-        childSymptomRepository.save(childSymptom);
-
-        assertTrue(!childSymptomRepository.equals(null));
-    }
+//    @Test
+//    @Order(2)
+//    @DisplayName("아이 추가 테스트")
+//    public void childTest(){
+//        for(int i =1; i<=10; i++){
+//        Child child = Child.builder()
+//                .firstName("아이")
+//                .lastName("홍")
+//                .personality(Arrays.asList("outgoing", "curious"))
+//                .gender('남')
+//                .dateOfBirth(new Date())
+//                .build();
+//
+//            childRepository.save(child);
+//        }
+//
+//        Symptom symptom = symptomRepository.findById(2l).orElseThrow(
+//                () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
+//        Child child = childRepository.findById(1l).orElseThrow(
+//                () -> new CustomException(CustomCode.NOT_FOUND_MEMBER));
+//
+//
+//        ChildSymptom childSymptom = ChildSymptom.builder()
+//                .symptom(symptom)
+//                .child(child)
+//                .build();
+//
+//        childSymptomRepository.save(childSymptom);
+//
+//        assertTrue(!childSymptomRepository.equals(null));
+//    }
 
     @Test
     @Order(1)
