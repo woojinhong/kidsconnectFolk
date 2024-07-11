@@ -1,7 +1,13 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ColorTheme from "../../../../Assets/StyledData/ColorTheme";
 
 const { primaryColor, black, white, gray1, gray2, lightGray1 } = ColorTheme;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${black};
+`;
 
 export const StyledTherapistCardContainer = styled.div`
   display: flex;
@@ -21,7 +27,7 @@ export const StyledTherapistCardContainer = styled.div`
     height: 278px;
   }
   &.summary {
-    width: 264px;
+    width: 100%;
     height: 306px;
     gap: 0;
   }
@@ -61,10 +67,21 @@ export const StyledProfileWrapper = styled.div`
     margin-right: 2px;
     font-weight: 800;
   }
+  & .profile_career strong {
+    margin-right: 4px;
+    font-weight: 500;
+    color: ${gray1};
+  }
   & .profile_career span {
+    display: block;
     margin-left: 2px;
     font-weight: 800;
     color: ${primaryColor};
+  }
+
+  & .profile_career i {
+    color: ${gray1};
+    font-style: normal;
   }
   & .profile_current_career {
     font-size: 12px;
