@@ -2,15 +2,21 @@ import styled from "styled-components";
 
 export const StyledContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
-  gap: 6px;
+  text-align: center;
+
   & img {
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
   }
   & span {
     font-size: 16px;
     line-height: 24px;
+  }
+  & span strong {
+    display: block;
   }
   &.xs {
     gap: 2px;

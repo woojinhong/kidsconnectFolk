@@ -62,7 +62,7 @@ export const StyledTherapistCardContainer = styled.section`
     padding: 64px 0 80px;
   }
 
-  & > div > div {
+  & > div > a {
     flex-basis: calc(50% - 12px);
   }
 `;

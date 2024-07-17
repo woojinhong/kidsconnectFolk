@@ -34,6 +34,7 @@ export type TherapistDetailedInfoType = {
 };
 
 export type educationType = {
+  id: number;
   education: string;
   major: string;
   degree: string;
@@ -44,7 +45,7 @@ export type experienceType = {
   id: number;
   place: string;
   years: number;
-  month: number;
+  months: number;
 };
 export type TherapistCareerType = {
   place: string;
