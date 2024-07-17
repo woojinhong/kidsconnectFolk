@@ -1,27 +1,33 @@
 package com.example.kidsconnect.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
+@DynamicInsert
+@ToString
 public class Symptom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String symptom;
+    private String name;
 
-    @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL)
-    private List<ChildSymptom> childSymptom;
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "symptom_id")
+//    private List<ChildSymptom> childSymptom;
+//
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "symptom_id")
+//    private List<TherapistInfoSymptom> ther;
 
-    @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL)
-    private List<TherapistInfoSymptom> therapistInfoSymptom;
 }

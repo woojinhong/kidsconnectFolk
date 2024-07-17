@@ -1,0 +1,24 @@
+1718808089363|3|statement|select * from `kidsconnect`.`center` where 1=0
+1718808089370|0|statement|select * from `kidsconnect`.`user` where 1=0
+1718808089379|0|statement|select * from `kidsconnect`.`user` where 1=0
+1718808089387|0|statement|select * from `kidsconnect`.`child` where 1=0
+1718808089396|0|statement|select * from `kidsconnect`.`child` where 1=0
+1718808089400|0|statement|select * from `kidsconnect`.`symptom` where 1=0
+1718808089409|0|statement|select * from `kidsconnect`.`center` where 1=0
+1718808089413|0|statement|select * from `kidsconnect`.`therapist` where 1=0
+1718808089422|0|statement|select * from `kidsconnect`.`child` where 1=0
+1718808089426|0|statement|select * from `kidsconnect`.`therapist` where 1=0
+1718808089431|0|statement|select * from `kidsconnect`.`user` where 1=0
+1718808089440|0|statement|select * from `kidsconnect`.`therapist_info` where 1=0
+1718808089449|0|statement|select * from `kidsconnect`.`therapist_info` where 1=0
+1718808089458|0|statement|select * from `kidsconnect`.`therapist_info` where 1=0
+1718808089467|0|statement|select * from `kidsconnect`.`therapist_info` where 1=0
+1718808089475|0|statement|select * from `kidsconnect`.`therapist` where 1=0
+1718808089483|0|statement|select * from `kidsconnect`.`symptom` where 1=0
+1718808089485|0|statement|select * from `kidsconnect`.`therapist_info` where 1=0
+1718808089495|0|statement|select * from `kidsconnect`.`therapist_info` where 1=0
+1718808089497|0|statement|select * from `kidsconnect`.`user` where 1=0
+1718808095961|3|statement|select ti1_0.id,t1_0.first_name,ti1_0.bio,ti1_0.image_file,ti1_0.total_experience,case when t1_0.freelancer=true then cast('프리랜서' as char) else c1_0.name end,s1_0.name from therapist_info ti1_0 join therapist t1_0 on t1_0.id=ti1_0.therapist_id left join enrol e1_0 on t1_0.id=e1_0.therapist_id left join center c1_0 on c1_0.id=e1_0.center_id left join therapist_info_symptom tis1_0 on ti1_0.id=tis1_0.therapist_info_id left join symptom s1_0 on s1_0.id=tis1_0.symptom_id where ti1_0.id in (select ti2_0.id from therapist_info ti2_0 join therapist t2_0 on t2_0.id=ti2_0.therapist_id left join enrol e2_0 on t2_0.id=e2_0.therapist_id left join therapist_info_symptom tis2_0 on ti2_0.id=tis2_0.therapist_info_id left join symptom s2_0 on s2_0.id=tis2_0.symptom_id where t2_0.gender in ('M','F') and ti2_0.total_experience='무경력' and s2_0.name='장애10')
+1718808095966|0|commit|
+1718810279951|2|statement|select ti1_0.id,t1_0.first_name,ti1_0.bio,ti1_0.image_file,ti1_0.total_experience,case when t1_0.freelancer=true then cast('프리랜서' as char) else c1_0.name end,s1_0.name from therapist_info ti1_0 join therapist t1_0 on t1_0.id=ti1_0.therapist_id left join enrol e1_0 on t1_0.id=e1_0.therapist_id left join center c1_0 on c1_0.id=e1_0.center_id left join therapist_info_symptom tis1_0 on ti1_0.id=tis1_0.therapist_info_id left join symptom s1_0 on s1_0.id=tis1_0.symptom_id where ti1_0.id in (select ti2_0.id from therapist_info ti2_0 join therapist t2_0 on t2_0.id=ti2_0.therapist_id left join enrol e2_0 on t2_0.id=e2_0.therapist_id left join therapist_info_symptom tis2_0 on ti2_0.id=tis2_0.therapist_info_id left join symptom s2_0 on s2_0.id=tis2_0.symptom_id where t2_0.gender in ('M','F') and ti2_0.total_experience='무경력' and s2_0.name='장애10')
+1718810279952|0|commit|

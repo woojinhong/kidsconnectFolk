@@ -22,12 +22,6 @@ public class CenterReview {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime upDate;
 
-    @ManyToOne
-    @JoinColumn(name = "center_id")
-    private Center center;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
 
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "therapistID": 4,
+    "centerID": 3,
+    "freelancer": false
+  },
+  {
+    "id": 2,
+    "therapistID": 5,
+    "centerID": 2,
+    "freelancer": false
+  },
+  {
+    "id": 3,
+    "therapistID": 1,
+    "centerID": 5,
+    "freelancer": true
+  },
+  {
+    "id": 4,
+    "therapistID": 3,
+    "centerID": 1,
+    "freelancer": false
+  },
+  {
+    "id": 5,
+    "therapistID": 2,
+    "centerID": 4,
+    "freelancer": true
+  }
+]
