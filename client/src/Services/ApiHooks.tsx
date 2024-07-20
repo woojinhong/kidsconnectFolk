@@ -14,6 +14,7 @@ import { useDelayChatbox } from "./CustomHooks";
 import { loginStatusActions } from "../Store/Slices/LoginStatus";
 import { AppliedOptionDataType } from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
 import { PreferenceSurveyState } from "../Store/Slices/MatchingSurveySlice";
+import { ReviewDataType } from "../Component/Common/Modal/ModalContent/ModalContentType";
 
 // 회원가입 POST API
 export const usePostSignup = async (
@@ -95,18 +96,22 @@ export const usePostSignin = () => {
 };
 
 // 아이 등록 POST API
-export const usePostChild = async (data: GatheredChildDataType) => {
-  try {
-    const cookie = document.cookie.replace("Bearer%", "");
-    await axiosApp.post("/child/register", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${cookie.split("=")[1]}`,
-      },
-    });
-  } catch (err: any) {
-    console.error(err);
-  }
+export const usePostChild = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const postChild = async (data: GatheredChildDataType) => {
+    try {
+      await axiosApp.post("/child/register", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookie.token,
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { postChild };
 };
 
 // 로그인한 부모님 정보 GET API
@@ -255,7 +260,7 @@ export const usePostMatchingSurvey = () => {
   return { postMatchingSurvey };
 };
 
-//모든 therapist 정보 가져오는 API
+//전체 therapist 정보 가져오는 API
 export const useGetAllTherapist = () => {
   const [cookie] = useCookies(["token"]);
 
@@ -311,6 +316,7 @@ export const useGetTherapistInfoById = () => {
   return { getTherapistInfoById };
 };
 
+//therapist를 필터링해서 가져오는 API
 export const useGetFilteredTherapist = () => {
   const [cookie] = useCookies(["token"]);
 
@@ -321,7 +327,7 @@ export const useGetFilteredTherapist = () => {
     try {
       const params = {
         address: region ? (region === "전체" ? "" : region) : "",
-        isExperience: preferenceData.preference.career ? "true" : "",
+        isExperience: "",
         gender: switchGenderToEng(preferenceData.preference.gender) || "",
         symptoms: preferenceData.treatmentArea
           ? preferenceData.treatmentArea.includes("전체")
@@ -343,6 +349,35 @@ export const useGetFilteredTherapist = () => {
     }
   };
   return { getFilteredTherapist };
+};
+
+// Top 4명 치료사 Id get하는 api
+export const useGetTopTherapist = async () => {
+  try {
+    const res = await axiosApp.get("/search/top-therapists");
+    return res.data;
+  } catch (err: any) {
+    console.error(err);
+  }
+};
+
+// reviewData POST API
+export const usePostReview = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const postReview = async (data: ReviewDataType, id: number) => {
+    try {
+      await axiosApp.post(`/review/${id}`, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookie.token,
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { postReview };
 };
 
 const switchGenderToEng = (value: string | undefined) => {

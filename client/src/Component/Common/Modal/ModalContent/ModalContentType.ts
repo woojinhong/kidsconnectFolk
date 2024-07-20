@@ -52,3 +52,16 @@ export interface AddChildSurveyProps {
   handleButtonSendOnClick?: () => void;
   setCurrentStep?: (value: number) => void;
 }
+
+export type ReviewTextType = {
+  messages: {
+    rating: string;
+    comment: string;
+    done: string;
+  };
+};
+
+export type ReviewDataType = {
+  rating: number;
+  comment: string;
+};

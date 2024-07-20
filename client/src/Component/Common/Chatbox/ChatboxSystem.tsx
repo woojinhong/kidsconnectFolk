@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 
-import { Highlight } from "@mantine/core";
+import { Highlight, Rating } from "@mantine/core";
 import OutlineButton from "../Button/OutlineButton";
 import FilledButton from "../Button/FilledButton";
 import InputDatePicker from "../Input/InputDatePicker";
@@ -25,6 +25,7 @@ function ChatboxSystem({
   selectbox = false,
   getDateValue,
   checkbox = false,
+  rating = false,
   setValue,
   getNeededCheckboxValue,
 }: ChatboxSystemProps) {
@@ -33,6 +34,7 @@ function ChatboxSystem({
   const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
     []
   );
+  const [ratingValue, setRatingValue] = useState<number>(0);
 
   const handleOnClick = (event: clickButtonEvent) => {
     if (onClick) {
@@ -66,6 +68,12 @@ function ChatboxSystem({
       }
     });
   }, []);
+
+  const handleRatingValue = (value: number) => {
+    setRatingValue(value);
+    getDateValue && getDateValue(value.toString());
+    setIsDisabled(true);
+  };
 
   useEffect(() => {
     setValue && setValue(selectedTreatmentArea);
@@ -137,6 +145,20 @@ function ChatboxSystem({
           <img src={LoadingAnimation} alt="로딩 중" />
         </StyledAnimationContainer>
       ) : null}
+      {rating ? (
+        <Rating
+          color="#ff7000"
+          styles={{
+            root: {
+              margin: "0 auto",
+              gap: "5px",
+            },
+          }}
+          size="xl"
+          onChange={handleRatingValue}
+          value={ratingValue}
+        />
+      ) : null}
     </StyledChatboxSystemBox>
   );
 }
@@ -150,6 +172,7 @@ interface ChatboxSystemProps {
   checkbox?: boolean;
   selectbox?: boolean;
   animation?: boolean;
+  rating?: boolean;
   onClick?: (event: clickButtonEvent) => void;
   disabled?: boolean;
   getDateValue?: (inputValue: string) => void;

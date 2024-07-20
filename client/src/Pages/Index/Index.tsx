@@ -7,6 +7,7 @@ import TherapistCard from "../../Component/Common/Card/TherapistCard/TherapistCa
 
 import { getSelectedTreatmentArea } from "../../Services/CustomHooks";
 import { matchingSurveyActions } from "../../Store/Slices/MatchingSurveySlice";
+import { useGetTopTherapist } from "../../Services/ApiHooks";
 
 import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import externalRecommendSites from "../../Assets/TextData/externalRecommendSites";
@@ -21,13 +22,21 @@ import {
   StyledSubBanner,
 } from "./Index.style";
 
+import { v4 as uuidv4 } from "uuid";
+
 function Index() {
+  const [topTherapistId, setTopTherapistId] = useState<TopTherapistType[]>([]);
   const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
     []
   );
-
-  const therapistIdThisMonth: number[] = [4, 3, 1, 2];
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchTopTherapistId = async () => {
+      setTopTherapistId(await useGetTopTherapist());
+    };
+    fetchTopTherapistId();
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -65,7 +74,7 @@ function Index() {
             <div>
               <Modal
                 buttonText="선생님 찾아보기"
-                content={"therapistPreference"}
+                content="therapistPreference"
                 buttonIcon="search"
               />
             </div>
@@ -89,11 +98,11 @@ function Index() {
         <StyledTopTherapistContainer>
           <h3>🏆 이 달의 인기 선생님</h3>
           <div>
-            {therapistIdThisMonth.map((therapistId) => (
+            {topTherapistId?.map((data) => (
               <TherapistCard
-                key={therapistId}
+                key={uuidv4()}
+                therapistId={data.id}
                 variants="summary"
-                therapistId={therapistId}
               />
             ))}
           </div>
@@ -113,3 +122,7 @@ function Index() {
 }
 
 export default Index;
+
+type TopTherapistType = {
+  id: number;
+};

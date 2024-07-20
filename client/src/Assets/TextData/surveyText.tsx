@@ -46,6 +46,15 @@ const surveyText = [
     placeholder: "날짜 선택하기",
     selectGender: ["남아", "여아"],
   },
+  {
+    type: "review",
+    messages: {
+      rating: "선생님에게 리뷰를 남겨주세요.",
+      comment:
+        "상세한 후기를 남겨주세요. 후기는 모든 회원과 선생님이 볼 수 있어요.",
+      done: "후기가 등록되었어요!",
+    },
+  },
 ];
 
 export default surveyText;

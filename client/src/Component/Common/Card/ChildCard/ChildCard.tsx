@@ -80,10 +80,10 @@ const mappingChildData = (index: number, child: Child) => {
       <StyledCard>
         <InfoGroup>
           <div style={{ fontWeight: 700 }}>
-            {lastName}
             {firstName}
+            {lastName}
             <span style={{ fontWeight: 400, marginLeft: "4px" }}>{age}세</span>
-            <img src={gender === "female" ? SymbolFemale : SymbolMale} />
+            <img src={gender === "F" ? SymbolFemale : SymbolMale} />
           </div>
           <img
             src={Edit}

@@ -7,6 +7,7 @@ import FilledButton from "../Button/FilledButton";
 import TherapistPreference from "./ModalContent/TherapistPreference";
 import AddChildSurvey from "./ModalContent/AddChildSurvey";
 import ApplicationQuestionary from "./ModalContent/ApplicationQuestionary";
+import ReviewSurvey from "./ModalContent/ReviewSurvey";
 import { changeInputEvent } from "../../../Assets/CommonType/EventType";
 
 import {
@@ -49,10 +50,18 @@ function Modal({
   };
 
   useEffect(() => {
-    if (currentStep === 1 || currentStep === 5) {
-      setSendButtonDisabled(false);
-    } else {
-      setSendButtonDisabled(true);
+    if (content === "addChild") {
+      if (currentStep === 1 || currentStep === 5) {
+        setSendButtonDisabled(false);
+      } else {
+        setSendButtonDisabled(true);
+      }
+    } else if (content === "review") {
+      if (currentStep === 2) {
+        setSendButtonDisabled(false);
+      } else {
+        setSendButtonDisabled(true);
+      }
     }
   }, [currentStep]);
 
@@ -74,7 +83,7 @@ function Modal({
             <StyledModalCloseButton icon={<img src={IconRemove} />} />
           </StyledModalHeader>
           <MantineModal.Body>
-            {content === "addChild"
+            {content === "addChild" || content === "review"
               ? getContentInModal(
                   content,
                   onClose,
@@ -143,7 +152,7 @@ function Modal({
 export default Modal;
 
 const getContentInModal = (
-  type: "therapistPreference" | "addChild" | "apply",
+  type: "therapistPreference" | "addChild" | "apply" | "review",
   onClose?: () => void,
   onClearChatInput?: () => void,
   chatInputValue?: string,
@@ -170,13 +179,24 @@ const getContentInModal = (
       return (
         <ApplicationQuestionary therapistId={therapistId} onClose={onClose} />
       );
+    case "review":
+      return (
+        <ReviewSurvey
+          chatInputValue={chatInputValue}
+          onClose={onClose}
+          currentStep={currentStep}
+          onClearChatInput={onClearChatInput}
+          handleButtonSendOnClick={handleButtonSendOnClick}
+          setCurrentStep={setCurrentStep}
+        />
+      );
     default:
       return null;
   }
 };
 
 type ModalProps = {
-  content: "apply" | "addChild" | "therapistPreference";
+  content: "apply" | "addChild" | "therapistPreference" | "review";
   buttonText: string;
   chatInput?: boolean;
   buttonVariant?: "filled" | "outlined" | "addChild";
