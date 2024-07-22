@@ -42,12 +42,12 @@ public class ReserveController {
     }
 
     @GetMapping("/pending/user")
-    public List<UserReservationDto> getUserPendingReservations(@AuthenticationPrincipal UserPrinciple userDetails) {
+    public List<Long> getUserPendingReservations(@AuthenticationPrincipal UserPrinciple userDetails) {
         return reserveService.getUserPendingReservations(userDetails);
     }
 
     @GetMapping("/confirmed/user")
-    public List<UserReservationDto> getUserConfirmedReservations(@AuthenticationPrincipal UserPrinciple userDetails) {
+    public  List<Long> getUserConfirmedReservations(@AuthenticationPrincipal UserPrinciple userDetails) {
         return reserveService.getUserConfirmedReservations(userDetails);
     }
 
