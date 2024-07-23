@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +31,16 @@ public class ReserveService {
     private final ChildSymptomService childSymptomService;
     private final TherapistInfoSymptomService therapistInfoSymptomService;
 
+    public List<Long> getAllReservationIds() {
+        List<Reservation> reservations = (List<Reservation>) reservationRepository.findAll();
+        List<Long> reservationIds = new ArrayList<>();
 
+        for (Reservation reservation : reservations) {
+            reservationIds.add(reservation.getId());
+        }
+
+        return reservationIds;
+    }
 
     @Transactional
     public ResponseEntity<?> createReservation(Long childId, Long therapistId, String location, UserPrinciple userDetails) {

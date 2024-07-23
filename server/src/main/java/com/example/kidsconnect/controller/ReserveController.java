@@ -22,7 +22,10 @@ public class ReserveController {
 
     private final ReserveService reserveService;
 
-
+    @GetMapping()
+    public List<Long> getAllReservation() {
+        return reserveService.getAllReservationIds();
+    }
     @GetMapping("/pending/therapist")
     public List<ReservationResponseDto> getPendingReservations(@AuthenticationPrincipal UserPrinciple userDetails) {
         return reserveService.getPendingReservations(userDetails);
