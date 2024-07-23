@@ -53,8 +53,11 @@ public class UserService {
     @Transactional
     public ResponseEntity<String> signUp(UserSignUpDto userSignUpDto) {
 
+        System.out.println("userSignUpDto = " + userSignUpDto);
         //엔티티 매핑
         User user = userMapper.fromUserSignUpDto(userSignUpDto);
+
+        System.out.println(user);
 
         //이메일 중복 체크
         validateEmail(user);

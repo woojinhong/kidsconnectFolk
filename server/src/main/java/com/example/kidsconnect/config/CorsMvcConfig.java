@@ -13,6 +13,6 @@ public class CorsMvcConfig implements WebMvcConfigurer {
                 .allowedOrigins("*") // 모든 도메인을 허용
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(false);
     }
 }
