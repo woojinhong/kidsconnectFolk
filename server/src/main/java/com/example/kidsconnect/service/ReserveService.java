@@ -31,8 +31,8 @@ public class ReserveService {
     private final ChildSymptomService childSymptomService;
     private final TherapistInfoSymptomService therapistInfoSymptomService;
 
-    public List<Long> getAllReservationIds() {
-        List<Reservation> reservations = (List<Reservation>) reservationRepository.findAll();
+    public List<Long> getPendingReservationIds() {
+        List<Reservation> reservations = reservationRepository.findByStatus(ReservationStatus.PENDING);
         List<Long> reservationIds = new ArrayList<>();
 
         for (Reservation reservation : reservations) {

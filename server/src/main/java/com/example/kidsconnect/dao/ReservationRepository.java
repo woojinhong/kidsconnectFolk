@@ -11,4 +11,6 @@ public interface ReservationRepository extends CrudRepository<Reservation,Long> 
 
     List<Reservation> findByUserAndStatus(User user, ReservationStatus pending);
 
+    List<Reservation> findByStatus(ReservationStatus status);
+
 }
