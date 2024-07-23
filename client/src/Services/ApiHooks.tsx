@@ -14,6 +14,7 @@ import { useDelayChatbox } from "./CustomHooks";
 import { loginStatusActions } from "../Store/Slices/LoginStatus";
 import { AppliedOptionDataType } from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
 import { PreferenceSurveyState } from "../Store/Slices/MatchingSurveySlice";
+import { ReviewDataType } from "../Component/Common/Modal/ModalContent/ModalContentType";
 
 // 회원가입 POST API
 export const usePostSignup = async (
@@ -358,6 +359,25 @@ export const useGetTopTherapist = async () => {
   } catch (err: any) {
     console.error(err);
   }
+};
+
+// reviewData POST API
+export const usePostReview = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const postReview = async (data: ReviewDataType, id: number) => {
+    try {
+      await axiosApp.post(`/review/${id}`, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookie.token,
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { postReview };
 };
 
 const switchGenderToEng = (value: string | undefined) => {
