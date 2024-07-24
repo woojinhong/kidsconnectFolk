@@ -53,7 +53,6 @@ function TherapistIntroduction() {
       setTherapistInfo(await getTherapistInfoById(Number(id)));
     };
     if (id) fetchTherapistData();
-    console.log(therapistData, therapistInfo);
   }, []);
 
   if (!therapistData || !therapistInfo) {
@@ -113,11 +112,12 @@ function TherapistIntroduction() {
             onClose={closeModal}
             isOpen={isModalOpen}
             onOpen={openModal}
+            therapistId={Number(id)}
           />
         </div>
       </StyledProfileSummaryContainer>
       <section>
-        <TherapistProfile data={therapistInfo} />
+        <TherapistProfile therapistId={Number(id)} />
       </section>
     </StyledMainContainer>
   );

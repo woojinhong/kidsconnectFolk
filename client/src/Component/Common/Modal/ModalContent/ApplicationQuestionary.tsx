@@ -15,7 +15,6 @@ import { GatheredChildDataType } from "./ModalContentType";
 
 import { StyledModalContentContainer } from "../Modal.style";
 
-
 function ApplicationQuestionary({
   therapistId,
   onClose,
@@ -51,7 +50,7 @@ function ApplicationQuestionary({
     getChildData();
     setAppliedOptionData((prev) => ({
       ...prev,
-      therapistId: 4,
+      therapistId: therapistId as number,
     }));
   }, []);
 

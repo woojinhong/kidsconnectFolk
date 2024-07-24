@@ -58,7 +58,7 @@ export const usePostSignup = async (
 export const usePostSignin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies(["token"]);
 
   const postSignin = async (
     userType: string,
@@ -378,6 +378,43 @@ export const usePostReview = () => {
     }
   };
   return { postReview };
+};
+
+// 부모님 마이페이지에서 pending된 예약 정보 가져오는 API
+export const useGetPendingReservation = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getPendingReservation = async () => {
+    try {
+      const res = await axiosApp.get("/reservation/pending/user", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getPendingReservation };
+};
+
+export const useGetConfirmedReservation = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getConfirmedReservation = async () => {
+    try {
+      const res = await axiosApp.get("/reservation/confirmed/user", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getConfirmedReservation };
 };
 
 const switchGenderToEng = (value: string | undefined) => {
