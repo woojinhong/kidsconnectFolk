@@ -1,12 +1,10 @@
 import BgImg1 from "../../Assets/Image/ExternalSites/Rectangle1.png";
 import BgImg2 from "../../Assets/Image/ExternalSites/Rectangle2.png";
 import BgImg3 from "../../Assets/Image/ExternalSites/Rectangle3.png";
-import BgImg4 from "../../Assets/Image/ExternalSites/Rectangle4.png";
 
 import Logo1 from "../../Assets/Image/ExternalSites/SeoulCenterCi.png";
 import Logo2 from "../../Assets/Image/ExternalSites/KCDI.png";
 import Logo3 from "../../Assets/Image/ExternalSites/DEP.png";
-import Logo4 from "../../Assets/Image/ExternalSites/KCELF.png";
 
 const externalRecommendSites = [
   {
@@ -31,14 +29,6 @@ const externalRecommendSites = [
     text: "영아선별 발달 검사 구매하기",
     backgroundImage: BgImg3,
     link: "https://tespia.kr/tp_mall/prd_detail.asp?num=47",
-  },
-  {
-    logo: Logo4,
-    alt: "KCELF",
-    ageRange: "초등 1년생 ~ 대학생",
-    text: "한국판 핵심언어 임상평가 구매하기",
-    backgroundImage: BgImg4,
-    link: "https://isorimall.com/catalog/ProdDetail.asp?cate1=1000&cate2=1012&pid=bca0251&page=1&pagenum=40",
   },
 ];
 export default externalRecommendSites;

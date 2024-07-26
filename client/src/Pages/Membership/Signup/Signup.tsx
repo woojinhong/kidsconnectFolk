@@ -1,5 +1,5 @@
 import { useState, useReducer } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SignupParentsInput from "../../../Component/Membership/SignUp/SignupParentsInput";
 import SignupTherapistInput from "../../../Component/Membership/SignUp/SignupTherapistInput";
 import UserTypeCheckbox from "../../../Component/Membership/UserTypeCheckbox";
@@ -28,7 +28,6 @@ import {
 } from "../Membership.style";
 
 function Signup() {
-  const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState<ToastMessageTypes>(
     {} as ToastMessageTypes
   );
@@ -41,6 +40,7 @@ function Signup() {
     therapistReducer,
     therapistInitialState
   );
+  const { postSignup } = usePostSignup();
 
   const isFormInvalid =
     selectedUserType === "parents"
@@ -85,9 +85,9 @@ function Signup() {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (selectedUserType === "parents") {
-      usePostSignup(parentState, undefined, setToastMessage, navigate);
+      postSignup(parentState, undefined, setToastMessage);
     } else {
-      usePostSignup(undefined, therapistState, setToastMessage, navigate);
+      postSignup(undefined, therapistState, setToastMessage);
     }
   };
 
