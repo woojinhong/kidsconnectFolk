@@ -126,3 +126,7 @@ export default Index;
 type TopTherapistType = {
   id: number;
 };
+
+// css 오류
+// key 오류
+// Header userName 받아와야함

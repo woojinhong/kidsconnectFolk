@@ -45,7 +45,7 @@ function ApplicationQuestionary({
   useEffect(() => {
     const getChildData = async () => {
       const data = await getChildInfo();
-      setChildData(data);
+      data && setChildData(data);
     };
     getChildData();
     setAppliedOptionData((prev) => ({

@@ -17,41 +17,44 @@ import { PreferenceSurveyState } from "../Store/Slices/MatchingSurveySlice";
 import { ReviewDataType } from "../Component/Common/Modal/ModalContent/ModalContentType";
 
 // 회원가입 POST API
-export const usePostSignup = async (
-  userData: ParentStateType | undefined,
-  therapistData: TherapistStateType | undefined,
-  setToastMessage: React.Dispatch<React.SetStateAction<ToastMessageTypes>>,
-  navigate: NavigateFunction
-) => {
-  const data = userData
-    ? userData
-    : therapistData
-      ? {
-          ...therapistData,
-          freelancer: therapistData.freelancer === "true",
-          gender: therapistData.gender === "여성" ? "F" : "M",
-        }
-      : undefined;
-  const path = userData ? "user" : "therapist";
+export const usePostSignup = () => {
+  const navigate = useNavigate();
+  const postSignup = async (
+    userData: ParentStateType | undefined,
+    therapistData: TherapistStateType | undefined,
+    setToastMessage: React.Dispatch<React.SetStateAction<ToastMessageTypes>>
+  ) => {
+    const data = userData
+      ? userData
+      : therapistData
+        ? {
+            ...therapistData,
+            freelancer: therapistData.freelancer === "true",
+            gender: therapistData.gender === "여성" ? "F" : "M",
+          }
+        : undefined;
+    const path = userData ? "user" : "therapist";
 
-  try {
-    await axiosApp.post(`/auth/signup/${path}`, JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setToastMessage({
-      type: "success",
-      message: "회원가입이 완료되었습니다. 로그인해주세요.",
-    });
-    await useDelayChatbox(1500);
-    navigate("/login");
-  } catch (err: any) {
-    setToastMessage({
-      type: "failed",
-      message: err.response.data.message,
-    });
-  }
+    try {
+      await axiosApp.post(`/auth/signup/${path}`, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setToastMessage({
+        type: "success",
+        message: "회원가입이 완료되었습니다. 로그인해주세요.",
+      });
+      await useDelayChatbox(1500);
+      navigate("/login");
+    } catch (err: any) {
+      setToastMessage({
+        type: "failed",
+        message: err.response.data.message,
+      });
+    }
+  };
+  return { postSignup };
 };
 
 // 로그인 POST API
