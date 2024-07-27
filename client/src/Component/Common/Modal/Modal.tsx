@@ -94,7 +94,16 @@ function Modal({
                   handleButtonSendOnClick,
                   setCurrentStep
                 )
-              : getContentInModal(content, onClose)}
+              : content === "apply"
+                ? getContentInModal(
+                    content,
+                    onClose,
+                    undefined,
+                    undefined,
+                    undefined,
+                    therapistId
+                  )
+                : getContentInModal(content, onClose)}
           </MantineModal.Body>
           {chatInput ? (
             <StyledChatInput>
