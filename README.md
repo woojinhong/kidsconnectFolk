@@ -1,8 +1,6 @@
 # 키즈커넥트
-![screenshot_out_out](https://github.com/user-attachments/assets/4efcec2a-9a31-453f-8b03-2e515648514e)
-
-
 키즈커넥트는 아동 발달 치료사 매칭 플랫폼으로, 아이들이 적합한 치료를 받을 수 있도록 부모에게 전문가를 매칭해주는 온라인 플랫폼입니다.
+![screenshot_out_out](https://github.com/user-attachments/assets/4efcec2a-9a31-453f-8b03-2e515648514e)
 
 ## 🔎 프로젝트 개요
 ![background](https://github.com/user-attachments/assets/3d7dac79-fdcc-43a7-9c48-ebcacf982bc0)
