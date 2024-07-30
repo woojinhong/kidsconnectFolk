@@ -1,4 +1,4 @@
-# 키즈커넥트
+# 👶🙌🧑‍⚕️ 키즈커넥트 👧🧑‍🍼👨‍👧‍👦
 키즈커넥트는 **아동 발달 치료사 매칭 플랫폼**으로, 아이들이 적합한 치료를 받을 수 있도록 **부모와 전문가를 매칭**해주는 온라인 플랫폼입니다.
 ![screenshot_out_out](https://github.com/user-attachments/assets/4efcec2a-9a31-453f-8b03-2e515648514e)
 
@@ -10,9 +10,10 @@
 ## 🧑‍💻 키즈커넥트팀
 | Back-end Developer  | Front-end Developer |
 | ------------- | ------------- |
-|  이미지 | 이미지  |
+| <img src="https://github.com/user-attachments/assets/f881f19f-add6-4b84-a778-8139b05ab3b0" style="width:250px"/> | <img src="https://github.com/user-attachments/assets/17619bb5-ef9c-4e2a-8183-f3b10a276e85" style="width:200px;"/>|
 | 홍우진(팀장)  | 오하은  |
 | 서버, ERD,  AWS, REST API, 기획 | 클라이언트, 마크업, UI/UX 디자인  |
+
 
 ## ⭐ 기능 소개
     1. 메인 기능
