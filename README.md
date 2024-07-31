@@ -75,4 +75,5 @@
 
 
 ## 🛠️ ERD 다이어그램
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/5bc29ecf-7e1b-42c4-ac89-4b321a979558/656b68a1-061d-4054-9bfd-36c081e3f3e2/Untitled.png)
+![kidsconnect](https://github.com/user-attachments/assets/97804ae0-e8c8-469b-97d3-54cbc623b6dc)
+
