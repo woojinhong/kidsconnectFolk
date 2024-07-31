@@ -75,6 +75,6 @@
 
 
 ## 🛠️ ERD 다이어그램
-[ERD Cloud 바로가기](https://www.erdcloud.com/d/YQp6XS3PKv2N6etMJ)
+👉[ERD Cloud 바로가기](https://www.erdcloud.com/d/YQp6XS3PKv2N6etMJ)
 ![kidsconnect](https://github.com/user-attachments/assets/97804ae0-e8c8-469b-97d3-54cbc623b6dc)
 
