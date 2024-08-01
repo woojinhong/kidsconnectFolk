@@ -62,6 +62,14 @@
 <img src="https://img.shields.io/badge/Mantine-339AF0?style=flat-square&logo=Mantine&logoColor=white"/>
 </div>
 
+## 🏗 시스템 아키텍쳐
+![SystemArchitecture](https://github.com/user-attachments/assets/a7f8ee11-ffb2-4193-971a-541c766cc3f6)
+
+## 📑 ERD
+👉[ERD Cloud 바로가기](https://www.erdcloud.com/d/YQp6XS3PKv2N6etMJ)
+
+![erd](https://github.com/user-attachments/assets/dc8fe7b7-0430-45f9-ae29-e6a183d2ca08)
+
 ## 서비스 기대 효과
 1. **아이의 발달 지원 강화**:  많은 아이들이 발달적인 어려움을 겪고 있으나, 적절한 치료 전문가를 찾기 어려운 경우가 많습니다. 이 플랫폼은 아이들의 발달을 지원하고, 부모들이 쉽게 치료 전문가를 찾을 수 있도록 돕습니다.
 
@@ -73,14 +81,5 @@
 
 5. **사회적 기여**: 발달 지연이나 장애를 가진 아이들과 그들의 가족들에게 효과적인 지원을 제공하여 사회적으로 기여하고자 합니다. 이 플랫폼은 아이들의 발달을 위해 노력하는 가정들을 지원하고 지속적인 발전을 돕는 역할을 수행합니다.
 
-## 🛠️ 시스템 아키텍처
-![systme_architecture](https://github.com/user-attachments/assets/1d17d23c-8946-4b77-92ff-ff4289846320)
-
-
-
-
-## 🛠️ ERD 다이어그램
-👉[ERD Cloud 바로가기](https://www.erdcloud.com/d/YQp6XS3PKv2N6etMJ)
-![kidsconnect](https://github.com/user-attachments/assets/bc4377c2-2162-4dfc-8766-98f1abea654e)
 
 
