@@ -73,6 +73,11 @@
 
 5. **사회적 기여**: 발달 지연이나 장애를 가진 아이들과 그들의 가족들에게 효과적인 지원을 제공하여 사회적으로 기여하고자 합니다. 이 플랫폼은 아이들의 발달을 위해 노력하는 가정들을 지원하고 지속적인 발전을 돕는 역할을 수행합니다.
 
+## 🛠️ 시스템 아키텍처
+![systme_architecture](https://github.com/user-attachments/assets/1d17d23c-8946-4b77-92ff-ff4289846320)
+
+
+
 
 ## 🛠️ ERD 다이어그램
 👉[ERD Cloud 바로가기](https://www.erdcloud.com/d/YQp6XS3PKv2N6etMJ)
