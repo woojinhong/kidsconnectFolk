@@ -92,6 +92,14 @@ public class TherapistInfo {
         this.therapistInfoSymptom.add(therapistInfoSymptom);
     }
 
+    public void setCertificate(List<String> certificate) {
+        this.certificate = certificate;
+    }
+
+    public void setAgeRange(List<String> ageRange) {
+        this.ageRange = ageRange;
+    }
+
     public void setTherapist(Therapist therapist) {
         this.therapist = therapist;
     }
