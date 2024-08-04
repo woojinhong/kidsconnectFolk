@@ -15,7 +15,6 @@ import { GatheredChildDataType } from "./ModalContentType";
 
 import { StyledModalContentContainer } from "../Modal.style";
 
-
 function ApplicationQuestionary({
   therapistId,
   onClose,
@@ -46,12 +45,12 @@ function ApplicationQuestionary({
   useEffect(() => {
     const getChildData = async () => {
       const data = await getChildInfo();
-      setChildData(data);
+      data && setChildData(data);
     };
     getChildData();
     setAppliedOptionData((prev) => ({
       ...prev,
-      therapistId: 4,
+      therapistId: therapistId as number,
     }));
   }, []);
 

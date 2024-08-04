@@ -14,50 +14,54 @@ import { useDelayChatbox } from "./CustomHooks";
 import { loginStatusActions } from "../Store/Slices/LoginStatus";
 import { AppliedOptionDataType } from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
 import { PreferenceSurveyState } from "../Store/Slices/MatchingSurveySlice";
+import { ReviewDataType } from "../Component/Common/Modal/ModalContent/ModalContentType";
 
 // 회원가입 POST API
-export const usePostSignup = async (
-  userData: ParentStateType | undefined,
-  therapistData: TherapistStateType | undefined,
-  setToastMessage: React.Dispatch<React.SetStateAction<ToastMessageTypes>>,
-  navigate: NavigateFunction
-) => {
-  const data = userData
-    ? userData
-    : therapistData
-      ? {
-          ...therapistData,
-          freelancer: therapistData.freelancer === "true",
-          gender: therapistData.gender === "여성" ? "F" : "M",
-        }
-      : undefined;
-  const path = userData ? "user" : "therapist";
+export const usePostSignup = () => {
+  const navigate = useNavigate();
+  const postSignup = async (
+    userData: ParentStateType | undefined,
+    therapistData: TherapistStateType | undefined,
+    setToastMessage: React.Dispatch<React.SetStateAction<ToastMessageTypes>>
+  ) => {
+    const data = userData
+      ? userData
+      : therapistData
+        ? {
+            ...therapistData,
+            freelancer: therapistData.freelancer === "true",
+            gender: therapistData.gender === "여성" ? "F" : "M",
+          }
+        : undefined;
+    const path = userData ? "user" : "therapist";
 
-  try {
-    await axiosApp.post(`/auth/signup/${path}`, JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setToastMessage({
-      type: "success",
-      message: "회원가입이 완료되었습니다. 로그인해주세요.",
-    });
-    await useDelayChatbox(1500);
-    navigate("/login");
-  } catch (err: any) {
-    setToastMessage({
-      type: "failed",
-      message: err.response.data.message,
-    });
-  }
+    try {
+      await axiosApp.post(`/auth/signup/${path}`, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setToastMessage({
+        type: "success",
+        message: "회원가입이 완료되었습니다. 로그인해주세요.",
+      });
+      await useDelayChatbox(1500);
+      navigate("/login");
+    } catch (err: any) {
+      setToastMessage({
+        type: "failed",
+        message: err.response.data.message,
+      });
+    }
+  };
+  return { postSignup };
 };
 
 // 로그인 POST API
 export const usePostSignin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies(["token"]);
 
   const postSignin = async (
     userType: string,
@@ -358,6 +362,62 @@ export const useGetTopTherapist = async () => {
   } catch (err: any) {
     console.error(err);
   }
+};
+
+// reviewData POST API
+export const usePostReview = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const postReview = async (data: ReviewDataType, id: number) => {
+    try {
+      await axiosApp.post(`/review/${id}`, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookie.token,
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { postReview };
+};
+
+// 부모님 마이페이지에서 pending된 예약 정보 가져오는 API
+export const useGetPendingReservation = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getPendingReservation = async () => {
+    try {
+      const res = await axiosApp.get("/reservation/pending/user", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getPendingReservation };
+};
+
+export const useGetConfirmedReservation = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getConfirmedReservation = async () => {
+    try {
+      const res = await axiosApp.get("/reservation/confirmed/user", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getConfirmedReservation };
 };
 
 const switchGenderToEng = (value: string | undefined) => {

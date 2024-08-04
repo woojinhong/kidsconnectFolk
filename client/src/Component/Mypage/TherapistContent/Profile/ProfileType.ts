@@ -1,4 +1,6 @@
 export type ProfileType = {
+  id?: number;
+  status?: boolean;
   firstName: string;
   lastName: string;
   freelancer: boolean;

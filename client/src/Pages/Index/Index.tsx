@@ -22,6 +22,8 @@ import {
   StyledSubBanner,
 } from "./Index.style";
 
+import { v4 as uuidv4 } from "uuid";
+
 function Index() {
   const [topTherapistId, setTopTherapistId] = useState<TopTherapistType[]>([]);
   const [selectedTreatmentArea, setSelectedTreatmentArea] = useState<string[]>(
@@ -72,7 +74,7 @@ function Index() {
             <div>
               <Modal
                 buttonText="선생님 찾아보기"
-                content={"therapistPreference"}
+                content="therapistPreference"
                 buttonIcon="search"
               />
             </div>
@@ -98,7 +100,7 @@ function Index() {
           <div>
             {topTherapistId?.map((data) => (
               <TherapistCard
-                key={data.id}
+                key={uuidv4()}
                 therapistId={data.id}
                 variants="summary"
               />
@@ -124,3 +126,7 @@ export default Index;
 type TopTherapistType = {
   id: number;
 };
+
+// css 오류
+// key 오류
+// Header userName 받아와야함

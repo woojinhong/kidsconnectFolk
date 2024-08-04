@@ -20,6 +20,8 @@ export const IndexContainer = styled.div`
   flex-direction: column;
   padding-bottom: 80px;
   gap: 80px;
+  width: 100vw;
+  overflow: hidden;
 
   & section {
     width: 1060px;
@@ -102,17 +104,14 @@ export const RecommendSitesContainer = styled.section`
 
   & ul {
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
-    width: calc(100vw - 190px);
-    overflow-x: scroll;
   }
   & li {
     position: relative;
     text-align: center;
   }
   & li > img {
-    position:;
-    width: 360px;
     height: 240px;
     border-radius: 16px;
   }

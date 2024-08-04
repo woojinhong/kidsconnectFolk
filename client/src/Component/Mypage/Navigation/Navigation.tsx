@@ -1,5 +1,11 @@
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { UseDispatch } from "react-redux";
+
+import { loginStatusActions } from "../../../Store/Slices/LoginStatus";
 import { clickButtonEvent } from "../../../Assets/CommonType/EventType";
 import { StyledNavigation, getButtonStyles } from "./Navigation.style";
+import { useDispatch } from "react-redux";
 
 function Navigation({
   userType = "parents",
@@ -10,11 +16,23 @@ function Navigation({
   clickedNavMenu?: string;
   handleNavMenu: (e: clickButtonEvent) => void;
 }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [, , removeCookie] = useCookies(["token"]);
   const isClickedNavMenu = (menu: string): boolean => {
     if (menu === clickedNavMenu) {
       return true;
     } else return false;
   };
+
+  const handleSignOutButton = (e: clickButtonEvent) => {
+    // 아니야 removeCookie 사용해서 하자.;
+    const loginStatusData = { userType, isLogin: false };
+    removeCookie("token");
+    dispatch(loginStatusActions.setLoginStatus(loginStatusData));
+    navigate("/");
+  };
+
   return (
     <StyledNavigation>
       <ul>
@@ -42,7 +60,9 @@ function Navigation({
               </li>
             ))}
       </ul>
-      <button type="button">로그아웃</button>
+      <button type="button" onClick={handleSignOutButton}>
+        로그아웃
+      </button>
     </StyledNavigation>
   );
 }

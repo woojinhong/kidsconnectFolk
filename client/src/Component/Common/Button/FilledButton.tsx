@@ -64,10 +64,16 @@ function FilledButton({
         onClick={onClick}
       >
         {icon ? <StyledIcon src={iconMatch(icon)} /> : null}
-        <span style={{ color: "#fff" }}>{text}</span>
+        <span style={{ color: fontColorByBackgroundColor(backgroundColor) }}>
+          {text}
+        </span>
       </Button>
     </StyledButton>
   );
 }
 
 export default FilledButton;
+
+const fontColorByBackgroundColor = (backgroundColor: string) => {
+  return backgroundColor === "#FF7000" ? "#fff" : "#666";
+};

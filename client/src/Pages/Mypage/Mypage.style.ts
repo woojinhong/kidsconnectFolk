@@ -8,13 +8,14 @@ export const StyledMypageLayout = styled.div`
   padding: 40px 0 96px;
   margin: 0 auto;
 
-  & > main {
+  & > div {
     width: 100%;
     flex: 1;
   }
 
   & > section {
     width: 100%;
+    overflow: hidden;
   }
 
   & h4 {
@@ -22,7 +23,7 @@ export const StyledMypageLayout = styled.div`
   }
 `;
 
-export const StyledMain = styled.main`
+export const StyledMain = styled.div`
   & h3 {
     font-size: 16px;
     margin: 0 0 24px;

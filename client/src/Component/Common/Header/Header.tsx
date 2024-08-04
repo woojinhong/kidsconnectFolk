@@ -1,9 +1,16 @@
-import DefaultText from "../Button/DefaultText";
-import FilledButton from "../Button/FilledButton";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import { RootState } from "../../../Store/store";
+
+import DefaultText from "../Button/DefaultText";
+import FilledButton from "../Button/FilledButton";
+
+import {
+  useGetParentInfo,
+  useGetTherapistInfo,
+} from "../../../Services/ApiHooks";
+
 import {
   StyledHeader,
   StyledContentContainer,
@@ -18,7 +25,29 @@ import notification from "../../../Assets/Image/Notification.svg";
 
 function Header() {
   const loginStatus = useSelector((state: RootState) => state.loginStatus);
+  const [parentName, setParentName] = useState<string>("");
+  const [therapistName, setTherapistName] = useState<string>("");
 
+  const { getParentInfo } = useGetParentInfo();
+  const { getTherapistInfo } = useGetTherapistInfo();
+
+  useEffect(() => {
+    if (loginStatus.isLogin) {
+      if (loginStatus.userType === "parents") {
+        const fetchParentInfo = async () => {
+          const response = await getParentInfo();
+          setParentName(`${response.lastName}${response.firstName}`);
+        };
+        fetchParentInfo();
+      } else {
+        const fetchTherapistInfo = async () => {
+          const response = await getTherapistInfo();
+          setTherapistName(`${response.lastName}${response.firstName}`);
+        };
+        fetchTherapistInfo();
+      }
+    }
+  }, [loginStatus, getParentInfo, getTherapistInfo]);
   return (
     <StyledHeader>
       <main>
@@ -47,7 +76,9 @@ function Header() {
                   className="mypage"
                 >
                   <h4>
-                    김땡땡
+                    {loginStatus.userType === "parents"
+                      ? parentName
+                      : therapistName}
                     <span>
                       {loginStatus.userType === "parents" ? "부모님" : "선생님"}
                     </span>

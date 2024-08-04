@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Tag from "../../Tag/Tag";
 import Modal from "../../Modal/Modal";
+import FilledButton from "../../Button/FilledButton";
+import OutlineButton from "../../Button/OutlineButton";
 
 import {
   useGetTherapistById,
@@ -19,15 +21,12 @@ import {
   TherapistCardProps,
   TherapistProfileType,
   TherapistDetailedInfoType,
-  showAppliedButtonByMatchingStatus,
 } from "./TherapistCardType";
 
 import ProfileTherapist from "../../../../Assets/Image/ImgProfileTeacher.svg";
 import IconReview from "../../../../Assets/Image/IconReview.svg";
 
 function TherapistCard({ variants, therapistId }: TherapistCardProps) {
-  const [isMatched, setIsMatched] = useState<boolean>(true);
-  const [hasReviewed, setHasReviewed] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [therapistData, setTherapistData] = useState<TherapistProfileType>();
@@ -114,14 +113,14 @@ function TherapistCard({ variants, therapistId }: TherapistCardProps) {
             <span>0</span>
           </div>
         </StyledProfileWrapper>
-        {variants === "applied" ? null : (
+        {variants === "pending" || variants === "confirmed" ? null : (
           <StyledContentWrapper
             className={variants === "summary" ? "content_summary" : ""}
           >
             <p>{therapistInfo.content}</p>
           </StyledContentWrapper>
         )}
-        {variants === "applied" ? (
+        {variants === "pending" || variants === "confirmed" ? (
           <StyledTherapistDetailContainer>
             <li>
               📍위치
@@ -148,8 +147,8 @@ function TherapistCard({ variants, therapistId }: TherapistCardProps) {
             />
           </StyledButtonWrapper>
         ) : null}
-        {variants === "applied"
-          ? showAppliedButtonByMatchingStatus(isMatched, hasReviewed)
+        {variants === "pending" || variants === "confirmed"
+          ? showAppliedButtonByMatchingStatus(variants)
           : null}
       </StyledTherapistCardContainer>
     </StyledLink>
@@ -157,3 +156,32 @@ function TherapistCard({ variants, therapistId }: TherapistCardProps) {
 }
 
 export default TherapistCard;
+
+const showAppliedButtonByMatchingStatus = (
+  variants: "pending" | "confirmed"
+) => {
+  if (variants === "pending") {
+    return (
+      <StyledButtonWrapper className="button_wrapper_applied">
+        <FilledButton text="연락이 안돼요" backgroundColor="#f2f2f2" />
+        <FilledButton text="매칭 완료했어요" />
+      </StyledButtonWrapper>
+    );
+  } else if (variants === "confirmed") {
+    return (
+      <StyledButtonWrapper>
+        <OutlineButton text="리뷰 쓰기" />
+      </StyledButtonWrapper>
+    );
+  } else {
+    return (
+      <StyledButtonWrapper>
+        <OutlineButton text="리뷰 쓰기" disabled={true} />
+      </StyledButtonWrapper>
+    );
+  }
+};
+
+const handleConfirmMatchButton = () => {
+  // TODO: 매칭 완료 버튼 클릭 시, 매칭 상태를 변경하는 API 호출
+};
