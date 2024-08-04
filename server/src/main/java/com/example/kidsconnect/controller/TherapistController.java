@@ -18,6 +18,10 @@ public class TherapistController {
     TherapistService therapistService;
 
 
+    @GetMapping()
+    public TherapistResponseDto showUser(@AuthenticationPrincipal UserPrinciple userDetails) {
+        return therapistService.getTherapist(userDetails);
+    }
     @GetMapping("/showAll")
     public ResponseEntity<List<Long>> getAllTherapistIds() {
         List<Long> therapistIds = therapistService.getAllTherapistIds();

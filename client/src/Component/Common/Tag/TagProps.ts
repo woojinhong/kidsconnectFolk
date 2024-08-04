@@ -17,13 +17,13 @@ export function colorByTagValue(value: string) {
       return "#B5D7C1";
     case "심리재활":
       return "#C1CFFF";
-    case "행동재활":
+    case "행동발달":
       return "#FED5FF";
     case "특수교육":
       return "#BBE7B7";
     case "창의재활":
       return "#F2EAA0";
     default:
-      return "#F2F2F2";
+      return "#DAD7E5";
   }
 }

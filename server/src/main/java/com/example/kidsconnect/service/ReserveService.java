@@ -76,12 +76,12 @@ public class ReserveService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserReservationDto> getUserPendingReservations(UserPrinciple userDetails) {
+    public List<Long> getUserPendingReservations(UserPrinciple userDetails) {
         return getUserReservationsByStatus(userDetails, ReservationStatus.PENDING);
     }
 
     @Transactional(readOnly = true)
-    public List<UserReservationDto> getUserConfirmedReservations(UserPrinciple userDetails) {
+    public List<Long> getUserConfirmedReservations(UserPrinciple userDetails) {
         return getUserReservationsByStatus(userDetails, ReservationStatus.CONFIRMED);
     }
 
@@ -115,25 +115,13 @@ public class ReserveService {
                 .collect(Collectors.toList());
     }
 
-    private List<UserReservationDto> getUserReservationsByStatus(UserPrinciple userDetails, ReservationStatus status) {
+    private List<Long> getUserReservationsByStatus(UserPrinciple userDetails, ReservationStatus status) {
         User user = userService.findById(userDetails.getId());
         List<Reservation> reservations = reservationRepository.findByUserAndStatus(user, status);
 
         return reservations.stream()
-                .map(reservation -> {
-                    TherapistInfo therapistInfo = therapistInfoService.findById(reservation.getTherapistInfo().getId());
-                    List<TherapistInfoSymptom> therapistInfoSymptoms = therapistInfoSymptomService.findByTherapistInfoId(therapistInfo.getId());
-                    List<String> symptomNames = therapistInfoSymptoms.stream()
-                            .map(therapistInfoSymptom -> therapistInfoSymptom.getSymptom().getName())
-                            .collect(Collectors.toList());
-
-                    List<Enrol> enrols = enrolService.findByTherapistId(therapistInfo.getTherapist().getId());
-                    List<String> centerNames = enrols.stream()
-                            .map(enrol -> enrol.getCenter().getName())
-                            .collect(Collectors.toList());
-
-                    return reservationMapper.toUserReservationDto(reservation, therapistInfo, symptomNames, centerNames);
-                })
+                .map(reservation -> reservation.getTherapistInfo().getTherapist().getId())
+                .distinct()
                 .collect(Collectors.toList());
     }
 

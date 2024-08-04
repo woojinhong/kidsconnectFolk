@@ -25,6 +25,8 @@ public class MatchResponseDto {
     private String centerName;
     private List<String> symptoms;
 
+    private Double avgRating;
+
 
 
 }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { axiosApp } from "./axiosApp";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -14,6 +13,7 @@ import {
 import { useDelayChatbox } from "./CustomHooks";
 import { loginStatusActions } from "../Store/Slices/LoginStatus";
 import { AppliedOptionDataType } from "../Component/Common/Modal/ModalContent/ApplicationQuestionary";
+import { PreferenceSurveyState } from "../Store/Slices/MatchingSurveySlice";
 
 // 회원가입 POST API
 export const usePostSignup = async (
@@ -95,18 +95,22 @@ export const usePostSignin = () => {
 };
 
 // 아이 등록 POST API
-export const usePostChild = async (data: GatheredChildDataType) => {
-  try {
-    const cookie = document.cookie.replace("Bearer%", "");
-    await axiosApp.post("/child/register", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${cookie.split("=")[1]}`,
-      },
-    });
-  } catch (err: any) {
-    console.error(err);
-  }
+export const usePostChild = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const postChild = async (data: GatheredChildDataType) => {
+    try {
+      await axiosApp.post("/child/register", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: cookie.token,
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { postChild };
 };
 
 // 로그인한 부모님 정보 GET API
@@ -253,4 +257,116 @@ export const usePostMatchingSurvey = () => {
     }
   };
   return { postMatchingSurvey };
+};
+
+//전체 therapist 정보 가져오는 API
+export const useGetAllTherapist = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getAllTherapist = async () => {
+    try {
+      const res = await axiosApp.get("/therapist/showAll", {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getAllTherapist };
+};
+
+// id값에 따라 therapist 정보 가져오는 API
+export const useGetTherapistById = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getTherapistById = async (id: number) => {
+    try {
+      const res = await axiosApp.get(`/therapist/${id}`, {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getTherapistById };
+};
+
+export const useGetTherapistInfoById = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getTherapistInfoById = async (id: number) => {
+    try {
+      const res = await axiosApp.get(`/therapist/info/therapist/${id}`, {
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getTherapistInfoById };
+};
+
+//therapist를 필터링해서 가져오는 API
+export const useGetFilteredTherapist = () => {
+  const [cookie] = useCookies(["token"]);
+
+  const getFilteredTherapist = async (
+    preferenceData: PreferenceSurveyState,
+    region: string
+  ) => {
+    try {
+      const params = {
+        address: region ? (region === "전체" ? "" : region) : "",
+        isExperience: "",
+        gender: switchGenderToEng(preferenceData.preference.gender) || "",
+        symptoms: preferenceData.treatmentArea
+          ? preferenceData.treatmentArea.includes("전체")
+            ? ""
+            : preferenceData.treatmentArea.join(",")
+          : "",
+        sort: "rating",
+      };
+
+      const res = await axiosApp.get("/search/filter", {
+        params: params,
+        headers: {
+          Authorization: cookie.token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+  return { getFilteredTherapist };
+};
+
+// Top 4명 치료사 Id get하는 api
+export const useGetTopTherapist = async () => {
+  try {
+    const res = await axiosApp.get("/search/top-therapists");
+    return res.data;
+  } catch (err: any) {
+    console.error(err);
+  }
+};
+
+const switchGenderToEng = (value: string | undefined) => {
+  switch (value) {
+    case "여성":
+      return "F";
+    case "남성":
+      return "M";
+    default:
+      return "";
+  }
 };

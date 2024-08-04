@@ -16,6 +16,10 @@ public class TherapistInfoController {
 
     private final TherapistInfoService therapistInfoService;
 
+    @GetMapping("/all")
+    public ResponseEntity showAllTherapistInfo(){
+        return therapistInfoService.showAllTherapistInfo();
+    }
     @GetMapping()
     public ResponseEntity<?> showTherapistInfo(@AuthenticationPrincipal UserPrinciple userDetails){
         return therapistInfoService.showTherapistInfo(userDetails);

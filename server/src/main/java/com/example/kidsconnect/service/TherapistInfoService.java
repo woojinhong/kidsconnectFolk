@@ -34,6 +34,11 @@ public class TherapistInfoService {
     private EntityManager entityManager;
 
 
+    public ResponseEntity<?> showAllTherapistInfo(){
+        List<TherapistInfo> therapistInfos = (List<TherapistInfo>) therapistInfoRepository.findAll();
+        List<TherapistInfoDto> therapistInfoDto = therapistInfoMapper.toTherapistInfoDtos(therapistInfos);
+        return ResponseEntity.ok(therapistInfoDto);
+    }
     @Transactional(readOnly = true)
     public ResponseEntity<?> showTherapistInfoWithTherapistId(Long therapistId) {
 

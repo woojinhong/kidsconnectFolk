@@ -35,21 +35,13 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                 QEnrol qEnrol = QEnrol.enrol;
                 QCenter qCenter = QCenter.center;
                 QTherapistInfoSymptom qTherapistInfoSymptom = QTherapistInfoSymptom.therapistInfoSymptom;
+                QTherapistReview qTherapistReview = QTherapistReview.therapistReview;
 
-                // Using the method
-   //             BooleanExpression experienceCondition = qTherapistInfo.totalExperience.ne("무경력");
                 BooleanExpression experienceCondition = experienceEq(matchRequestDto.getIsExperience());
                 BooleanExpression symptomCondition = symptomIn(matchRequestDto.getSymptoms());
                 BooleanExpression genderCondition = genderEq(matchRequestDto.getGender());
                 JPQLQuery<Long> subQuery = createSubQuery(genderCondition, experienceCondition, symptomCondition);
-//                BooleanExpression genderCondition = genderEq(matchRequestDto.getGender());
-//                BooleanExpression experienceCondition = experienceEq(matchRequestDto.isExperience());
-//                BooleanExpression symptomCondition = symptomIn(matchRequestDto.getSymptoms());
 
-                // 서브쿼리 정의
-//                JPQLQuery<Long> subQuery = createSubQuery(genderCondition, experienceCondition, symptomCondition);
-
-                // 메인 쿼리 정의
                 List<Tuple> results = queryFactory
                         .select(
                                 qTherapistInfo.id,
@@ -59,7 +51,8 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                 qTherapistInfo.imageFile,
                                 qTherapistInfo.totalExperience,
                                 qTherapist.freelancer.when(true).then("프리랜서").otherwise(qCenter.name),
-                                qSymptom.name
+                                qSymptom.name,
+                                qTherapistReview.rating.avg()
                         )
                         .from(qTherapistInfo)
                         .join(qTherapistInfo.therapist, qTherapist)
@@ -67,7 +60,19 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         .leftJoin(qEnrol.center, qCenter)
                         .leftJoin(qTherapistInfo.therapistInfoSymptom, qTherapistInfoSymptom)
                         .leftJoin(qTherapistInfoSymptom.symptom, qSymptom)
+                        .leftJoin(qTherapistInfo.therapistReview, qTherapistReview)
                         .where(qTherapistInfo.id.in(subQuery))
+                        .groupBy(
+                                qTherapistInfo.id,
+                                qTherapist.id,
+                                qTherapist.firstName,
+                                qTherapistInfo.bio,
+                                qTherapistInfo.imageFile,
+                                qTherapistInfo.totalExperience,
+                                qTherapist.freelancer,
+                                qCenter.name,
+                                qSymptom.name
+                        )
                         .fetch();
 
                 Map<Long, MatchResponseDto> resultMap = new HashMap<>();
@@ -81,6 +86,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         String totalExperience = row.get(qTherapistInfo.totalExperience);
                         String centerName = row.get(qTherapist.freelancer.when(false).then("프리랜서").otherwise(qCenter.name));
                         String symptomName = row.get(qSymptom.name);
+                        Double avgRating = row.get(qTherapistReview.rating.avg());
 
                         MatchResponseDto dto = resultMap.get(therapistInfoId);
                         if (dto == null) {
@@ -91,7 +97,8 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                         imageFile,
                                         totalExperience,
                                         centerName,
-                                        new ArrayList<>()
+                                        new ArrayList<>(),
+                                        avgRating != null ? avgRating : 0.0
                                 );
                                 resultMap.put(therapistInfoId, dto);
                         }
@@ -102,6 +109,8 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
 
                 return resultMap.values().stream().collect(Collectors.toList());
         }
+
+
 
         protected JPQLQuery<Long> createSubQuery(BooleanExpression genderCondition, BooleanExpression experienceCondition, BooleanExpression symptomCondition) {
                 QTherapist qTherapist = QTherapist.therapist;
@@ -183,7 +192,6 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         builder.and(qSymptom.name.in(filterDto.getSymptoms()));
                 }
 
-                // Select all relevant therapistInfo IDs that match the filter criteria
                 JPQLQuery<Long> subQuery = JPAExpressions
                         .select(qTherapistInfo.id)
                         .from(qTherapistInfo)
@@ -194,7 +202,6 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         .leftJoin(qTherapistInfoSymptom.symptom, qSymptom)
                         .where(builder);
 
-                // Main query to fetch the details of therapistInfo along with related symptoms
                 JPQLQuery<Tuple> query = queryFactory
                         .select(
                                 qTherapistInfo.id,
@@ -251,6 +258,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         String totalExperience = row.get(qTherapistInfo.totalExperience);
                         String centerName = row.get(qTherapist.freelancer.when(true).then("프리랜서").otherwise(qCenter.name));
                         String symptomName = row.get(qSymptom.name);
+                        Double avgRating = row.get(qTherapistReview.rating.avg());
 
                         MatchResponseDto dto = resultMap.get(therapistInfoId);
                         if (dto == null) {
@@ -262,6 +270,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                                         .totalExperience(totalExperience)
                                         .centerName(centerName)
                                         .symptoms(new ArrayList<>())
+                                        .avgRating(avgRating != null ? avgRating : 0.0)
                                         .build();
                                 resultMap.put(therapistInfoId, dto);
                         }
@@ -270,7 +279,6 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         }
                 }
 
-                // 추가 로직: therapistInfoId 기준으로 증상들을 그룹화하여 전체 증상을 반환
                 Set<Long> therapistInfoIds = resultMap.keySet();
                 List<Tuple> allSymptoms = queryFactory
                         .select(qTherapistInfo.id, qSymptom.name)
@@ -305,6 +313,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                 JPQLQuery<Tuple> query = queryFactory
                         .select(
                                 qTherapistInfo.id,
+                                qTherapist.id,
                                 qTherapist.firstName,
                                 qTherapistInfo.bio,
                                 qTherapistInfo.imageFile,
@@ -320,6 +329,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         .leftJoin(qTherapistInfo.therapistReview, qTherapistReview)
                         .groupBy(
                                 qTherapistInfo.id,
+                                qTherapist.id,
                                 qTherapist.firstName,
                                 qTherapistInfo.bio,
                                 qTherapistInfo.imageFile,
@@ -342,6 +352,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
 
                 for (Tuple row : results) {
                         Long therapistInfoId = row.get(qTherapistInfo.id);
+                        Long therapistId = row.get(qTherapist.id);
                         String therapistName = row.get(qTherapist.firstName);
                         String bio = row.get(qTherapistInfo.bio);
                         byte[] imageFile = row.get(qTherapistInfo.imageFile);
@@ -353,6 +364,7 @@ public class TherapistInfoRepositoryImpl implements TherapistInfoRepositoryCusto
                         TopTherapistResponseDto dto = resultMap.get(therapistInfoId);
                         if (dto == null) {
                                 dto = TopTherapistResponseDto.builder()
+                                        .id(therapistId)
                                         .therapistName(therapistName)
                                         .bio(bio)
                                         .imageFile(imageFile)

@@ -8,6 +8,7 @@ import TherapistCard from "../../Component/Common/Card/TherapistCard/TherapistCa
 import { PreferenceSurveyState } from "../../Store/Slices/MatchingSurveySlice";
 import treatmentAreaText from "../../Assets/TextData/treatmentAreaText";
 import { getSelectedTreatmentArea } from "../../Services/CustomHooks";
+import { useGetFilteredTherapist } from "../../Services/ApiHooks";
 
 import {
   StyledMainContainer,
@@ -28,10 +29,11 @@ function FindMatching() {
   );
   const [selectedRegion, setSelectedRegion] = useState<string | null>();
   const [selectedGender, setSelectedGender] = useState<string | null>();
-  const [selectedCareer, setSelectedCareer] = useState<
-    string | boolean | null
-  >();
+  const [selectedCareer, setSelectedCareer] = useState<string | null>();
   const [selectedFilterBy, setSelectedFilterBy] = useState<string | null>();
+  const [allTherapistData, setAllTherapistData] = useState<any[]>();
+
+  const { getFilteredTherapist } = useGetFilteredTherapist();
 
   const checkedSurveyData = useSelector(
     (state: RootState) => state.preferenceData
@@ -43,8 +45,30 @@ function FindMatching() {
       setSelectedTreatmentArea(checkedSurveyData.treatmentArea);
     }
   }, []);
-  // 추후 api
-  const therapistId: number[] = [1, 2, 3, 4];
+  useEffect(() => {
+    const fetchFilteredTherapist = async () => {
+      const filteredTherapistData =
+        surveyedData &&
+        (await getFilteredTherapist(surveyedData, selectedRegion || ""));
+      setAllTherapistData(filteredTherapistData);
+    };
+    fetchFilteredTherapist();
+  }, [checkedSurveyData, surveyedData, selectedRegion]);
+
+  useEffect(() => {
+    setSurveyedData((prevState) => {
+      if (!prevState) return;
+      return {
+        ...prevState,
+        treatmentArea: selectedTreatmentArea,
+        preference: {
+          ...prevState.preference,
+          gender: selectedGender || prevState.preference.gender,
+          career: true,
+        },
+      };
+    });
+  }, [selectedTreatmentArea, selectedGender, selectedCareer, selectedFilterBy]);
 
   return (
     <StyledMainContainer>
@@ -93,13 +117,16 @@ function FindMatching() {
       </StyledFilterContainer>
       <StyledTherapistCardContainer>
         <div>
-          {therapistId.map((therapistId) => (
+          {allTherapistData?.map((therapist) => (
             <TherapistCard
-              key={therapistId}
-              therapistId={therapistId}
+              key={therapist.therapistId}
+              therapistId={therapist.therapistId}
               variants="default"
             />
           ))}
+          {allTherapistData?.length === 0 ? (
+            <div>아직 등록된 선생님이 없어요!</div>
+          ) : null}
         </div>
       </StyledTherapistCardContainer>
     </StyledMainContainer>

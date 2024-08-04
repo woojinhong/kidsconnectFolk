@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Tag from "../../Component/Common/Tag/Tag";
 import TherapistProfile from "../../Component/TherapistProfile/TherapistProfile";
-
-import TherapistInfoData from "../../MockData/therapistInfoData.json";
-import TherapistData from "../../MockData/therapistData.json";
-import TherapistCareer from "../../MockData/therapistExperienceData.json";
-
 import Modal from "../../Component/Common/Modal/Modal";
-import { ProfileType } from "../../Component/Mypage/TherapistContent/Profile/ProfileType";
+
 import {
-  ProfileDetailType,
-  ProfileCareerType,
-} from "../../Component/Mypage/TherapistContent/Profile/ProfileType";
+  useGetTherapistById,
+  useGetTherapistInfoById,
+} from "../../Services/ApiHooks";
+
+import {
+  TherapistProfileType,
+  TherapistDetailedInfoType,
+} from "../../Component/Common/Card/TherapistCard/TherapistCardType";
 
 import IconReview from "../../Assets/Image/IconReview.svg";
+import ProfileImg from "../../Assets/Image/ImgProfileTeacher.svg";
 
 import {
   StyledMainContainer,
@@ -29,24 +31,14 @@ import {
 } from "../Mypage/Mypage.style";
 
 function TherapistIntroduction() {
-  // 나중에 therapist Id params로 받아오기
-  const therapistId = 1;
-  const therapistDataById: object | undefined = TherapistData.find(
-    (data) => data.id === therapistId
-  );
-  const therapistInfoById: object | undefined = TherapistInfoData.find(
-    (data) => data.id === therapistId
-  );
-  const therapistCareerById = TherapistCareer.find(
-    (data) => data.therapistId === therapistId
-  );
-
-  const { firstName, lastName } = therapistDataById as ProfileType;
-  const { imageFile, review, treatmentArea } =
-    therapistInfoById as ProfileDetailType;
-  const { place } = therapistCareerById as ProfileCareerType;
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [therapistData, setTherapistData] = useState<TherapistProfileType>();
+  const [therapistInfo, setTherapistInfo] =
+    useState<TherapistDetailedInfoType>();
+
+  const { id } = useParams<string>();
+  const { getTherapistById } = useGetTherapistById();
+  const { getTherapistInfoById } = useGetTherapistInfoById();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -55,37 +47,61 @@ function TherapistIntroduction() {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    const fetchTherapistData = async () => {
+      setTherapistData(await getTherapistById(Number(id)));
+      setTherapistInfo(await getTherapistInfoById(Number(id)));
+    };
+    if (id) fetchTherapistData();
+    console.log(therapistData, therapistInfo);
+  }, []);
+
+  if (!therapistData || !therapistInfo) {
+    return <div>선생님 데이터를 불러오지 못했어요!</div>;
+  }
+
   return (
     <StyledMainContainer>
       <StyledProfileSummaryContainer style={{ padding: "40px 0" }}>
         <div>
           <StyledProfileImgContainer>
-            <img src={imageFile} alt="프로필 이미지" />
+            <img
+              src={
+                therapistInfo.imageFile ? therapistInfo.imageFile : ProfileImg
+              }
+              alt="프로필 이미지"
+            />
           </StyledProfileImgContainer>
           <StyledProfileTextContainer style={{ marginLeft: "24px" }}>
             <StyledSymptomContainer>
-              {treatmentArea.map((text, index) => (
-                <Tag key={index} value={text} />
+              {therapistInfo.symptom.map((tag) => (
+                <Tag key={tag} value={tag} />
               ))}
             </StyledSymptomContainer>
             <StyledNameContainer>
               <h4>
-                {firstName}
-                {lastName}
+                {therapistData.lastName}
+                {therapistData.firstName}
                 <span>선생님</span>
               </h4>
             </StyledNameContainer>
             <StyledTextSummaryContainer>
               <div className="review">
                 <img src={IconReview} alt="리뷰 점수" />
-                <span>{review}</span>
+                <span>리뷰필요</span>
               </div>
               <div className="career">
                 경력 <span>8년 6개월</span>
               </div>
-              <div className="isWorking">
-                <span>{place}</span> 근무 중
-              </div>
+              {therapistData.freelancer ? (
+                <div className="isWorking">
+                  <span>프리랜서</span> 근무 중
+                </div>
+              ) : (
+                <div className="isWorking">
+                  <span>{therapistData.centerName}</span> 근무 중
+                </div>
+              )}
             </StyledTextSummaryContainer>
           </StyledProfileTextContainer>
         </div>
@@ -101,7 +117,7 @@ function TherapistIntroduction() {
         </div>
       </StyledProfileSummaryContainer>
       <section>
-        <TherapistProfile data={therapistInfoById} />
+        <TherapistProfile data={therapistInfo} />
       </section>
     </StyledMainContainer>
   );
